@@ -3,6 +3,7 @@
 	<name>cdsPlayground</name>
 	<comment></comment>
 	<projects>
+		<project>cloudantDB</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
