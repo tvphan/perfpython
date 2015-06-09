@@ -2,7 +2,7 @@ import pylab
 import json
 import numpy as np
 
-data = json.load(open("TaskData_test.json"))
+data = json.load(open("TaskData.json"))
 humanReadable ={"simpleInsert":"Simple Doc Insert",
      "bulkInsert":"Simple Bulk Doc Insert (10 Docs/Insert)",
      "randomRead":"Simple Random Doc Read",
