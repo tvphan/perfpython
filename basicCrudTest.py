@@ -136,70 +136,7 @@ class TestBasicCrudOps(unittest.TestCase):
         if self.randomIDs is None or self.randomIDs == []:
             self.randomIDs = self.insertedIDs[:]
             random.shuffle(self.randomIDs)
-        return self.randomIDs.pop()       
-
-    
-
-        
-#class TestDeleteDoc(unittest.TestCase):
-    """ Delete documents in database 
-        - Create 10 docs
-        - Delete 10 docs
-        - Verify deleted docs are deleted """
-"""        
-    data={}
-    
-    def setUp(self):
-        self.startTime = time.time()
-        self.loops = 10
-        self.createdDocs=[]
-        self.db = cdb.cloudantWrapper(c.config)
-        resp = self.db.addDatabase(c.config["dbname"], checkResp=False)
-        if not resp.ok:
-            self.assertTrue(resp.ok,"Failed to add Database: " + str(resp.json()))
-        
-        # create a number of simple documents to deleted during the test
-        for i in range(self.loops):
-            d={"_id":"test:"+str(i)+":"+str(dt.datetime.now())}
-            resp = self.db.addDocument(c.config["dbname"], d, checkResp=False)
-            if not resp.ok:
-                self.assertTrue(resp.ok,"Failed to add document to database: " + str(resp.json()))
-            self.createdDocs.append(d['_id'])
-    
-    def tearDown(self):
-        # dump test data
-        print "Total "+self.testName+" run time:", time.time()-self.startTime
-        json.dump(self.data, open("TaskData_deleteDocs.json","w"))
-        
-        resp = self.db.deleteDatabase(c.config["dbname"], checkResp=False)
-        if not resp.ok:
-            self.assertTrue(resp.ok,"Failed to delete Database: " + str(resp.json()))
-        
-    def testDeleteDocs(self):
-        respTimes = []
-        self.testName = "DeleteDocs"
-        for i in range(len(self.createdDocs)):
-            # retrieve document to get the _rev id
-            resp = self.db.getDocument(c.config["dbname"], self.createdDocs[i])
-            if not resp.ok:
-                self.assertTrue(resp.ok,"Failed to get _rev for documents from database: " + str(resp.json()))
-            rev = resp.json()['_rev']
-            
-            # delete each document we created during setup
-            t = time.time()
-            resp = self.db.deleteDocument(c.config["dbname"], self.createdDocs[i], docRev=rev, checkResp=False)
-            delta_t = time.time()-t
-            if not resp.ok:
-                self.assertTrue(resp.ok,"Failed to delete documents from database: " + str(resp.json()))
-            
-            # requery the database to verify the document has been deleted
-            resp = self.db.getDocument(c.config["dbname"], self.createdDocs[i], checkResp=False)
-            if resp.ok:
-                self.assertTrue(False,"Failed to delete documents from database: " + str(resp.json()))
-            respTimes.append(delta_t)
-        
-        self.data[self.testName]={"loops":len(self.createdDocs),"responseTimes":respTimes}
-        self.assertTrue(True,"Failed to delete document from database: " + str(resp.json())) """
+        return self.randomIDs.pop()
         
 if __name__ == "__main__":
     #import sys;sys.argv = ['', 'Test.testName']
