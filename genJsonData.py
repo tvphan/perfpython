@@ -24,6 +24,60 @@ class genJsonData(object):
             self.template = json.load(open(self.templateFile))
     
     def popValue(self,v):
+        ''' This function parses and generates data for a JSON template
+        These templates are expected to be in valid JSON, wherever a
+        generated value is needed, a place holder is inserted. 
+        
+        Place holders are formatted in the following syntax:
+        [<type>|<random/length/value>]
+        type => int|float|string|boolean
+        random => a random value will be assigned
+        length => either 'variable(<min>,<max>)' or 'fixed(<len>)' 
+                    these dictate the length of a string, 
+                    not valid other types
+        value => it will attempt to parse the given value as the specified <type>
+        
+        example:
+        {
+            "array1": [
+                [
+                    "[float|random]",
+                    "[float|random]"
+                ], 
+                {}, 
+            ], 
+            "boolean1": "[boolean|true]",
+            "integer1": "[int|random]", 
+            "obj1": {
+                "array2": ["[string|variable(10,25)]","[string|variable(10,25)]","[string|variable(10,25)]"], 
+                "obj2": {
+                    "boolean2": "[boolean|random]"
+                }
+            },
+            "string1": "[string|fixed(10)]"
+        }
+        
+        becomes:
+        {
+            "array1": [
+                [
+                    28358.521,
+                    -3308.1692
+                ], 
+                {}, 
+            ], 
+            "boolean1": "True",
+            "integer1": "29257", 
+            "obj1": {
+                "array2": ['Lorem ipsum dolor', 'Lorem ipsum. Fu', 'Lorem ipsu'], 
+                "obj2": {
+                    "boolean2": "False"
+                }
+            },
+            "string1": "Lorem ipsu"
+        }
+        '''
+           
         if isinstance(v, list):
             for n,_ in enumerate(v):
                 v[n] = self.popValue(v[n])
@@ -67,6 +121,8 @@ class genJsonData(object):
                     # TODO check the its in the right format, fixed(n)
                     param = int(bits[1].replace("fixed(","").replace(")",""))
                     v = self.getText(param)
+                elif bits[1] == "random":
+                    v = self.getText(random.randint(0,1024))
                 else:
                     # attempt to use the given value
                     v = bits[1]
@@ -80,6 +136,9 @@ class genJsonData(object):
         return v
 
     def genJsonFromTemplate(self):
+        ''' generate a JSON document based on a supplied template
+            the outer most shell of the json doc must be a dict.
+            for more detailed explaination see popValue()'''
         if self.template is not None:
             for k in self.template:
                 self.template[k] = self.popValue(self.template[k])
