@@ -7,6 +7,8 @@ import sys
 import datetime as dt
 import loremipsum as li
 import json
+import random
+import numpy as np
 
 class genJsonData(object):
     '''
@@ -14,10 +16,77 @@ class genJsonData(object):
     '''
 
 
-    def __init__(self):
-        '''
-        Constructor
-        '''
+    def __init__(self, templateFile=None):
+        self.templateFile = templateFile
+        self.template = None
+        
+        if self.templateFile is not None:
+            self.template = json.load(open(self.templateFile))
+    
+    def popValue(self,v):
+        if isinstance(v, list):
+            for n,_ in enumerate(v):
+                v[n] = self.popValue(v[n])
+        elif isinstance(v, dict):
+            for k in v:
+                v[k] = self.popValue(v[k])
+        elif (isinstance(v,unicode) or isinstance(v,str)) and v[0]=="[" and v[-1]=="]":
+            if isinstance(v,unicode):
+                v = str(v)
+            
+            # strip out [ and ]
+            v = v[1:-1]
+            # match brackets for recursive gen v.count("[") == v.count("]"):
+            bits = v.split("|")
+            # expecting [<type>|<value/parameter>]
+            if bits[0] == "int":
+                if bits[1] == "random":
+                    v = np.int32(random.randint(-65535,65535))
+                else:
+                    # attempt to parse given value
+                    v = np.int32(bits[1])
+            elif bits[0] == "float":
+                if bits[1] == "random":
+                    v = np.float32(random.uniform(-65535,65535))
+                else:
+                    # attempt to parse given value
+                    v = np.float32(bits[1])
+            elif bits[0] == "boolean":
+                if bits[1] == "random":
+                    v = np.bool8(random.getrandbits(1))
+                else:
+                    # attempt to parse given value
+                    v = np.bool8(bits[1])
+            elif bits[0] == "string":
+                if "variable" in bits[1]:
+                    # TODO: check the its in the right format, variable(n,n)
+                    # split out the parameters of the variable, "variable(1,5)" -> int(1),int(5)
+                    params = map(int, bits[1].replace("variable(","").replace(")","").split(","))
+                    v = self.getText(random.randint(params[0],params[1]))
+                elif "fixed" in bits[1]:
+                    # TODO check the its in the right format, fixed(n)
+                    param = int(bits[1].replace("fixed(","").replace(")",""))
+                    v = self.getText(param)
+                else:
+                    # attempt to use the given value
+                    v = bits[1]
+                    
+            elif bits[0] == "none" or bits[0] == "null":
+                v = None
+            
+            
+        else:
+            print "invalid template, got hung up on: ", v, type(v)
+        return v
+
+    def genJsonFromTemplate(self):
+        if self.template is not None:
+            for k in self.template:
+                self.template[k] = self.popValue(self.template[k])
+            return self.template
+        else:
+            return None
+
     def getText(self, textLen):
         retStr=""
         while len(retStr) < textLen:
@@ -76,5 +145,5 @@ class genJsonData(object):
         return d
 
 if __name__ == "__main__":
-    gen = genJsonData()
-    print gen.genData(dataSize=1024)
+    gen = genJsonData(templateFile="templates/basic_template.json")
+    print gen.genJsonFromTemplate()
