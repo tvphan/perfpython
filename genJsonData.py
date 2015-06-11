@@ -21,7 +21,10 @@ class genJsonData(object):
         self.template = None
         
         if self.templateFile is not None:
-            self.template = json.load(open(self.templateFile))
+            try:
+                self.template = json.load(open(self.templateFile))
+            except Exception as e:
+                raise Exception("Failed to load JSON template, validate JSON in template file: " + self.templateFile)
     
     def popValue(self,v):
         ''' This function parses and generates data for a JSON template
@@ -87,10 +90,11 @@ class genJsonData(object):
         elif (isinstance(v,unicode) or isinstance(v,str)) and v[0]=="[" and v[-1]=="]":
             if isinstance(v,unicode):
                 v = str(v)
+            if v.count("[") != v.count("]"):
+                raise Exception("unmatched [ ] brackets: "+str(v))
             
             # strip out [ and ]
             v = v[1:-1]
-            # match brackets for recursive gen v.count("[") == v.count("]"):
             bits = v.split("|")
             # expecting [<type>|<value/parameter>]
             if bits[0] == "int":
@@ -115,8 +119,10 @@ class genJsonData(object):
                 if "variable" in bits[1]:
                     # TODO: check the its in the right format, variable(n,n)
                     # split out the parameters of the variable, "variable(1,5)" -> int(1),int(5)
-                    params = map(int, bits[1].replace("variable(","").replace(")","").split(","))
-                    v = self.getText(random.randint(params[0],params[1]))
+                    randMin, randMax = map(int, bits[1].replace("variable(","").replace(")","").split(","))
+                    if randMin > randMax:
+                        raise  Exception("randMin must be lower than randMax: "+str(v))
+                    v = self.getText(random.randint(randMin,randMax))
                 elif "fixed" in bits[1]:
                     # TODO check the its in the right format, fixed(n)
                     param = int(bits[1].replace("fixed(","").replace(")",""))
@@ -132,7 +138,7 @@ class genJsonData(object):
             
             
         else:
-            print "invalid template, got hung up on: ", v, type(v)
+            raise Exception( "invalid template, got hung up on: "+ str(v) + type(v))
         return v
 
     def genJsonFromTemplate(self):
