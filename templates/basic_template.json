@@ -1,0 +1,18 @@
+{
+    "array1": [
+        [
+            "[float|random]",
+            "[float|random]"
+        ], 
+        {}
+    ], 
+    "boolean1": "[boolean|true]",
+    "integer1": "[int|random]", 
+    "obj1": {
+        "array2": ["[string|variable(10,25)]","[string|variable(10,25)]","[string|variable(10,25)]"], 
+        "obj2": {
+            "boolean2": "[boolean|random]"
+        }
+    },
+    "string1": "[string|fixed(10)]"
+}
