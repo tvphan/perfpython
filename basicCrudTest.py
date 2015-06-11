@@ -4,7 +4,7 @@ Created on Jun 2, 2015
 @author: madmaze
 '''
 import unittest
-import cloudantWrapper as cdb
+import pyCloudantDB as cdb
 import config as c
 import datetime as dt
 import time
@@ -18,7 +18,7 @@ class TestBasicCrudOps(unittest.TestCase):
     def setUp(self):
         self.randomIDs = None
         self.startTime = time.time()
-        self.db = cdb.cloudantWrapper(c.config)
+        self.db = cdb.pyCloudantDB(c.config)
         # test connection
         respConn = self.db.testConnection()
         if not respConn:
