@@ -19,5 +19,18 @@ for k in data:
     pylab.title(humanReadable[k])
     pylab.legend()
     pylab.ylim([0,np.max(p95th)*1.5])
-    pylab.show()
+    pylab.savefig(k+"_95th.png", dpi=200)
+    pylab.clf()
+    
+    pylab.plot(d, label=k)
+    pylab.plot([np.mean(d)]*len(d), label="mean")
+    pylab.plot([np.median(d)]*len(d), label="median")
+    pylab.xlabel("Test samples")
+    pylab.ylabel("Response Time (s)")
+    pylab.title(humanReadable[k])
+    pylab.legend()
+    pylab.ylim([0,np.max(d)*1.5])
+    pylab.savefig(k+".png", dpi=200)
+    pylab.clf()
 
+print "done generating plots.."
