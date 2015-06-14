@@ -13,7 +13,7 @@ import random
 
 
 class TestBasicCrudOps(unittest.TestCase):
-    """ quick check to make sure we can connect to cloudant and add/delete a DB """
+    """ Basic CRUD benchmark """
 
     def setUp(self):
         self.randomIDs = None
@@ -25,7 +25,7 @@ class TestBasicCrudOps(unittest.TestCase):
             self.assertTrue(respConn,"Failed to successfully connect to Database")
             
         # add database for test
-        respAdd = self.db.addDatabase(c.config["dbname"], checkResp=False)
+        respAdd = self.db.addDatabase(c.config["dbname"])
         if not respAdd.ok:
             self.assertTrue(respAdd.ok,"Failed to successfully add a Database")
             
@@ -35,7 +35,7 @@ class TestBasicCrudOps(unittest.TestCase):
         json.dump(self.data, open("TaskData.json","w"))
         
         # Remove Database after test completion
-        respDel = self.db.deleteDatabase(c.config["dbname"], checkResp=False)
+        respDel = self.db.deleteDatabase(c.config["dbname"])
         if not respDel.ok:
             self.assertTrue(respDel.ok,"Failed to delete Database: " + str(respDel.json()))
             
@@ -46,12 +46,15 @@ class TestBasicCrudOps(unittest.TestCase):
         bulkInserts = 500
         bulkInsertSize = 10
         randomReads = 500
-        randomUpdate = 500
+        randomUpdates = 500
+        randomDeletes = 500
+        
         
         self.data = {"simpleInsert":[],
                      "bulkInsert":[],
                      "randomRead":[],
-                     "randomUpdate":[]
+                     "randomUpdate":[],
+                     "randomDelete":[]
                      }
         
         ########################################
@@ -63,7 +66,7 @@ class TestBasicCrudOps(unittest.TestCase):
             d = {"_id":"test:"+str(i)+":"+str(dt.datetime.now()), "lastUpdate":str(dt.datetime.now())}
             self.insertedIDs.append(d['_id'])
             t = time.time()
-            resp = self.db.addDocument(c.config["dbname"], d, checkResp=False)
+            resp = self.db.addDocument(c.config["dbname"], d)
             delta_t = time.time()-t
             if not resp.ok:
                 self.assertTrue(resp.ok,"Failed to add document to database: " + str(resp.json()))
@@ -84,7 +87,7 @@ class TestBasicCrudOps(unittest.TestCase):
             
             # insert all items in bulkAdd at once
             t = time.time()
-            resp = self.db.bulkAddDocuments(c.config["dbname"], bulkAdd, checkResp=False)
+            resp = self.db.bulkAddDocuments(c.config["dbname"], bulkAdd)
             delta_t = time.time()-t
             if not resp.ok:
                 self.assertTrue(resp.ok,"Failed to add document to database: " + str(resp.json()))
@@ -109,13 +112,13 @@ class TestBasicCrudOps(unittest.TestCase):
         # Random Update
         #####
         print "starting Random Updates"
-        for i in range(randomUpdate):
+        for i in range(randomUpdates):
             # get a random document and update the "lastUpdate" field
             t = time.time()
             resp = self.db.getDocument(c.config["dbname"], self.getRandomDocID())
+            delta_t = time.time()-t
             d = resp.json()
             d["lastUpdated"]=str(dt.datetime.now())
-            delta_t = time.time()-t
             if not resp.ok:
                 self.assertTrue(resp.ok,"Failed to get document from database: " + str(resp.json()))
             else:
@@ -123,13 +126,37 @@ class TestBasicCrudOps(unittest.TestCase):
             
             # get the document to get a matching _rev id
             t = time.time()
-            resp = self.db.updateDocument(c.config["dbname"], d, checkResp=False)
+            resp = self.db.updateDocument(c.config["dbname"], d)
             delta_t = time.time()-t
             
             if not resp.ok:
                 self.assertTrue(resp.ok,"Failed to update document: " + str(resp.json()))
             else:
                 self.data["randomUpdate"].append(delta_t)
+                
+        ########################################
+        # Random Deletes
+        #####
+        print "starting Random Deletes"
+        for i in range(randomDeletes):
+            # get a random document to fetch the _rev
+            t = time.time()
+            resp = self.db.getDocument(c.config["dbname"], self.getRandomDocID())
+            delta_t = time.time()-t
+            d = resp.json()
+            if not resp.ok:
+                self.assertTrue(resp.ok,"Failed to get document from database: " + str(resp.json()))
+            else:
+                self.data["randomRead"].append(delta_t)
+                
+            # get a random document and delete it
+            t = time.time()
+            resp = self.db.deleteDocument(c.config["dbname"], d['_id'], d['_rev'])
+            delta_t = time.time()-t
+            if not resp.ok:
+                self.assertTrue(resp.ok,"Failed to delete document from database: " + str(resp.json()))
+            else:
+                self.data["randomDelete"].append(delta_t)
         
     def getRandomDocID(self):
         """ return a random ID from the shuffled deck, if the deck is empty, reshuffle """
@@ -139,5 +166,4 @@ class TestBasicCrudOps(unittest.TestCase):
         return self.randomIDs.pop()
         
 if __name__ == "__main__":
-    #import sys;sys.argv = ['', 'Test.testName']
     unittest.main()
