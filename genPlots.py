@@ -9,7 +9,8 @@ def main(datafile="TaskData.json", outdir="./"):
     humanReadable ={"simpleInsert":"Simple Doc Insert",
          "bulkInsert":"Simple Bulk Doc Insert (10 Docs/Insert)",
          "randomRead":"Simple Random Doc Read",
-         "randomUpdate":"Simple Random Doc Update"}
+         "randomUpdate":"Simple Random Doc Update",
+         "randomDelete":"Simple Random Doc Delete"}
     
     for k in data:
         d = np.array(data[k])
