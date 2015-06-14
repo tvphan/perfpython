@@ -14,28 +14,29 @@ def main(datafile="TaskData.json", outdir="./"):
     
     for k in data:
         d = np.array(data[k])
-        p95th = d[np.where(d < np.percentile(d,95))[0]]
-        pylab.plot(p95th, label=k+"_95th percentile")
-        pylab.plot([np.mean(p95th)]*len(p95th), label="mean")
-        pylab.plot([np.median(p95th)]*len(p95th), label="median")
-        pylab.xlabel("Test samples")
-        pylab.ylabel("Response Time (s)")
-        pylab.title(humanReadable[k])
-        pylab.legend()
-        pylab.ylim([0,np.max(p95th)*1.5])
-        pylab.savefig(outdir+"/"+k+"_95th.png", dpi=200)
-        pylab.clf()
-        
-        pylab.plot(d, label=k)
-        pylab.plot([np.mean(d)]*len(d), label="mean")
-        pylab.plot([np.median(d)]*len(d), label="median")
-        pylab.xlabel("Test samples")
-        pylab.ylabel("Response Time (s)")
-        pylab.title(humanReadable[k])
-        pylab.legend()
-        pylab.ylim([0,np.max(d)*1.5])
-        pylab.savefig(outdir+"/"+k+".png", dpi=200)
-        pylab.clf()
+        if len(d)>0:
+            p95th = d[np.where(d < np.percentile(d,95))[0]]
+            pylab.plot(p95th, label=k+"_95th percentile")
+            pylab.plot([np.mean(p95th)]*len(p95th), label="mean")
+            pylab.plot([np.median(p95th)]*len(p95th), label="median")
+            pylab.xlabel("Test samples")
+            pylab.ylabel("Response Time (s)")
+            pylab.title(humanReadable[k])
+            pylab.legend()
+            pylab.ylim([0,np.max(p95th)*1.5])
+            pylab.savefig(outdir+"/"+k+"_95th.png", dpi=200)
+            pylab.clf()
+            
+            pylab.plot(d, label=k)
+            pylab.plot([np.mean(d)]*len(d), label="mean")
+            pylab.plot([np.median(d)]*len(d), label="median")
+            pylab.xlabel("Test samples")
+            pylab.ylabel("Response Time (s)")
+            pylab.title(humanReadable[k])
+            pylab.legend()
+            pylab.ylim([0,np.max(d)*1.5])
+            pylab.savefig(outdir+"/"+k+".png", dpi=200)
+            pylab.clf()
     
     print "done generating plots.."
 
