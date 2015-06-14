@@ -66,7 +66,7 @@ class TestBasicCrudOps(unittest.TestCase):
             d = {"_id":"test:"+str(i)+":"+str(dt.datetime.now()), "lastUpdate":str(dt.datetime.now())}
             self.insertedIDs.append(d['_id'])
             t = time.time()
-            resp = self.db.addDocument(c.config["dbname"], d)
+            resp = self.db.addDocument(d)
             delta_t = time.time()-t
             if not resp.ok:
                 self.assertTrue(resp.ok,"Failed to add document to database: " + str(resp.json()))
@@ -87,7 +87,7 @@ class TestBasicCrudOps(unittest.TestCase):
             
             # insert all items in bulkAdd at once
             t = time.time()
-            resp = self.db.bulkAddDocuments(c.config["dbname"], bulkAdd)
+            resp = self.db.bulkAddDocuments(bulkAdd)
             delta_t = time.time()-t
             if not resp.ok:
                 self.assertTrue(resp.ok,"Failed to add document to database: " + str(resp.json()))
@@ -101,7 +101,7 @@ class TestBasicCrudOps(unittest.TestCase):
         for i in range(randomReads):
             # retrieve a random document
             t = time.time()
-            resp = self.db.getDocument(c.config["dbname"], self.getRandomDocID() )
+            resp = self.db.getDocument( self.getRandomDocID() )
             delta_t = time.time()-t
             if not resp.ok:
                 self.assertTrue(resp.ok,"Failed to get document from database: " + str(resp.json()))
@@ -115,7 +115,7 @@ class TestBasicCrudOps(unittest.TestCase):
         for i in range(randomUpdates):
             # get a random document and update the "lastUpdate" field
             t = time.time()
-            resp = self.db.getDocument(c.config["dbname"], self.getRandomDocID())
+            resp = self.db.getDocument( self.getRandomDocID() )
             delta_t = time.time()-t
             d = resp.json()
             d["lastUpdated"]=str(dt.datetime.now())
@@ -126,7 +126,7 @@ class TestBasicCrudOps(unittest.TestCase):
             
             # get the document to get a matching _rev id
             t = time.time()
-            resp = self.db.updateDocument(c.config["dbname"], d)
+            resp = self.db.updateDocument(d)
             delta_t = time.time()-t
             
             if not resp.ok:
@@ -141,7 +141,7 @@ class TestBasicCrudOps(unittest.TestCase):
         for i in range(randomDeletes):
             # get a random document to fetch the _rev
             t = time.time()
-            resp = self.db.getDocument(c.config["dbname"], self.getRandomDocID())
+            resp = self.db.getDocument( self.getRandomDocID() )
             delta_t = time.time()-t
             d = resp.json()
             if not resp.ok:
@@ -151,7 +151,7 @@ class TestBasicCrudOps(unittest.TestCase):
                 
             # get a random document and delete it
             t = time.time()
-            resp = self.db.deleteDocument(c.config["dbname"], d['_id'], d['_rev'])
+            resp = self.db.deleteDocument(d['_id'], d['_rev'])
             delta_t = time.time()-t
             if not resp.ok:
                 self.assertTrue(resp.ok,"Failed to delete document from database: " + str(resp.json()))
