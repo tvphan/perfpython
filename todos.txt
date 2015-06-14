@@ -1,0 +1,5 @@
+: TODOs
+:: Template Gen
+- allow for recursize templating, ie: [array|fixed|[float|random]]
+  [type|size/length|value/random] or [type|value/random]
+:: 
