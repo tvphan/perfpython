@@ -30,7 +30,7 @@ class benchmarkWorker(object):
                   "bulkInsert":10}"""
         self.ratios = {"simpleInsert":100,
                   "randomDelete":50,
-                  "randomUpdate":0,
+                  "randomUpdate":50,
                   "bulkInsert":0}
         self.actions = []
         
@@ -73,7 +73,7 @@ class benchmarkWorker(object):
             pass
         else:
             resp_d = resp.json()
-            self.insertedIDs.put({"id":resp_d['id'],"rev":resp_d['rev']})
+            self.insertedIDs.put({"_id":resp_d['id'],"_rev":resp_d['rev']})
         return delta_t
     
     def execDelete(self):
@@ -81,7 +81,7 @@ class benchmarkWorker(object):
         try:
             d = self.insertedIDs.get_nowait()
             t = time.time()
-            resp = self.db.deleteDocument(docID=d['id'], docRev=d['rev'])
+            resp = self.db.deleteDocument(docID=d['_id'], docRev=d['_rev'])
             delta_t = time.time()-t
             if not resp.ok:
                 # TODO: report error somehow
@@ -92,7 +92,22 @@ class benchmarkWorker(object):
         return delta_t
     
     def execUpdate(self):
-        return 0.0
+        ''' Update a random element'''
+        try:
+            d = self.insertedIDs.get_nowait()
+            d["lastUpdated"] = str(dt.datetime.now())
+            t = time.time()
+            resp = self.db.updateDocument(d)
+            delta_t = time.time()-t
+            if not resp.ok:
+                # TODO: report error somehow
+                return -1
+                pass
+            resp_d = resp.json()
+            self.insertedIDs.put({"_id":resp_d['id'],"_rev":resp_d['rev']})
+        except Q.Empty:
+            return -1
+        return delta_t
     
     def execbulkInsert(self):
         return 0.0

@@ -10,6 +10,7 @@ import datetime as dt
 import time
 import json
 import random
+import traceback
 import sys
 from multiprocessing import Process, Queue, Value, Array
 import benchmarkWorker as bW
@@ -21,7 +22,9 @@ class TestMultiThreadedDriver(unittest.TestCase):
         self.randomIDs = None
         self.startTime = time.time()
         self.db = cdb.pyCloudantDB(c.config)
+        
         # test connection
+        # TODO: capture the database version/build for output info
         respConn = self.db.testConnection()
         if not respConn:
             self.assertTrue(respConn,"Failed to successfully connect to Database")
@@ -42,22 +45,34 @@ class TestMultiThreadedDriver(unittest.TestCase):
         #if not respDel.ok:
         #    self.assertTrue(respDel.ok,"Failed to delete Database: " + str(respDel.json()))
 
-    def basicCrudWorker(self, insertedIDs, responseTimes, processStates, pid, runLength):      
+    def basicCrudWorker(self, insertedIDs, responseTimes, processStates, pid, runLength):
+        ''' An instance of this is executed in every thread '''      
         try:
-            
+            # Create a local DB object
             db = cdb.pyCloudantDB(c.config)
+            
+            # Create a local Worker
             worker = bW.benchmarkWorker(db, insertedIDs)
+            
+            
             for i in range(runLength):
+                
                 # make sure we should continue running..
                 if not all(processStates):
                     print pid, "error on other thread, exiting"
                     return
                 
+                # Run worker 
                 action, delta_t = worker.execRandomAction(str(pid)+":"+str(i))
-                responseTimes.put({action:delta_t})
+                
+                # Stash response time
+                responseTimes.put({"action":action, "resp":delta_t, "timestamp":dt.datetime.now()})
+                
         except Exception as e:
+            # TODO: improve exception handleing, must catch/deal-with exception and decide whether we should fail.
             e_info = sys.exc_info()[0]
-            print "Exception", e_info
+            print action, "Exception", e_info
+            print traceback.format_exc()
             processStates=False
             raise e
             return
@@ -72,7 +87,7 @@ class TestMultiThreadedDriver(unittest.TestCase):
                      "randomDelete":[]
                      }
         threads = 10
-        runLength = 30
+        runLength = 40
         insertedIDs = Queue()
         responseTimes = Queue()
         processStates = Array('b',range(threads))
@@ -90,14 +105,16 @@ class TestMultiThreadedDriver(unittest.TestCase):
         for i in range(threads):
             processes[i].join()
         
-        data=[]
-        while not insertedIDs.empty():
-            data.append(insertedIDs.get())
-        print "there should be", len(data),"docs in the db"
+        # check how many 
+        #while not insertedIDs.empty():
+        #    print(insertedIDs.get())
+        print "There should be", insertedIDs.qsize(),"docs in the db"
         
+        # sort responseTimes into categories
         while not responseTimes.empty():
             d = responseTimes.get()
-            self.data[d.keys()[0]].append(d[d.keys()[0]])
+            # TODO: how should the timestamp be stashed?
+            self.data[d["action"]].append(d["resp"])
 
 if __name__ == "__main__":
     unittest.main()
