@@ -10,6 +10,7 @@ import datetime as dt
 import time
 import json
 import random
+import sys
 from multiprocessing import Process, Queue, Value, Array
 import benchmarkWorker as bW
 
@@ -32,6 +33,7 @@ class TestMultiThreadedDriver(unittest.TestCase):
             
     def tearDown(self):
         # dump test data
+        print "test finished:", dt.datetime.now()
         print "Total "+self.testName+" run time:", time.time()-self.startTime
         json.dump(self.data, open("TaskData.json","w"))
         
@@ -51,24 +53,13 @@ class TestMultiThreadedDriver(unittest.TestCase):
                     print pid, "error on other thread, exiting"
                     return
                 
-                #print pid,"starting worker..",i
                 action, delta_t = worker.execRandomAction(str(pid)+":"+str(i))
-                
-                # add a single document
-                #d = {"_id":"test:"+str(i)+":"+str(dt.datetime.now()), "lastUpdate":str(dt.datetime.now())}
-                #t = time.time()
-                #resp = db.addDocument(c.config["dbname"], d)
-                #delta_t = time.time()-t
-                #if not resp.ok:
-                #    #self.assertTrue(resp.ok,"Failed to add document to database: " + str(resp.json()))
-                #    # TODO: report error somehow
-                #    pass
-                #else:
-                #    insertedIDs.put(d['_id'])
-                
                 responseTimes.put({action:delta_t})
-        except:
+        except Exception as e:
+            e_info = sys.exc_info()[0]
+            print "Exception", e_info
             processStates=False
+            raise e
             return
 
     
@@ -80,8 +71,8 @@ class TestMultiThreadedDriver(unittest.TestCase):
                      "randomUpdate":[],
                      "randomDelete":[]
                      }
-        threads = 1
-        runLength = 500
+        threads = 10
+        runLength = 30
         insertedIDs = Queue()
         responseTimes = Queue()
         processStates = Array('b',range(threads))
@@ -97,15 +88,16 @@ class TestMultiThreadedDriver(unittest.TestCase):
         
         # join workers
         for i in range(threads):
-            p.join()
+            processes[i].join()
         
+        data=[]
         while not insertedIDs.empty():
-            print insertedIDs.get()
+            data.append(insertedIDs.get())
+        print "there should be", len(data),"docs in the db"
         
         while not responseTimes.empty():
             d = responseTimes.get()
-            if "simpleInsert" in d:
-                self.data["simpleInsert"].append(d["simpleInsert"])
+            self.data[d.keys()[0]].append(d[d.keys()[0]])
 
 if __name__ == "__main__":
     unittest.main()

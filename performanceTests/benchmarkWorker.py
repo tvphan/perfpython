@@ -6,6 +6,10 @@ Created on Jun 14, 2015
 import datetime as dt
 import time
 import random
+from multiprocessing import Queue
+
+# for exceptions
+import Queue as Q
 
 class benchmarkWorker(object):
     '''
@@ -25,7 +29,7 @@ class benchmarkWorker(object):
                   "randomUpdate":30,
                   "bulkInsert":10}"""
         self.ratios = {"simpleInsert":100,
-                  "randomDelete":0,
+                  "randomDelete":50,
                   "randomUpdate":0,
                   "bulkInsert":0}
         self.actions = []
@@ -34,14 +38,18 @@ class benchmarkWorker(object):
         if self.actions == []:
             for k in self.ratios:
                 self.actions.extend(self.ratios[k]*[k])
-            random.shuffle(self.actions)
+            random.seed(time.time())
+            for i in range(len(self.actions)/10):
+                # lets do a few rounds of suffleing to ensure we 
+                # get something actually kinda random
+                random.shuffle(self.actions)
             
         return self.actions.pop()
         
     def execRandomAction(self, seqNum):
         self.seqNum = seqNum
         action = self.getShuffledAction()
-        #print action
+        
         if action == "simpleInsert":
             return (action, self.execInsert())
         elif action == "randomDelete":
@@ -60,15 +68,28 @@ class benchmarkWorker(object):
         resp = self.db.addDocument(d)
         delta_t = time.time()-t
         if not resp.ok:
-            #self.assertTrue(resp.ok,"Failed to add document to database: " + str(resp.json()))
             # TODO: report error somehow
+            return -1
             pass
         else:
-            self.insertedIDs.put(d['_id'])
+            resp_d = resp.json()
+            self.insertedIDs.put({"id":resp_d['id'],"rev":resp_d['rev']})
         return delta_t
     
     def execDelete(self):
-        return 0.0
+        ''' Things to note, we are cheating a little, we don't to a read for every delete since we trach the _rev'''
+        try:
+            d = self.insertedIDs.get_nowait()
+            t = time.time()
+            resp = self.db.deleteDocument(docID=d['id'], docRev=d['rev'])
+            delta_t = time.time()-t
+            if not resp.ok:
+                # TODO: report error somehow
+                return -1
+                pass
+        except Q.Empty:
+            return -1
+        return delta_t
     
     def execUpdate(self):
         return 0.0
