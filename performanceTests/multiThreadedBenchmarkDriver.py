@@ -45,7 +45,7 @@ class TestMultiThreadedDriver(unittest.TestCase):
         #if not respDel.ok:
         #    self.assertTrue(respDel.ok,"Failed to delete Database: " + str(respDel.json()))
 
-    def basicCrudWorker(self, insertedIDs, responseTimes, processStates, pid, runLength):
+    def basicCrudWorker(self, insertedIDs, responseTimes, processStateDone, pid, runLength):
         ''' An instance of this is executed in every thread '''      
         try:
             # Create a local DB object
@@ -57,10 +57,10 @@ class TestMultiThreadedDriver(unittest.TestCase):
             
             for i in range(runLength):
                 
-                # make sure we should continue running..
-                if not all(processStates):
-                    print pid, "error on other thread, exiting"
-                    return
+                # TODO: add feature to allow exiting of all threads
+                #if any(processStateDone):
+                #    print pid, "error on other thread, exiting"
+                #    return False
                 
                 # Run worker 
                 action, delta_t = worker.execRandomAction(str(pid)+":"+str(i))
@@ -71,11 +71,15 @@ class TestMultiThreadedDriver(unittest.TestCase):
         except Exception as e:
             # TODO: improve exception handleing, must catch/deal-with exception and decide whether we should fail.
             e_info = sys.exc_info()[0]
-            print action, "Exception", e_info
+            print "Exception", e_info
             print traceback.format_exc()
-            processStates=False
+            processStateDone[pid]=True
             raise e
-            return
+            return False
+        
+        #print pid, "all done.."
+        processStateDone[pid]=True
+        return True
 
     
     def testMultiThreadedBenchmark(self):
@@ -87,34 +91,45 @@ class TestMultiThreadedDriver(unittest.TestCase):
                      "randomDelete":[]
                      }
         threads = 10
-        runLength = 40
+        runLength = 130
         insertedIDs = Queue()
         responseTimes = Queue()
-        processStates = Array('b',range(threads))
+        processStateDone = Array('b',range(threads))
         for i in range(threads):
-            processStates[i] = True
+            processStateDone[i] = False
             
         processes = []
         # create workers
         for i in range(threads):
-            p = Process(target=self.basicCrudWorker, args=(insertedIDs, responseTimes, processStates, i, runLength))
+            p = Process(target=self.basicCrudWorker, args=(insertedIDs, responseTimes, processStateDone, i, runLength))
             p.start()
             processes.append(p)
         
-        # join workers
-        for i in range(threads):
-            processes[i].join()
+        print "waiting for workers to finish.."
+        while all(processStateDone) is False:
+                print ".",
+                time.sleep(5) 
         
-        # check how many 
-        #while not insertedIDs.empty():
-        #    print(insertedIDs.get())
-        print "There should be", insertedIDs.qsize(),"docs in the db"
+        ###################################################
+        # NOTE: To work around queue problem, both queues need to be emptied before they are joined
+        #        see the "Joining processes that use queues" section here:
+        #        https://docs.python.org/2/library/multiprocessing.html#multiprocessing-programming
+        ####################
         
-        # sort responseTimes into categories
+        # Sort responseTimes into categories
         while not responseTimes.empty():
             d = responseTimes.get()
             # TODO: how should the timestamp be stashed?
             self.data[d["action"]].append(d["resp"])
+        
+        print "There should be", insertedIDs.qsize(),"docs in the db"
+        while not insertedIDs.empty():
+            _= insertedIDs.get()
+                   
+        # Join workers after both queues have been empties
+        for i in range(threads):
+            processes[i].join()
+            print "Thread %i joined.." % i
 
 if __name__ == "__main__":
     unittest.main()

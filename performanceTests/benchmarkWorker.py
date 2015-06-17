@@ -17,21 +17,26 @@ class benchmarkWorker(object):
     '''
 
 
-    def __init__(self, db, insertedIDs):
+    def __init__(self, db, insertedIDs, params=None):
         '''
         Constructor
         '''
+        if params is not None:
+            self.params = params
+        else:
+            self.params = {
+                    "bulkInsertSize":10
+                           }
         self.db = db
         self.insertedIDs = insertedIDs
         self.seqNum = -1
-        """self.ratios = {"simpleInsert":50,
-                  "randomDelete":10,
-                  "randomUpdate":30,
-                  "bulkInsert":10}"""
-        self.ratios = {"simpleInsert":100,
-                  "randomDelete":50,
-                  "randomUpdate":50,
-                  "bulkInsert":0}
+        self.ratios = {
+                  "simpleInsert":50,
+                  "randomDelete":25,
+                  "randomRead":25,
+                  "randomUpdate":25,
+                  "bulkInsert":5
+                  }
         self.actions = []
         
     def getShuffledAction(self):
@@ -54,10 +59,12 @@ class benchmarkWorker(object):
             return (action, self.execInsert())
         elif action == "randomDelete":
             return (action, self.execDelete())
+        elif action == "randomRead":
+            return (action, self.execRead())
         elif action == "randomUpdate":
             return (action, self.execUpdate())
         elif action == "bulkInsert":
-            return (action, self.execBulkInsert)
+            return (action, self.execBulkInsert())
         else:
             print "Error, unknown action:", action
         
@@ -91,6 +98,24 @@ class benchmarkWorker(object):
             return -1
         return delta_t
     
+    def execRead(self):
+        ''' Read a random read element'''
+        try:
+            d = self.insertedIDs.get_nowait()
+            t = time.time()
+            resp = self.db.getDocument(d["_id"])
+            delta_t = time.time()-t
+            if not resp.ok:
+                # TODO: report error somehow
+                return -1
+                pass
+            resp_d = resp.json()
+            self.insertedIDs.put({"_id":resp_d['_id'],"_rev":resp_d['_rev']})
+        except Q.Empty:
+            return -1
+        return delta_t
+        return -1
+    
     def execUpdate(self):
         ''' Update a random element'''
         try:
@@ -109,5 +134,23 @@ class benchmarkWorker(object):
             return -1
         return delta_t
     
-    def execbulkInsert(self):
-        return 0.0
+    def execBulkInsert(self):
+        ''' Bulk inserts'''
+        bulkAdd=[]
+        for j in range(self.params["bulkInsertSize"]):
+            d = {"_id":"test:"+str(j)+":"+str(dt.datetime.now()), "lastUpdate":str(dt.datetime.now())}
+            bulkAdd.append(d)
+        
+        t = time.time()
+        resp = self.db.bulkAddDocuments(bulkAdd)
+        delta_t = time.time()-t
+        if not resp.ok:
+            # TODO: report error somehow
+            return -1
+            pass
+        else:
+            resp_d = resp.json()
+            for d in resp_d:
+                self.insertedIDs.put({"_id":d['id'],"_rev":d['rev']})
+        return delta_t
+            
