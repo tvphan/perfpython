@@ -15,6 +15,12 @@ def main(datafile="TaskData.json", outdir="./"):
     for k in data:
         d = np.array(data[k])
         if len(d)>0:
+            err = len(d[np.where(d == -1)])
+            print k,"empty queue", 100*(float(err)/len(d))
+            err = len(d[np.where(d == -2)])
+            print k,"error", 100*(float(err)/len(d))
+
+            d = d[np.where(d > 0)]
             p95th = d[np.where(d < np.percentile(d,95))[0]]
             pylab.plot(p95th, label=k+"_95th percentile")
             pylab.plot([np.mean(p95th)]*len(p95th), label="mean")

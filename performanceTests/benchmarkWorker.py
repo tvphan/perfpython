@@ -7,6 +7,7 @@ import datetime as dt
 import time
 import random
 from multiprocessing import Queue
+import logging
 
 # for exceptions
 import Queue as Q
@@ -50,92 +51,95 @@ class benchmarkWorker(object):
                 random.shuffle(self.actions)
             
         return self.actions.pop()
+    
+    def getRandomID(self):
+        t=time.time()
+        d = self.insertedIDs.get(timeout=10)
+        delta_t=time.time()-t
+        
+        if delta_t >1:
+            log = logging.getLogger('mtbenchmark')
+            log.warn("getting Random ID took a long time:"+str(delta_t))
+            
+        return d
         
     def execRandomAction(self, seqNum):
         self.seqNum = seqNum
         action = self.getShuffledAction()
         
         if action == "simpleInsert":
-            return (action, self.execInsert())
+            return self.execInsert()
         elif action == "randomDelete":
-            return (action, self.execDelete())
+            return self.execDelete()
         elif action == "randomRead":
-            return (action, self.execRead())
+            return self.execRead()
         elif action == "randomUpdate":
-            return (action, self.execUpdate())
+            return self.execUpdate()
         elif action == "bulkInsert":
-            return (action, self.execBulkInsert())
+            return self.execBulkInsert()
         else:
-            print "Error, unknown action:", action
+            raise Exception({"action":action, "err":True, "msg":"Error, unknown action"})
         
     def execInsert(self):
+        ''' Insert a random document '''
         # add a single document
         d = {"_id":"test:"+str(self.seqNum)+":"+str(dt.datetime.now()), "lastUpdate":str(dt.datetime.now())}
         t = time.time()
         resp = self.db.addDocument(d)
         delta_t = time.time()-t
         if not resp.ok:
-            # TODO: report error somehow
-            return -1
-            pass
+            return {"action":"simpleInsert","delta_t":-2,"err":True,"msg":"[execInsert Error] "+str(resp.status_code)}
         else:
             resp_d = resp.json()
             self.insertedIDs.put({"_id":resp_d['id'],"_rev":resp_d['rev']})
-        return delta_t
+        return {"action":"simpleInsert","delta_t":delta_t}
     
     def execDelete(self):
         ''' Things to note, we are cheating a little, we don't to a read for every delete since we trach the _rev'''
         try:
-            d = self.insertedIDs.get_nowait()
+            d = self.getRandomID()
             t = time.time()
             resp = self.db.deleteDocument(docID=d['_id'], docRev=d['_rev'])
             delta_t = time.time()-t
             if not resp.ok:
-                # TODO: report error somehow
-                return -1
-                pass
+                return {"action":"randomDelete","delta_t":-2,"err":True,"msg":"[execDelete Error] "+str(resp.status_code)}
         except Q.Empty:
-            return -1
-        return delta_t
+            return {"action":"randomDelete","delta_t":-1,"err":True,"msg":"[execDelete Error] nothing to process QSize="+str(self.insertedIDs.qsize())}
+        return {"action":"randomDelete","delta_t":delta_t}
     
     def execRead(self):
         ''' Read a random read element'''
         try:
-            d = self.insertedIDs.get_nowait()
+            d = self.getRandomID()
             t = time.time()
             resp = self.db.getDocument(d["_id"])
             delta_t = time.time()-t
             if not resp.ok:
-                # TODO: report error somehow
-                return -1
-                pass
+                return {"action":"randomRead","delta_t":-2,"err":True,"msg":"[execRead Error] "+str(resp.status_code)}
             resp_d = resp.json()
             self.insertedIDs.put({"_id":resp_d['_id'],"_rev":resp_d['_rev']})
         except Q.Empty:
-            return -1
-        return delta_t
-        return -1
+            return {"action":"randomRead","delta_t":-1,"err":True,"msg":"[execRead Error] nothing to process QSize="+str(self.insertedIDs.qsize())}
+        return {"action":"randomRead","delta_t":delta_t}
     
     def execUpdate(self):
         ''' Update a random element'''
         try:
-            d = self.insertedIDs.get_nowait()
+            d = self.getRandomID()
             d["lastUpdated"] = str(dt.datetime.now())
             t = time.time()
             resp = self.db.updateDocument(d)
             delta_t = time.time()-t
             if not resp.ok:
-                # TODO: report error somehow
-                return -1
-                pass
+                return {"action":"randomUpdate","delta_t":-2,"err":True,"msg":"[execUpdate Error] "+str(resp.status_code)}
             resp_d = resp.json()
             self.insertedIDs.put({"_id":resp_d['id'],"_rev":resp_d['rev']})
         except Q.Empty:
-            return -1
-        return delta_t
+            return {"action":"randomUpdate","delta_t":-1,"err":True,"msg":"[execUpdate Error] nothing to process QSize="+str(self.insertedIDs.qsize())}
+        return {"action":"randomUpdate","delta_t":delta_t}
     
     def execBulkInsert(self):
-        ''' Bulk inserts'''
+        ''' Bulk inserts a a bunch of random documents, insertSize = params["bulkInsertSize"]'''
         bulkAdd=[]
         for j in range(self.params["bulkInsertSize"]):
             d = {"_id":"test:"+str(self.seqNum)+":"+str(dt.datetime.now()), "lastUpdate":str(dt.datetime.now())}
@@ -145,12 +149,10 @@ class benchmarkWorker(object):
         resp = self.db.bulkAddDocuments(bulkAdd)
         delta_t = time.time()-t
         if not resp.ok:
-            # TODO: report error somehow
-            raise Exception("[BulkInsert Error]", resp.status_code)
-            pass
+            return {"action":"bulkInsert", "delta_t":-2, "err":True, "msg":"[execBulkInsert Error] "+str(resp.status_code)}
         else:
             resp_d = resp.json()
             for d in resp_d:
                 self.insertedIDs.put({"_id":d['id'],"_rev":d['rev']})
-        return delta_t
+        return {"action":"bulkInsert","delta_t":delta_t}
             

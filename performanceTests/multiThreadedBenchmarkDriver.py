@@ -52,7 +52,6 @@ class TestMultiThreadedDriver(unittest.TestCase):
         log = logging.getLogger('mtbenchmark')
         log.info("pid:%i started.." % pid)
         try:
-            action = "na"
             # Create a local DB object
             db = cdb.pyCloudantDB(c.config)
             
@@ -68,15 +67,18 @@ class TestMultiThreadedDriver(unittest.TestCase):
                     #    return False
                     
                     # Run worker 
-                    action, delta_t = worker.execRandomAction(str(pid)+":"+str(i))
+                    resp = worker.execRandomAction(str(pid)+":"+str(i))
+                    
+                    if "err" in resp.keys() and resp["err"] is True:
+                        log.error("("+str(pid)+") Task Level Error: " + resp["action"] + " - Exception: " + resp["msg"])
                     
                     # Stash response time
-                    responseTimes.put({"action":action, "resp":delta_t, "timestamp":dt.datetime.now()})
+                    responseTimes.put({"action":resp["action"], "resp":resp["delta_t"], "timestamp":dt.datetime.now()})
                 
                 except Exception as e:
                     # catch task level exception to prevent early exiting
                     e_info = sys.exc_info()[0]
-                    errLine = "("+str(pid)+") Task Level Error: " + action + " - Exception: "+ str(e_info) + " trace:" + str(traceback.format_exc())
+                    errLine = "("+str(pid)+") Task Level Error - Exception: "+ str(e_info) + " trace:" + str(traceback.format_exc())
                     log.error(errLine)
                     
         except Exception as e:
@@ -97,7 +99,7 @@ class TestMultiThreadedDriver(unittest.TestCase):
         logStreamHandler.setLevel(logging.DEBUG)
         logStreamHandler.setFormatter(logging.Formatter('%(asctime)s - %(levelname)s - %(message)s'))
         
-        logFile = open("/home/madmaze/workspaces/pydev/cdsPlayground/error.log","w")
+        logFile = open("./error.log","w")
         logFileHandler = logging.StreamHandler(logFile)
         logFileHandler.setLevel(logging.DEBUG)
         logFileHandler.setFormatter(logging.Formatter('%(asctime)s - %(levelname)s - %(message)s'))
@@ -120,8 +122,8 @@ class TestMultiThreadedDriver(unittest.TestCase):
         for i in range(threads):
             processStateDone[i] = False
             
-        processes = []
         # create workers
+        processes = []
         for i in range(threads):
             p = Process(target=self.basicCrudWorker, args=(insertedIDs, responseTimes, processStateDone, eventLog, i, runLength))
             p.start()
@@ -139,39 +141,24 @@ class TestMultiThreadedDriver(unittest.TestCase):
         ####################
         
         # Sort responseTimes into categories
-        while not responseTimes.empty():
+        log.info("%i response times were collected" % responseTimes.qsize())
+        while responseTimes.qsize() > 0: # don't use .empty() it lies
             d = responseTimes.get()
             # TODO: how should the timestamp be stashed?
             self.data[d["action"]].append(d["resp"])
         
         log.info("There should be %i docs in the db" % insertedIDs.qsize())
-        while not insertedIDs.empty():
+        while insertedIDs.qsize() > 0:
             _= insertedIDs.get()
         
         log.info("starting to join threads..")
         json.dump(self.data, open("TaskData.json","w"))
         
+        log.info("Terminating and Joining worker threads..")
         for i in range(threads):
-            log.debug("terminating Thread %i" % i)
+            #log.debug("terminating Thread %i" % i)
             processes[i].terminate()
-            
-        # Join workers after both queues have been empties
-        for i in range(threads):
             processes[i].join()
-            log.debug("Thread %i joined.." % i)
 
 if __name__ == "__main__":
-    
     unittest.main()
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
