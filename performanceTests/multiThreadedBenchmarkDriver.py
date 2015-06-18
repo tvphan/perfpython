@@ -27,8 +27,9 @@ class TestMultiThreadedDriver(unittest.TestCase):
         # test connection
         # TODO: capture the database version/build for output info
         respConn = self.db.testConnection()
-        if not respConn:
+        if not respConn.ok:
             self.assertTrue(respConn,"Failed to successfully connect to Database")
+        self.dbVersion = respConn.json()
             
         # add database for test
         respAdd = self.db.addDatabase(c.config["dbname"])
@@ -78,7 +79,7 @@ class TestMultiThreadedDriver(unittest.TestCase):
                         log.error("("+str(pid)+") Task Level Error: " + resp["action"] + " - Exception: " + resp["msg"])
                     
                     # Stash response time
-                    responseTimes.put({"action":resp["action"], "resp":resp["delta_t"], "timestamp":dt.datetime.now()})
+                    responseTimes.put(resp) #{"action":resp["action"], "resp":resp["delta_t"], "timestamp":resp["timestamp"]})
                 
                 except Exception as e:
                     # catch task level exception to prevent early exiting
@@ -120,7 +121,8 @@ class TestMultiThreadedDriver(unittest.TestCase):
                      "randomRead":[],
                      "randomUpdate":[],
                      "randomDelete":[],
-                     "userCounts":[]
+                     "userCounts":[],
+                     "dbVersion":self.dbVersion
                      }
         threads = 15
         runLength = 100
@@ -155,7 +157,7 @@ class TestMultiThreadedDriver(unittest.TestCase):
         while responseTimes.qsize() > 0: # don't use .empty() it lies
             d = responseTimes.get()
             # TODO: how should the timestamp be stashed?
-            self.data[d["action"]].append(d["resp"])
+            self.data[d["action"]].append({"ts":d["timestamp"],"v":d["delta_t"]})
         
         log.info("There should be %i docs in the db" % insertedIDs.qsize())
         while insertedIDs.qsize() > 0:
