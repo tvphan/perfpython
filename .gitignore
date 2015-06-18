@@ -1,2 +1,4 @@
 ./plots
 *.png
+performanceTests/*.json
+performanceTests/*.log

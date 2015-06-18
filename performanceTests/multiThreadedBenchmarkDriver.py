@@ -47,9 +47,14 @@ class TestMultiThreadedDriver(unittest.TestCase):
         #if not respDel.ok:
         #    self.assertTrue(respDel.ok,"Failed to delete Database: " + str(respDel.json()))
 
-    def basicCrudWorker(self, insertedIDs, responseTimes, processStateDone, eventLog, pid, runLength):
+    def basicCrudWorker(self, insertedIDs, responseTimes, processStateDone, pid, activeThreadCounter, runLength):
         ''' An instance of this is executed in every thread '''
         log = logging.getLogger('mtbenchmark')
+        
+        # increment out active thread count
+        with activeThreadCounter.get_lock():
+            activeThreadCounter.value += 1
+            
         log.info("pid:%i started.." % pid)
         try:
             # Create a local DB object
@@ -88,6 +93,9 @@ class TestMultiThreadedDriver(unittest.TestCase):
             log.error(errLine)
         
         processStateDone[pid]=True
+        # decrement out active thread count
+        with activeThreadCounter.get_lock():
+            activeThreadCounter.value -= 1
         log.info("pid:%i finished.." % pid)
     
     def testMultiThreadedBenchmark(self):
@@ -99,7 +107,7 @@ class TestMultiThreadedDriver(unittest.TestCase):
         logStreamHandler.setLevel(logging.DEBUG)
         logStreamHandler.setFormatter(logging.Formatter('%(asctime)s - %(levelname)s - %(message)s'))
         
-        logFile = open("./error.log","w")
+        logFile = open("./run.log","w")
         logFileHandler = logging.StreamHandler(logFile)
         logFileHandler.setLevel(logging.DEBUG)
         logFileHandler.setFormatter(logging.Formatter('%(asctime)s - %(levelname)s - %(message)s'))
@@ -111,13 +119,14 @@ class TestMultiThreadedDriver(unittest.TestCase):
                      "bulkInsert":[],
                      "randomRead":[],
                      "randomUpdate":[],
-                     "randomDelete":[]
+                     "randomDelete":[],
+                     "userCounts":[]
                      }
-        threads = 1000
+        threads = 15
         runLength = 100
         insertedIDs = Queue()
         responseTimes = Queue()
-        eventLog = Queue()
+        activeThreadCounter = Value("i")
         processStateDone = Array('b',range(threads))
         for i in range(threads):
             processStateDone[i] = False
@@ -125,14 +134,15 @@ class TestMultiThreadedDriver(unittest.TestCase):
         # create workers
         processes = []
         for i in range(threads):
-            p = Process(target=self.basicCrudWorker, args=(insertedIDs, responseTimes, processStateDone, eventLog, i, runLength))
+            p = Process(target=self.basicCrudWorker, args=(insertedIDs, responseTimes, processStateDone, i, activeThreadCounter, runLength))
             p.start()
             processes.append(p)
         
         log.info("waiting for workers to finish..")
         while all(processStateDone) is False:
-                log.info('tick..')
-                time.sleep(15)
+            self.data["userCounts"].append({str(dt.datetime.now()): activeThreadCounter.value})
+            log.info('tick..')
+            time.sleep(5)
         
         ###################################################
         # NOTE: To work around queue problem, both queues need to be emptied before they are joined
