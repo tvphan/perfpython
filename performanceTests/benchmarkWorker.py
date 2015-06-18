@@ -138,7 +138,7 @@ class benchmarkWorker(object):
         ''' Bulk inserts'''
         bulkAdd=[]
         for j in range(self.params["bulkInsertSize"]):
-            d = {"_id":"test:"+str(j)+":"+str(dt.datetime.now()), "lastUpdate":str(dt.datetime.now())}
+            d = {"_id":"test:"+str(self.seqNum)+":"+str(dt.datetime.now()), "lastUpdate":str(dt.datetime.now())}
             bulkAdd.append(d)
         
         t = time.time()
@@ -146,7 +146,7 @@ class benchmarkWorker(object):
         delta_t = time.time()-t
         if not resp.ok:
             # TODO: report error somehow
-            return -1
+            raise Exception("[BulkInsert Error]", resp.status_code)
             pass
         else:
             resp_d = resp.json()

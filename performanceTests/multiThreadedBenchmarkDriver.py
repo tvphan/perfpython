@@ -10,6 +10,7 @@ import datetime as dt
 import time
 import json
 import random
+import logging
 import traceback
 import sys
 from multiprocessing import Process, Queue, Value, Array
@@ -35,9 +36,10 @@ class TestMultiThreadedDriver(unittest.TestCase):
             self.assertTrue(respAdd.ok,"Failed to successfully add a Database")
             
     def tearDown(self):
+        log = logging.getLogger('mtbenchmark')
         # dump test data
-        print "test finished:", dt.datetime.now()
-        print "Total "+self.testName+" run time:", time.time()-self.startTime
+        log.info("test finished: " + str(dt.datetime.now()))
+        log.info("Total "+self.testName+" run time:" + str(time.time()-self.startTime))
         json.dump(self.data, open("TaskData.json","w"))
         
         # Remove Database after test completion
@@ -45,9 +47,12 @@ class TestMultiThreadedDriver(unittest.TestCase):
         #if not respDel.ok:
         #    self.assertTrue(respDel.ok,"Failed to delete Database: " + str(respDel.json()))
 
-    def basicCrudWorker(self, insertedIDs, responseTimes, processStateDone, pid, runLength):
-        ''' An instance of this is executed in every thread '''      
+    def basicCrudWorker(self, insertedIDs, responseTimes, processStateDone, eventLog, pid, runLength):
+        ''' An instance of this is executed in every thread '''
+        log = logging.getLogger('mtbenchmark')
+        log.info("pid:%i started.." % pid)
         try:
+            action = "na"
             # Create a local DB object
             db = cdb.pyCloudantDB(c.config)
             
@@ -56,33 +61,49 @@ class TestMultiThreadedDriver(unittest.TestCase):
             
             
             for i in range(runLength):
+                try:
+                    # TODO: add feature to allow exiting of all threads
+                    #if any(processStateDone):
+                    #    print pid, "error on other thread, exiting"
+                    #    return False
+                    
+                    # Run worker 
+                    action, delta_t = worker.execRandomAction(str(pid)+":"+str(i))
+                    
+                    # Stash response time
+                    responseTimes.put({"action":action, "resp":delta_t, "timestamp":dt.datetime.now()})
                 
-                # TODO: add feature to allow exiting of all threads
-                #if any(processStateDone):
-                #    print pid, "error on other thread, exiting"
-                #    return False
-                
-                # Run worker 
-                action, delta_t = worker.execRandomAction(str(pid)+":"+str(i))
-                
-                # Stash response time
-                responseTimes.put({"action":action, "resp":delta_t, "timestamp":dt.datetime.now()})
-                
+                except Exception as e:
+                    # catch task level exception to prevent early exiting
+                    e_info = sys.exc_info()[0]
+                    errLine = "("+str(pid)+") Task Level Error: " + action + " - Exception: "+ str(e_info) + " trace:" + str(traceback.format_exc())
+                    log.error(errLine)
+                    
         except Exception as e:
-            # TODO: improve exception handleing, must catch/deal-with exception and decide whether we should fail.
+            # catch thread level
             e_info = sys.exc_info()[0]
-            print "Exception", e_info
-            print traceback.format_exc()
-            processStateDone[pid]=True
-            raise e
-            return False
+            errLine = "("+str(pid)+") Thread Level Exception - "+ str(e_info) + " trace:" + str(traceback.format_exc())
+            log.error(errLine)
         
-        #print pid, "all done.."
         processStateDone[pid]=True
-        return True
-
+        log.info("pid:%i finished.." % pid)
     
     def testMultiThreadedBenchmark(self):
+        # setting up logging
+        log = logging.getLogger('mtbenchmark')
+        log.setLevel(logging.DEBUG)
+        
+        logStreamHandler = logging.StreamHandler()
+        logStreamHandler.setLevel(logging.DEBUG)
+        logStreamHandler.setFormatter(logging.Formatter('%(asctime)s - %(levelname)s - %(message)s'))
+        
+        logFile = open("/home/madmaze/workspaces/pydev/cdsPlayground/error.log","w")
+        logFileHandler = logging.StreamHandler(logFile)
+        logFileHandler.setLevel(logging.DEBUG)
+        logFileHandler.setFormatter(logging.Formatter('%(asctime)s - %(levelname)s - %(message)s'))
+        log.addHandler(logFileHandler)
+        
+        
         self.testName = "MultiThreadedBenchmark"
         self.data = {"simpleInsert":[],
                      "bulkInsert":[],
@@ -90,10 +111,11 @@ class TestMultiThreadedDriver(unittest.TestCase):
                      "randomUpdate":[],
                      "randomDelete":[]
                      }
-        threads = 10
-        runLength = 130
+        threads = 1000
+        runLength = 100
         insertedIDs = Queue()
         responseTimes = Queue()
+        eventLog = Queue()
         processStateDone = Array('b',range(threads))
         for i in range(threads):
             processStateDone[i] = False
@@ -101,14 +123,14 @@ class TestMultiThreadedDriver(unittest.TestCase):
         processes = []
         # create workers
         for i in range(threads):
-            p = Process(target=self.basicCrudWorker, args=(insertedIDs, responseTimes, processStateDone, i, runLength))
+            p = Process(target=self.basicCrudWorker, args=(insertedIDs, responseTimes, processStateDone, eventLog, i, runLength))
             p.start()
             processes.append(p)
         
-        print "waiting for workers to finish.."
+        log.info("waiting for workers to finish..")
         while all(processStateDone) is False:
-                print ".",
-                time.sleep(5) 
+                log.info('tick..')
+                time.sleep(15)
         
         ###################################################
         # NOTE: To work around queue problem, both queues need to be emptied before they are joined
@@ -122,14 +144,34 @@ class TestMultiThreadedDriver(unittest.TestCase):
             # TODO: how should the timestamp be stashed?
             self.data[d["action"]].append(d["resp"])
         
-        print "There should be", insertedIDs.qsize(),"docs in the db"
+        log.info("There should be %i docs in the db" % insertedIDs.qsize())
         while not insertedIDs.empty():
             _= insertedIDs.get()
-                   
+        
+        log.info("starting to join threads..")
+        json.dump(self.data, open("TaskData.json","w"))
+        
+        for i in range(threads):
+            log.debug("terminating Thread %i" % i)
+            processes[i].terminate()
+            
         # Join workers after both queues have been empties
         for i in range(threads):
             processes[i].join()
-            print "Thread %i joined.." % i
+            log.debug("Thread %i joined.." % i)
 
 if __name__ == "__main__":
+    
     unittest.main()
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
