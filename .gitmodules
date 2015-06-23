@@ -1,0 +1,3 @@
+[submodule "performanceTests/pyCloudantDB"]
+	path = performanceTests/pyCloudantDB
+	url = git@github.ibm.com:malee/pycloudantdb.git
