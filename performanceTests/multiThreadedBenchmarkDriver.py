@@ -4,7 +4,7 @@ Created on Jun 13, 2015
 @author: madmaze
 '''
 import unittest
-import pyCloudantDB as cdb
+import pyCloudantDB.pyCloudantDB as cdb
 import config as c
 import datetime as dt
 import time

@@ -18,9 +18,10 @@ Some quick tests, experiments and scripts for the CDS Perf Team
     * 5 Bulk Inserts
   * Currently this test can run 1000 users concurrently on a single laptop
   * Getting started:
-    1. clone this repo: `git clone git@github.ibm.com:malee/cdsperfplayground.git`
-    2. initialize pycloudantdb: `git init submodules`
-    3. configure performanceTests/config.py to point to your cloudant instance
+    1. clone this repo: `git clone git@github.ibm.com:malee/cdsperfplayground.git --recursive`
+      * the above will clone the main repository and also pull the dependent submodule
+    2. configure performanceTests/config.py to point to your cloudant instance
+    3. cd into performanceTests
     4. run the test: python ./multThreadedBenchmarkDriver.py
       * Thread and run length can be set in ./multThreadedBenchmarkDriver.py
       * Action ratios can be set in benchmarkWorker.py
