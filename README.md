@@ -1,7 +1,7 @@
 Some quick tests, experiments and scripts for the CDS Perf Team
 
 ### Benchmarks, located in (./performanceTests)
-1. **basicCurdBenchmark.py**
+1. **basicCrudBenchmark.py**
   * This test creates a database and then does the following operations in order:
     * 500 inserts, simple docs
     * 500 bulk inserts, 10 simple docs per insert
