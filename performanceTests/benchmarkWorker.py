@@ -22,22 +22,26 @@ class benchmarkWorker(object):
         '''
         Constructor
         '''
-        if params is not None:
-            self.params = params
-        else:
-            self.params = {
-                    "bulkInsertSize":10
-                           }
         self.db = db
         self.insertedIDs = insertedIDs
         self.seqNum = -1
-        self.ratios = {
-                  "simpleInsert":50,
-                  "randomDelete":25,
-                  "randomRead":25,
-                  "randomUpdate":25,
-                  "bulkInsert":5
+        if params is not None and "actionRatios" in params:
+            self.ratios = params["actionRatios"]
+            self.params = params
+        else:
+            log = logging.getLogger('mtbenchmark')
+            log.error("params have not been set, using fallback")
+            self.ratios = {
+                  "simpleInsert" : 1,
+                  "randomDelete" : 1,
+                  "randomRead" : 1,
+                  "randomUpdate" : 1,
+                  "bulkInsert" : 1
                   }
+            self.params = {
+                    "bulkInsertSize" : 10
+                    }
+             
         self.actions = []
         
     def getShuffledAction(self):

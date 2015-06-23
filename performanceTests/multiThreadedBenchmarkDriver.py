@@ -22,7 +22,11 @@ class TestMultiThreadedDriver(unittest.TestCase):
     def setUp(self):
         self.randomIDs = None
         self.startTime = time.time()
-        self.db = cdb.pyCloudantDB(c.config)
+        self.benchmarkConfig = c.config["benchmarkConfig"]
+        self.threads = self.benchmarkConfig["concurrentThreads"]
+        self.runLength = self.benchmarkConfig["iterationPerThread"]
+        
+        self.db = cdb.pyCloudantDB(c.config["dbConfig"])
         
         # test connection
         # TODO: capture the database version/build for output info
@@ -32,7 +36,7 @@ class TestMultiThreadedDriver(unittest.TestCase):
         self.dbVersion = respConn.json()
             
         # add database for test
-        respAdd = self.db.addDatabase(c.config["dbname"])
+        respAdd = self.db.addDatabase(c.config["dbConfig"]["dbname"])
         if not respAdd.ok:
             self.assertTrue(respAdd.ok,"Failed to successfully add a Database")
             
@@ -44,11 +48,11 @@ class TestMultiThreadedDriver(unittest.TestCase):
         json.dump(self.data, open("TaskData.json","w"))
         
         # Remove Database after test completion
-        #respDel = self.db.deleteDatabase(c.config["dbname"])
+        #respDel = self.db.deleteDatabase(c.config["dbConfig"]["dbname"])
         #if not respDel.ok:
         #    self.assertTrue(respDel.ok,"Failed to delete Database: " + str(respDel.json()))
 
-    def basicCrudWorker(self, insertedIDs, responseTimes, processStateDone, pid, activeThreadCounter, runLength):
+    def basicCrudWorker(self, insertedIDs, responseTimes, processStateDone, pid, activeThreadCounter, benchmarkConfig):
         ''' An instance of this is executed in every thread '''
         log = logging.getLogger('mtbenchmark')
         
@@ -59,13 +63,13 @@ class TestMultiThreadedDriver(unittest.TestCase):
         log.info("pid:%i started.." % pid)
         try:
             # Create a local DB object
-            db = cdb.pyCloudantDB(c.config)
+            db = cdb.pyCloudantDB(c.config["dbConfig"])
             
             # Create a local Worker
-            worker = bW.benchmarkWorker(db, insertedIDs)
+            worker = bW.benchmarkWorker(db, insertedIDs, params=benchmarkConfig)
             
             
-            for i in range(runLength):
+            for i in range(benchmarkConfig["iterationPerThread"]):
                 try:
                     # TODO: add feature to allow exiting of all threads
                     #if any(processStateDone):
@@ -124,19 +128,18 @@ class TestMultiThreadedDriver(unittest.TestCase):
                      "userCounts":[],
                      "dbVersion":self.dbVersion
                      }
-        threads = 15
-        runLength = 100
+        
         insertedIDs = Queue()
         responseTimes = Queue()
         activeThreadCounter = Value("i")
-        processStateDone = Array('b',range(threads))
-        for i in range(threads):
+        processStateDone = Array('b',range(self.threads))
+        for i in range(self.threads):
             processStateDone[i] = False
             
         # create workers
         processes = []
-        for i in range(threads):
-            p = Process(target=self.basicCrudWorker, args=(insertedIDs, responseTimes, processStateDone, i, activeThreadCounter, runLength))
+        for i in range(self.threads):
+            p = Process(target=self.basicCrudWorker, args=(insertedIDs, responseTimes, processStateDone, i, activeThreadCounter, self.benchmarkConfig))
             p.start()
             processes.append(p)
         
@@ -167,7 +170,7 @@ class TestMultiThreadedDriver(unittest.TestCase):
         json.dump(self.data, open("TaskData.json","w"))
         
         log.info("Terminating and Joining worker threads..")
-        for i in range(threads):
+        for i in range(self.threads):
             #log.debug("terminating Thread %i" % i)
             processes[i].terminate()
             processes[i].join()
