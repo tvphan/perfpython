@@ -82,11 +82,15 @@ class genJsonData(object):
         '''
            
         if isinstance(v, list):
+            res = []
             for n,_ in enumerate(v):
-                v[n] = self.popValue(v[n])
+                res.append(self.popValue(v[n]))
+            v = res
         elif isinstance(v, dict):
-            for k in v:
-                v[k] = self.popValue(v[k])
+            res = {}
+            for k in v.keys():
+                res[k] = self.popValue(v[k])
+            v = res
         elif (isinstance(v,unicode) or isinstance(v,str)) and v[0]=="[" and v[-1]=="]":
             if isinstance(v,unicode):
                 v = str(v)
@@ -138,17 +142,18 @@ class genJsonData(object):
             
             
         else:
-            raise Exception( "invalid template, got hung up on: "+ str(v) + type(v))
+            raise Exception( "invalid template, got hung up on: "+ str(v) +" "+ str(type(v)))
         return v
 
     def genJsonFromTemplate(self):
         ''' generate a JSON document based on a supplied template
             the outer most shell of the json doc must be a dict.
             for more detailed explaination see popValue()'''
+        temp_template = self.template.copy()
         if self.template is not None:
             for k in self.template:
-                self.template[k] = self.popValue(self.template[k])
-            return self.template
+                temp_template[k] = self.popValue(self.template[k])
+            return temp_template
         else:
             return None
 
@@ -172,7 +177,22 @@ class genJsonData(object):
     def getRandomFloat(self):
         return np.float32(random.uniform(-65535,65535))
     
-    def randomChange(self,d,numChanges):
+    def genRandomChanges(self,d,numChanges):
+        # remove id and rev so they don't get changed
+        id = d.pop("_id",None)
+        rev = d.pop("_rev",None)
+        
+        d = self.randomlyChange(d,numChanges)
+        
+        # put _id and _rev back
+        if id is not None:
+            d["_id"] = id
+        if rev is not None:
+            d["_rev"] = rev
+            
+        return d
+    
+    def randomlyChange(self,d,numChanges):
         """ Takes a json document and recursively makes a number of random changes """
         
         if isinstance(d,dict):
@@ -251,8 +271,8 @@ class genJsonData(object):
         return d
 
 if __name__ == "__main__":
-    gen = genJsonData(templateFile="templates/basic_template.json")
-    newTemp = gen.genJsonFromTemplate()
-    print newTemp
-    print gen.randomChange(newTemp, 1)
+    gen = genJsonData(templateFile="templates/iron_template.json")
+    print  gen.genJsonFromTemplate()
+    print gen.genJsonFromTemplate()
+    #print gen.randomlyChange(newTemp, 1)
     
