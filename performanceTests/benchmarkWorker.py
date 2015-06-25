@@ -94,11 +94,19 @@ class benchmarkWorker(object):
         delta_t = time.time()-t
         tstamp=str(dt.datetime.fromtimestamp(t))
         if not resp.ok:
-            return {"action":"simpleInsert","delta_t":-2,"err":True,"msg":"[execInsert Error] "+str(resp.status_code),"timestamp":tstamp}
+            return {"action":"simpleInsert",
+                    "delta_t":-2,
+                    "err":True,
+                    "msg":"[execInsert Error] "+str(resp.status_code),
+                    "timestamp":tstamp}
+            
         else:
             resp_d = resp.json()
             self.insertedIDs.put({"_id":resp_d['id'],"_rev":resp_d['rev']})
-        return {"action":"simpleInsert","delta_t":delta_t,"timestamp":tstamp}
+            
+        return {"action":"simpleInsert",
+                "delta_t":delta_t,
+                "timestamp":tstamp}
     
     def execDelete(self):
         ''' Things to note, we are cheating a little, we don't to a read for every delete since we trach the _rev'''
@@ -109,10 +117,22 @@ class benchmarkWorker(object):
             delta_t = time.time()-t
             tstamp=str(dt.datetime.fromtimestamp(t))
             if not resp.ok:
-                return {"action":"randomDelete","delta_t":-2,"err":True,"msg":"[execDelete Error] "+str(resp.status_code), "timestamp":tstamp}
+                return {"action":"randomDelete",
+                        "delta_t":-2,
+                        "err":True,
+                        "msg":"[execDelete Error] "+str(resp.status_code),
+                        "timestamp":tstamp}
+                
         except Q.Empty:
-            return {"action":"randomDelete","delta_t":-1,"err":True,"msg":"[execDelete Error] nothing to process QSize="+str(self.insertedIDs.qsize()), "timestamp":str(dt.datetime.now())}
-        return {"action":"randomDelete","delta_t":delta_t,"timestamp":tstamp}
+            return {"action":"randomDelete",
+                    "delta_t":-1,
+                    "err":True,
+                    "msg":"[execDelete Error] nothing to process QSize="+str(self.insertedIDs.qsize()),
+                    "timestamp":str(dt.datetime.now())}
+            
+        return {"action":"randomDelete",
+                "delta_t":delta_t,
+                "timestamp":tstamp}
     
     def execRead(self):
         ''' Read a random read element'''
@@ -123,12 +143,25 @@ class benchmarkWorker(object):
             delta_t = time.time()-t
             tstamp=str(dt.datetime.fromtimestamp(t))
             if not resp.ok:
-                return {"action":"randomRead","delta_t":-2,"err":True,"msg":"[execRead Error] "+str(resp.status_code),"timestamp":tstamp}
+                return {"action":"randomRead",
+                        "delta_t":-2,
+                        "err":True,
+                        "msg":"[execRead Error] "+str(resp.status_code),
+                        "timestamp":tstamp}
+                
             resp_d = resp.json()
             self.insertedIDs.put({"_id":resp_d['_id'],"_rev":resp_d['_rev']})
+            
         except Q.Empty:
-            return {"action":"randomRead","delta_t":-1,"err":True,"msg":"[execRead Error] nothing to process QSize="+str(self.insertedIDs.qsize()),"timestamp":str(dt.datetime.now())}
-        return {"action":"randomRead","delta_t":delta_t,"timestamp":tstamp}
+            return {"action":"randomRead",
+                    "delta_t":-1,
+                    "err":True,
+                    "msg":"[execRead Error] nothing to process QSize="+str(self.insertedIDs.qsize()),
+                    "timestamp":str(dt.datetime.now())}
+            
+        return {"action":"randomRead",
+                "delta_t":delta_t,
+                "timestamp":tstamp}
     
     def execUpdate(self):
         ''' Update a random element'''
@@ -140,12 +173,25 @@ class benchmarkWorker(object):
             delta_t = time.time()-t
             tstamp=str(dt.datetime.fromtimestamp(t))
             if not resp.ok:
-                return {"action":"randomUpdate","delta_t":-2,"err":True,"msg":"[execUpdate Error] "+str(resp.status_code),"timestamp":tstamp}
+                return {"action":"randomUpdate",
+                        "delta_t":-2,
+                        "err":True,
+                        "msg":"[execUpdate Error] "+str(resp.status_code),
+                        "timestamp":tstamp}
+                
             resp_d = resp.json()
             self.insertedIDs.put({"_id":resp_d['id'],"_rev":resp_d['rev']})
+            
         except Q.Empty:
-            return {"action":"randomUpdate","delta_t":-1,"err":True,"msg":"[execUpdate Error] nothing to process QSize="+str(self.insertedIDs.qsize()),"timestamp":str(dt.datetime.now())}
-        return {"action":"randomUpdate","delta_t":delta_t,"timestamp":tstamp}
+            return {"action":"randomUpdate",
+                    "delta_t":-1,
+                    "err":True,
+                    "msg":"[execUpdate Error] nothing to process QSize="+str(self.insertedIDs.qsize()),
+                    "timestamp":str(dt.datetime.now())}
+            
+        return {"action":"randomUpdate",
+                "delta_t":delta_t,
+                "timestamp":tstamp}
     
     def execBulkInsert(self):
         ''' Bulk inserts a a bunch of random documents, insertSize = params["bulkInsertSize"]'''
@@ -159,10 +205,17 @@ class benchmarkWorker(object):
         delta_t = time.time()-t
         tstamp=str(dt.datetime.fromtimestamp(t))
         if not resp.ok:
-            return {"action":"bulkInsert", "delta_t":-2, "err":True, "msg":"[execBulkInsert Error] "+str(resp.status_code),"timestamp":tstamp}
+            return {"action":"bulkInsert",
+                    "delta_t":-2,
+                    "err":True,
+                    "msg":"[execBulkInsert Error] "+str(resp.status_code),
+                    "timestamp":tstamp}
         else:
             resp_d = resp.json()
             for d in resp_d:
                 self.insertedIDs.put({"_id":d['id'],"_rev":d['rev']})
-        return {"action":"bulkInsert","delta_t":delta_t,"timestamp":tstamp}
+                
+        return {"action":"bulkInsert",
+                "delta_t":delta_t,
+                "timestamp":tstamp}
             
