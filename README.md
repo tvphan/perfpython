@@ -1,6 +1,17 @@
 Some quick tests, experiments and scripts for the CDS Perf Team
 
+**Note**: at the moment all you need Python 2.6.x or Python 2.7.x, it is **not** Python 3.0 compatible yet
+
 ### Benchmarks, located in (./performanceTests)
+Dependencies:
+Note: if you have python 2.7.9 or newer, it includes pip, python's package manager
+* python's requests library: http://docs.python-requests.org/en/latest/user/install/
+  * with pip: pip install requests
+* numpy library: http://sourceforge.net/projects/numpy/files/NumPy/
+  * with pip: pip install numpy
+* loremipsum library: https://pypi.python.org/pypi/loremipsum
+  * with pip: pip install loremipsum
+
 1. **basicCrudBenchmark.py**
   * This test creates a database and then does the following operations in order:
     * 500 inserts, simple docs
