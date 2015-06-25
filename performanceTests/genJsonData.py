@@ -99,19 +99,19 @@ class genJsonData(object):
             # expecting [<type>|<value/parameter>]
             if bits[0] == "int":
                 if bits[1] == "random":
-                    v = np.int32(random.randint(-65535,65535))
+                    v = self.getRandomInt()
                 else:
                     # attempt to parse given value
                     v = np.int32(bits[1])
             elif bits[0] == "float":
                 if bits[1] == "random":
-                    v = np.float32(random.uniform(-65535,65535))
+                    v = self.getRandomFloat()
                 else:
                     # attempt to parse given value
                     v = np.float32(bits[1])
             elif bits[0] == "boolean":
                 if bits[1] == "random":
-                    v = np.bool8(random.getrandbits(1))
+                    v = self.getRandomBoolean()
                 else:
                     # attempt to parse given value
                     v = np.bool8(bits[1])
@@ -122,7 +122,7 @@ class genJsonData(object):
                     randMin, randMax = map(int, bits[1].replace("variable(","").replace(")","").split(","))
                     if randMin > randMax:
                         raise  Exception("randMin must be lower than randMax: "+str(v))
-                    v = self.getText(random.randint(randMin,randMax))
+                    v = self.getRandomString(randMin,randMax)
                 elif "fixed" in bits[1]:
                     # TODO check the its in the right format, fixed(n)
                     param = int(bits[1].replace("fixed(","").replace(")",""))
@@ -159,6 +159,47 @@ class genJsonData(object):
             retStr += para
         
         return retStr[:textLen]
+    
+    def getRandomBoolean(self):
+        return np.bool8(random.getrandbits(1))
+    
+    def getRandomString(self, randMin=6, randMax=60):
+        return self.getText(random.randint(randMin,randMax))
+    
+    def getRandomInt(self):
+        return np.int32(random.randint(-65535,65535))
+    
+    def getRandomFloat(self):
+        return np.float32(random.uniform(-65535,65535))
+    
+    def randomChange(self,d,numChanges):
+        """ Takes a json document and recursively makes a number of random changes """
+        
+        if isinstance(d,dict):
+            for c in range(numChanges):
+                if len(d.keys())==0:
+                    return d
+                i = random.randint(0,len(d.keys())-1)
+                d[d.keys()[i]] = self.randomChange(d[d.keys()[i]],1)
+            return d
+        elif isinstance(d,list):
+            # itereate over the number of changes we want to make
+            for c in range(numChanges):
+                if len(d)==0:
+                    return d
+                i = random.randint(0,len(d)-1)
+                d[i] = self.randomChange(d[i],1)
+            return d
+        elif isinstance(d, str) or isinstance(d, unicode):
+            return self.getRandomString()
+        elif isinstance(d, np.int32):
+            return self.getRandomInt()
+        elif isinstance(d, np.float32):
+            return self.getRandomFloat()
+        elif isinstance(d, np.bool8):
+            return self.getRandomBoolean()
+        else:
+            return d
     
     def sizeOfObj(self,d):
         """ Note these sizes are probaly not accurate, but
@@ -211,4 +252,7 @@ class genJsonData(object):
 
 if __name__ == "__main__":
     gen = genJsonData(templateFile="templates/basic_template.json")
-    print gen.genJsonFromTemplate()
+    newTemp = gen.genJsonFromTemplate()
+    print newTemp
+    print gen.randomChange(newTemp, 1)
+    
