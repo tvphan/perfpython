@@ -139,6 +139,7 @@ class TestMultiThreadedDriver(unittest.TestCase):
         logStreamHandler = logging.StreamHandler()
         logStreamHandler.setLevel(logging.DEBUG)
         logStreamHandler.setFormatter(logging.Formatter('%(asctime)s - %(levelname)s - %(message)s'))
+        log.addHandler(logStreamHandler)
         
         logFile = open("./run.log","w")
         logFileHandler = logging.StreamHandler(logFile)
