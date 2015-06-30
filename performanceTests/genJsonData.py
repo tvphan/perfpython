@@ -107,19 +107,19 @@ class genJsonData(object):
                     v = self.getRandomInt()
                 else:
                     # attempt to parse given value
-                    v = np.int32(bits[1])
+                    v = int(bits[1])
             elif bits[0] == "float":
                 if bits[1] == "random":
                     v = self.getRandomFloat()
                 else:
                     # attempt to parse given value
-                    v = np.float32(bits[1])
+                    v = float(bits[1])
             elif bits[0] == "boolean":
                 if bits[1] == "random":
                     v = self.getRandomBoolean()
                 else:
                     # attempt to parse given value
-                    v = np.bool8(bits[1])
+                    v = bool(bits[1])
             elif bits[0] == "string":
                 if "variable" in bits[1]:
                     # TODO: check the its in the right format, variable(n,n)
@@ -171,20 +171,19 @@ class genJsonData(object):
                 retStr += txt.dummyText[randLine][randStart:]
             randStart = textLen - len(retStr)
         
-        print retStr
         return retStr
     
     def getRandomBoolean(self):
-        return np.bool8(random.getrandbits(1))
+        return bool(random.getrandbits(1))
     
     def getRandomString(self, randMin=6, randMax=60):
         return self.getText(random.randint(randMin,randMax))
     
     def getRandomInt(self):
-        return np.int32(random.randint(-65535,65535))
+        return int(random.randint(-65535,65535))
     
     def getRandomFloat(self):
-        return np.float32(random.uniform(-65535,65535))
+        return float(random.uniform(-65535,65535))
     
     def genRandomChanges(self,d,numChanges):
         # remove id and rev so they don't get changed
@@ -209,7 +208,7 @@ class genJsonData(object):
                 if len(d.keys())==0:
                     return d
                 i = random.randint(0,len(d.keys())-1)
-                d[d.keys()[i]] = self.randomChange(d[d.keys()[i]],1)
+                d[d.keys()[i]] = self.randomlyChange(d[d.keys()[i]],1)
             return d
         elif isinstance(d,list):
             # itereate over the number of changes we want to make
@@ -217,15 +216,15 @@ class genJsonData(object):
                 if len(d)==0:
                     return d
                 i = random.randint(0,len(d)-1)
-                d[i] = self.randomChange(d[i],1)
+                d[i] = self.randomlyChange(d[i],1)
             return d
         elif isinstance(d, str) or isinstance(d, unicode):
             return self.getRandomString()
-        elif isinstance(d, np.int32):
+        elif isinstance(d, int):
             return self.getRandomInt()
-        elif isinstance(d, np.float32):
+        elif isinstance(d, float):
             return self.getRandomFloat()
-        elif isinstance(d, np.bool8):
+        elif isinstance(d, bool):
             return self.getRandomBoolean()
         else:
             return d
