@@ -1,0 +1,5 @@
+argparse
+numpy
+requests>=2.5
+virtualenv>=1.5
+matplotlib>=1.3
