@@ -2,15 +2,25 @@ Some quick tests, experiments and scripts for the CDS Perf Team
 
 **Note**: at the moment all you need Python 2.6.x or Python 2.7.x, it is **not** Python 3.0 compatible yet
 
-### Benchmarks, located in (./performanceTests)
 Dependencies:
 Note: if you have python 2.7.9 or newer, it includes pip, python's package manager
-* python's requests library: http://docs.python-requests.org/en/latest/user/install/
-  * with pip: pip install requests
-* numpy library: http://sourceforge.net/projects/numpy/files/NumPy/
-  * with pip: pip install numpy
-* loremipsum library: https://pypi.python.org/pypi/loremipsum
-  * with pip: pip install loremipsum
+* argparse, requests, numpy, matplotlib
+* if you want to use a virtualenv:
+  * `virtualenv testenv`
+  * `source ./testenv/bin/activate`
+* Install requirements using pip:
+  * `pip install -r requirements.txt`
+
+### Getting started:
+  1. clone this repo: `git clone git@github.ibm.com:malee/cdsperfplayground.git --recursive`
+    * the above will clone the main repository and also pull the dependent submodule
+  2. configure performanceTests/config.py to point to your cloudant instance
+  3. cd into performanceTests
+  4. run the test: `python ./multThreadedBenchmarkDriver.py`
+    * Thread count, run length and action-ratios can be set in config.py
+  5. get a coffee
+
+### Benchmarks, located in (./performanceTests)
 
 1. **basicCrudBenchmark.py**
   * This test creates a database and then does the following operations in order:
@@ -28,15 +38,15 @@ Note: if you have python 2.7.9 or newer, it includes pip, python's package manag
     * 25 Reads
     * 5 Bulk Inserts
   * Currently this test can run 1000 users concurrently on a single laptop
-  * Getting started:
-    1. clone this repo: `git clone git@github.ibm.com:malee/cdsperfplayground.git --recursive`
-      * the above will clone the main repository and also pull the dependent submodule
-    2. configure performanceTests/config.py to point to your cloudant instance
-    3. cd into performanceTests
-    4. run the test: python ./multThreadedBenchmarkDriver.py
-      * Thread and run length can be set in ./multThreadedBenchmarkDriver.py
-      * Action ratios can be set in benchmarkWorker.py
-    5. get a coffee
+3. **multThreadedBenchmarkDriver_ironClone.py**
+  * This is an exact clone of IronCushion
+  * This test spawns 100 worker threads, each execute 20 bulk inserts of 1000 documents modeled after performanceTests/templates/iron_template.json
+  * Then each worker thread executes 1000 randomly selected actions according to the following ratios:
+    * 2 Inserts
+    * 3 Deletes
+    * 3 Updates
+    * 2 Reads
+  * Note: config.py is only used for the database credentials and database name for this project, the rest is preset to mimic ironcushion
 
 ### Misc related files:
 1. **genPlots.py**
