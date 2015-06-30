@@ -5,9 +5,10 @@ Created on Jun 9, 2015
 '''
 import sys
 import datetime as dt
-import loremipsum as li
+import dummyText as txt
 import json
 import random
+import time
 import numpy as np
 
 class genJsonData(object):
@@ -159,11 +160,19 @@ class genJsonData(object):
 
     def getText(self, textLen):
         retStr=""
+        extraLen = textLen
         while len(retStr) < textLen:
-            para = li.get_paragraph(1)
-            retStr += para
+            randLine = random.randint(0,len(txt.dummyText)-1)
+            lineLen = len(txt.dummyText[randLine])
+            randStart = random.randint(0,lineLen-1)
+            if randStart + extraLen <= lineLen: 
+                retStr += txt.dummyText[randLine][randStart:randStart+extraLen]
+            else:
+                retStr += txt.dummyText[randLine][randStart:]
+            randStart = textLen - len(retStr)
         
-        return retStr[:textLen]
+        print retStr
+        return retStr
     
     def getRandomBoolean(self):
         return np.bool8(random.getrandbits(1))
@@ -272,7 +281,10 @@ class genJsonData(object):
 
 if __name__ == "__main__":
     gen = genJsonData(templateFile="templates/iron_template.json")
-    print  gen.genJsonFromTemplate()
-    print gen.genJsonFromTemplate()
+    t = time.time()
+    for i in range(10):
+        d = gen.genJsonFromTemplate()
+    print (time.time()-t)/10
+    #print gen.genJsonFromTemplate()
     #print gen.randomlyChange(newTemp, 1)
     
