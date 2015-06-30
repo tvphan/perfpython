@@ -2,3 +2,5 @@
 *.png
 performanceTests/*.json
 performanceTests/*.log
+performanceTests/*.nmon
+*.pyc
