@@ -11,22 +11,30 @@ import time
 import json
 import random
 import logging
+import cProfile
+from pstats import Stats
 import traceback
+import requests
 import sys
 from multiprocessing import Process, Queue, Value, Array
 import benchmarkWorker as bW
+import stacktracer
+
+profile = False
 
 class TestMultiThreadedDriver(unittest.TestCase):
     """ Basic Multithreaded benchmark """
 
     def setUp(self):
+        
         self.randomIDs = None
         self.startTime = time.time()
         self.benchmarkConfig={
-            "concurrentThreads" : 100,
+            "templateFile" : "templates/iron_template.json",
+            "concurrentThreads" : 10,#0,
             "bulkInsertsPerThread" : 20,
             "bulkInsertSize" : 1000,
-            "iterationPerThread" : 1000,
+            "iterationPerThread" : 100,#0,
             "actionRatios" : {
                   "simpleInsert" : 2,
                   "randomDelete" : 3,
@@ -48,7 +56,10 @@ class TestMultiThreadedDriver(unittest.TestCase):
                   "bulkInsert" : 0
                     }                   
             }"""
-
+        if profile:
+            self.pr = cProfile.Profile()
+            self.pr.enable()
+            
         self.threads = self.benchmarkConfig["concurrentThreads"]
         self.runLength = self.benchmarkConfig["iterationPerThread"]
         
@@ -61,6 +72,8 @@ class TestMultiThreadedDriver(unittest.TestCase):
             self.assertTrue(respConn,"Failed to successfully connect to Database")
         self.dbVersion = respConn.json()
         
+        # just delete the old DB in case it already exists
+        # TODO: do a check here to check whether is exists or not
         respDel = self.db.deleteDatabase(c.config["dbConfig"]["dbname"])
         
         # add database for test
@@ -75,12 +88,19 @@ class TestMultiThreadedDriver(unittest.TestCase):
         log.info("Total "+self.testName+" run time:" + str(time.time()-self.startTime))
         json.dump(self.data, open("TaskData.json","w"))
         
+        if profile:
+            p = Stats(self.pr)
+            p.strip_dirs()
+            p.sort_stats('cumtime')
+            p.reverse_order()
+            p.print_stats()
+        
         # Remove Database after test completion
         #respDel = self.db.deleteDatabase(c.config["dbConfig"]["dbname"])
         #if not respDel.ok:
         #    self.assertTrue(respDel.ok,"Failed to delete Database: " + str(respDel.json()))
 
-    def basicCrudWorker(self, insertedIDs, responseTimes, processStateDone, pid, activeThreadCounter, benchmarkConfig):
+    def basicCrudWorker(self, insertedIDs, responseTimes, processStateDone, idx, pid, activeThreadCounter, benchmarkConfig):
         ''' An instance of this is executed in every thread '''
         log = logging.getLogger('mtbenchmark')
         
@@ -90,8 +110,11 @@ class TestMultiThreadedDriver(unittest.TestCase):
             
         log.info("pid:%i started.." % pid)
         try:
+            # Create new requests session
+            session = requests.Session()
+            
             # Create a local DB object
-            db = cdb.pyCloudantDB(c.config["dbConfig"])
+            db = cdb.pyCloudantDB(config=c.config["dbConfig"], session=session)
             
             # Create a local Worker
             worker = bW.benchmarkWorker(db, insertedIDs, params=benchmarkConfig)
@@ -112,6 +135,7 @@ class TestMultiThreadedDriver(unittest.TestCase):
                     
                     # Stash response time
                     responseTimes.put(resp) #{"action":resp["action"], "resp":resp["delta_t"], "timestamp":resp["timestamp"]})
+                    log.info("pid:%i finished task %i" % (pid,i))
                 
                 except Exception as e:
                     # catch task level exception to prevent early exiting
@@ -125,7 +149,9 @@ class TestMultiThreadedDriver(unittest.TestCase):
             errLine = "("+str(pid)+") Thread Level Exception - "+ str(e_info) + " trace:" + str(traceback.format_exc())
             log.error(errLine)
         
-        processStateDone[pid]=True
+        log.debug("pid:%i about to set State" % pid)
+        processStateDone[idx]=True
+        log.debug("pid:%i about to decrement activeThreadCnt" % pid)
         # decrement out active thread count
         with activeThreadCounter.get_lock():
             activeThreadCounter.value -= 1
@@ -171,6 +197,7 @@ class TestMultiThreadedDriver(unittest.TestCase):
             processStateDone[i] = False
             
         bulkInsertConfig = {
+            "templateFile" : "templates/iron_template.json",
             "concurrentThreads" : self.threads,
             "iterationPerThread" : self.benchmarkConfig["bulkInsertsPerThread"],
             "bulkInsertSize" : self.benchmarkConfig["bulkInsertSize"],
@@ -182,30 +209,29 @@ class TestMultiThreadedDriver(unittest.TestCase):
                   "bulkInsert" : 1
                     }                   
             }
-            
+        #session = requests.Session()
         # create workers
         processes = []
         for i in range(self.threads):
-            p = Process(target=self.basicCrudWorker, args=(insertedIDs, responseTimes, processStateDone, i, activeThreadCounter, bulkInsertConfig))
+            p = Process(target=self.basicCrudWorker, args=(insertedIDs, responseTimes, processStateDone, i, self.threads+i, activeThreadCounter, bulkInsertConfig))
             p.start()
             processes.append(p)
         
         log.info("waiting for workers to finish..")
         while all(processStateDone) is False:
-            self.data["userCounts"].append({str(dt.datetime.now()): activeThreadCounter.value})
-            log.info('tick..')
+            activeWorkers = activeThreadCounter.value
+            self.data["userCounts"].append({str(dt.datetime.now()): activeWorkers})
+            log.info('tick.. %d active workers' % activeWorkers)
             time.sleep(5)
         
+        log.info("%i response times were collected" % responseTimes.qsize())
         while responseTimes.qsize() > 0: # don't use .empty() it lies
             d = responseTimes.get()
             # TODO: how should the timestamp be stashed?
             self.data[d["action"]].append({"ts":d["timestamp"],"v":d["delta_t"]})
-        
-        #log.info("Terminating and Joining worker threads..")
-        #for i in range(self.threads):
-        #    #log.debug("terminating Thread %i" % i)
-        #    processes[i].terminate()
-        #    processes[i].join()
+            
+        # Lets not forcefully end the first set of threads in case they are still
+        #  messing around with the queue
         
         #######################################################
         #
@@ -213,21 +239,21 @@ class TestMultiThreadedDriver(unittest.TestCase):
         #
         ###########
         activeThreadCounter = Value("i")
-        processStateDone = Array('b',range(self.threads))
+        processStateDone2 = Array('b',range(self.threads))
         for i in range(self.threads):
             processStateDone[i] = False
             
         # create workers
-        #processes = []
         for i in range(self.threads):
-            p = Process(target=self.basicCrudWorker, args=(insertedIDs, responseTimes, processStateDone, i, activeThreadCounter, self.benchmarkConfig))
+            p = Process(target=self.basicCrudWorker, args=(insertedIDs, responseTimes, processStateDone2, i, self.threads+i, activeThreadCounter, self.benchmarkConfig))
             p.start()
             processes.append(p)
         
         log.info("waiting for workers to finish..")
-        while all(processStateDone) is False:
-            self.data["userCounts"].append({str(dt.datetime.now()): activeThreadCounter.value})
-            log.info('tick..')
+        while all(processStateDone2) is False:
+            activeWorkers = activeThreadCounter.value
+            self.data["userCounts"].append({str(dt.datetime.now()): activeWorkers})
+            log.info('tick.. %d active workers' % activeWorkers)
             time.sleep(5)
         
         ###################################################
@@ -237,7 +263,7 @@ class TestMultiThreadedDriver(unittest.TestCase):
         ####################
         
         # Sort responseTimes into categories
-        log.info("%i response times were collected" % responseTimes.qsize())
+        log.info("an additional %i response times were collected" % responseTimes.qsize())
         while responseTimes.qsize() > 0: # don't use .empty() it lies
             d = responseTimes.get()
             # TODO: how should the timestamp be stashed?
@@ -252,7 +278,6 @@ class TestMultiThreadedDriver(unittest.TestCase):
         
         log.info("Terminating and Joining worker threads..")
         for i in range(self.threads*2):
-            #log.debug("terminating Thread %i" % i)
             processes[i].terminate()
             processes[i].join()
 

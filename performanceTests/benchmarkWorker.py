@@ -8,6 +8,7 @@ import time
 import random
 from multiprocessing import Queue
 import logging
+import genJsonData as gen
 
 # for exceptions
 import Queue as Q
@@ -25,6 +26,13 @@ class benchmarkWorker(object):
         self.db = db
         self.insertedIDs = insertedIDs
         self.seqNum = -1
+        
+        if params is not None and "templateFile" in params:
+            templateFile = params["templateFile"]
+        else:
+            templateFile = "templates/basic_template.json"
+        self.gen = gen.genJsonData(templateFile=templateFile)
+        
         if params is not None and "actionRatios" in params:
             self.ratios = params["actionRatios"]
             self.params = params
@@ -87,8 +95,10 @@ class benchmarkWorker(object):
         
     def execInsert(self):
         ''' Insert a random document '''
-        # add a single document
-        d = {"_id":"test:"+str(self.seqNum)+":"+str(dt.datetime.now()), "lastUpdate":str(dt.datetime.now())}
+        # Generate a random doc from template
+        d = self.gen.genJsonFromTemplate()
+        
+        d["_id"] = "test:"+str(self.seqNum)
         t = time.time()
         resp = self.db.addDocument(d)
         delta_t = time.time()-t
@@ -102,7 +112,8 @@ class benchmarkWorker(object):
             
         else:
             resp_d = resp.json()
-            self.insertedIDs.put({"_id":resp_d['id'],"_rev":resp_d['rev']})
+            d["_rev"]=resp_d["rev"]
+            self.insertedIDs.put(d)
             
         return {"action":"simpleInsert",
                 "delta_t":delta_t,
@@ -150,7 +161,7 @@ class benchmarkWorker(object):
                         "timestamp":tstamp}
                 
             resp_d = resp.json()
-            self.insertedIDs.put({"_id":resp_d['_id'],"_rev":resp_d['_rev']})
+            self.insertedIDs.put(resp_d)
             
         except Q.Empty:
             return {"action":"randomRead",
@@ -167,9 +178,10 @@ class benchmarkWorker(object):
         ''' Update a random element'''
         try:
             d = self.getRandomID()
-            d["lastUpdated"] = str(dt.datetime.now())
+            # execute a random change
+            d_changed = self.gen.genRandomChanges(d, 1)
             t = time.time()
-            resp = self.db.updateDocument(d)
+            resp = self.db.updateDocument(d_changed)
             delta_t = time.time()-t
             tstamp=str(dt.datetime.fromtimestamp(t))
             if not resp.ok:
@@ -180,7 +192,8 @@ class benchmarkWorker(object):
                         "timestamp":tstamp}
                 
             resp_d = resp.json()
-            self.insertedIDs.put({"_id":resp_d['id'],"_rev":resp_d['rev']})
+            d_changed["_rev"]=resp_d["rev"]
+            self.insertedIDs.put(d_changed)
             
         except Q.Empty:
             return {"action":"randomUpdate",
@@ -195,13 +208,16 @@ class benchmarkWorker(object):
     
     def execBulkInsert(self):
         ''' Bulk inserts a a bunch of random documents, insertSize = params["bulkInsertSize"]'''
-        bulkAdd=[]
-        for j in range(self.params["bulkInsertSize"]):
-            d = {"_id":"test:"+str(self.seqNum)+":"+str(dt.datetime.now()), "lastUpdate":str(dt.datetime.now())}
-            bulkAdd.append(d)
+        bulkAdd={}
+        for j in range(0,self.params["bulkInsertSize"]):
+            # Generate a random doc from template
+            d = self.gen.genJsonFromTemplate()
+            
+            d["_id"]="test:"+str(self.seqNum)+":"+str(j)
+            bulkAdd[d["_id"]]=d
         
         t = time.time()
-        resp = self.db.bulkAddDocuments(bulkAdd)
+        resp = self.db.bulkAddDocuments(bulkAdd.values())
         delta_t = time.time()-t
         tstamp=str(dt.datetime.fromtimestamp(t))
         if not resp.ok:
@@ -213,8 +229,9 @@ class benchmarkWorker(object):
         else:
             resp_d = resp.json()
             for d in resp_d:
-                self.insertedIDs.put({"_id":d['id'],"_rev":d['rev']})
-                
+                bulkAdd[d["id"]]["_rev"]=d['rev']
+                self.insertedIDs.put(bulkAdd[d["id"]])
+        print "bulk inserted",len(bulkAdd),"docs in", delta_t,"s"
         return {"action":"bulkInsert",
                 "delta_t":delta_t,
                 "timestamp":tstamp}
