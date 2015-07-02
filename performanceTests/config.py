@@ -21,4 +21,6 @@ config={
     
     # Database to be used
     "dbname" : "testdb"
+   }
+
 }
