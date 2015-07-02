@@ -4,7 +4,7 @@ Created on Jun 2, 2015
 @author: madmaze
 '''
 import unittest
-import pyCloudantDB as cdb
+import pyCloudantDB.pyCloudantDB as cdb
 import config as c
 import datetime as dt
 import time
@@ -18,14 +18,14 @@ class TestBasicCrudOps(unittest.TestCase):
     def setUp(self):
         self.randomIDs = None
         self.startTime = time.time()
-        self.db = cdb.pyCloudantDB(c.config)
+        self.db = cdb.pyCloudantDB(c.config["dbConfig"])
         # test connection
         respConn = self.db.testConnection()
         if not respConn:
             self.assertTrue(respConn,"Failed to successfully connect to Database")
             
         # add database for test
-        respAdd = self.db.addDatabase(c.config["dbname"])
+        respAdd = self.db.addDatabase(c.config["dbConfig"]["dbname"])
         if not respAdd.ok:
             self.assertTrue(respAdd.ok,"Failed to successfully add a Database")
             
@@ -35,7 +35,7 @@ class TestBasicCrudOps(unittest.TestCase):
         json.dump(self.data, open("TaskData.json","w"))
         
         # Remove Database after test completion
-        respDel = self.db.deleteDatabase(c.config["dbname"])
+        respDel = self.db.deleteDatabase(c.config["dbConfig"]["dbname"])
         if not respDel.ok:
             self.assertTrue(respDel.ok,"Failed to delete Database: " + str(respDel.json()))
             

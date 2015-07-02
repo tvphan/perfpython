@@ -11,16 +11,17 @@ import time
 import json
 import random
 import logging
-import cProfile
-from pstats import Stats
 import traceback
 import requests
 import sys
 from multiprocessing import Process, Queue, Value, Array
 import benchmarkWorker as bW
-import stacktracer
 
 profile = False
+
+if profile:
+    import cProfile
+    from pstats import Stats
 
 class TestMultiThreadedDriver(unittest.TestCase):
     """ Basic Multithreaded benchmark """
