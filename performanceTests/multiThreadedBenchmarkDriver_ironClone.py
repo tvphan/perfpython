@@ -31,10 +31,10 @@ class TestMultiThreadedDriver(unittest.TestCase):
         self.startTime = time.time()
         self.benchmarkConfig={
             "templateFile" : "templates/iron_template.json",
-            "concurrentThreads" : 10,#0,
+            "concurrentThreads" : 100,
             "bulkInsertsPerThread" : 20,
             "bulkInsertSize" : 1000,
-            "iterationPerThread" : 100,#0,
+            "iterationPerThread" : 1000,
             "actionRatios" : {
                   "simpleInsert" : 2,
                   "randomDelete" : 3,
@@ -100,7 +100,7 @@ class TestMultiThreadedDriver(unittest.TestCase):
         #if not respDel.ok:
         #    self.assertTrue(respDel.ok,"Failed to delete Database: " + str(respDel.json()))
 
-    def basicCrudWorker(self, insertedIDs, responseTimes, processStateDone, idx, pid, activeThreadCounter, benchmarkConfig):
+    def basicCrudWorker(self, insertedIDs, responseTimes, processStateDone, idx, pid, activeThreadCounter, benchmarkConfig, session):
         ''' An instance of this is executed in every thread '''
         log = logging.getLogger('mtbenchmark')
         
@@ -111,7 +111,7 @@ class TestMultiThreadedDriver(unittest.TestCase):
         log.info("pid:%i started.." % pid)
         try:
             # Create new requests session
-            session = requests.Session()
+            #session = requests.Session()
             
             # Create a local DB object
             db = cdb.pyCloudantDB(config=c.config["dbConfig"], session=session)
@@ -135,7 +135,7 @@ class TestMultiThreadedDriver(unittest.TestCase):
                     
                     # Stash response time
                     responseTimes.put(resp) #{"action":resp["action"], "resp":resp["delta_t"], "timestamp":resp["timestamp"]})
-                    log.info("pid:%i finished task %i" % (pid,i))
+                    #log.debug("pid:%i finished task %i" % (pid,i))
                 
                 except Exception as e:
                     # catch task level exception to prevent early exiting
@@ -209,11 +209,12 @@ class TestMultiThreadedDriver(unittest.TestCase):
                   "bulkInsert" : 1
                     }                   
             }
-        #session = requests.Session()
+        session = requests.Session()
+        session.auth = c.config["dbConfig"]["auth"]
         # create workers
         processes = []
         for i in range(self.threads):
-            p = Process(target=self.basicCrudWorker, args=(insertedIDs, responseTimes, processStateDone, i, self.threads+i, activeThreadCounter, bulkInsertConfig))
+            p = Process(target=self.basicCrudWorker, args=(insertedIDs, responseTimes, processStateDone, i, i, activeThreadCounter, bulkInsertConfig, session))
             p.start()
             processes.append(p)
         
@@ -245,7 +246,7 @@ class TestMultiThreadedDriver(unittest.TestCase):
             
         # create workers
         for i in range(self.threads):
-            p = Process(target=self.basicCrudWorker, args=(insertedIDs, responseTimes, processStateDone2, i, self.threads+i, activeThreadCounter, self.benchmarkConfig))
+            p = Process(target=self.basicCrudWorker, args=(insertedIDs, responseTimes, processStateDone2, i, self.threads+i, activeThreadCounter, self.benchmarkConfig, session))
             p.start()
             processes.append(p)
         
