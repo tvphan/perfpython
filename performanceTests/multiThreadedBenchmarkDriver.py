@@ -146,7 +146,7 @@ class TestMultiThreadedDriver(unittest.TestCase):
         
         log.info("waiting for workers to finish..")
         while all(processStateDone) is False:
-            self.data["userCounts"].append({str(dt.datetime.now()): activeThreadCounter.value})
+            self.data["userCounts"].append({"ts":str(dt.datetime.now()),"v":activeWorkers})
             log.info('tick..')
             time.sleep(5)
         
