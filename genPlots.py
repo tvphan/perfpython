@@ -10,18 +10,24 @@ def main(datafile="TaskData.json", outdir="./"):
          "bulkInsert":"Simple Bulk Doc Insert (10 Docs/Insert)",
          "randomRead":"Simple Random Doc Read",
          "randomUpdate":"Simple Random Doc Update",
-         "randomDelete":"Simple Random Doc Delete"}
+         "randomDelete":"Simple Random Doc Delete",
+         "userCounts":"Active Users over time"}
     
-    for k in data:
+    print(data.keys())
+    for k in humanReadable.keys():
         d = np.array(data[k])
         if len(d)>0:
             err = len(d[np.where(d == -1)])
             print k,"empty queue", 100*(float(err)/len(d))
             err = len(d[np.where(d == -2)])
             print k,"error", 100*(float(err)/len(d))
+            
+            # index just the values
+            vals = np.array([ element["v"] for element in d ])
 
-            d = d[np.where(d > 0)]
-            p95th = d[np.where(d < np.percentile(d,95))[0]]
+            vals = vals[np.where(vals > 0)]
+            p=np.where(vals < np.percentile(vals,95))[0]
+            p95th = vals[p]
             pylab.plot(p95th, label=k+"_95th percentile")
             pylab.plot([np.mean(p95th)]*len(p95th), label="mean")
             pylab.plot([np.median(p95th)]*len(p95th), label="median")
@@ -33,14 +39,14 @@ def main(datafile="TaskData.json", outdir="./"):
             pylab.savefig(outdir+"/"+k+"_95th.png", dpi=200)
             pylab.clf()
             
-            pylab.plot(d, label=k)
-            pylab.plot([np.mean(d)]*len(d), label="mean")
-            pylab.plot([np.median(d)]*len(d), label="median")
+            pylab.plot(vals, label=k)
+            pylab.plot([np.mean(vals)]*len(vals), label="mean")
+            pylab.plot([np.median(vals)]*len(vals), label="median")
             pylab.xlabel("Test samples")
             pylab.ylabel("Response Time (s)")
             pylab.title(humanReadable[k])
             pylab.legend()
-            pylab.ylim([0,np.max(d)*1.5])
+            pylab.ylim([0,np.max(vals)*1.5])
             pylab.savefig(outdir+"/"+k+".png", dpi=200)
             pylab.clf()
     
