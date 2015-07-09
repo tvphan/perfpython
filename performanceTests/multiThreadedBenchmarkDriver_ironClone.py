@@ -52,6 +52,9 @@ class TestMultiThreadedDriver(unittest.TestCase):
         self.threads = self.benchmarkConfig["concurrentThreads"]
         self.runLength = self.benchmarkConfig["iterationPerThread"]
         
+        timeStampedFileName = "TaskData_"+str(dt.datetime.now()).replace(" ","_")+".json"
+        self.resultsFileName = c.config["resultsFileName"] if "resultsFileName" in c.config.keys() else timeStampedFileName
+        
         self.db = cdb.pyCloudantDB(c.config["dbConfig"])
         
         # test connection
@@ -83,7 +86,7 @@ class TestMultiThreadedDriver(unittest.TestCase):
         # dump test data
         log.info("test finished: " + str(dt.datetime.now()))
         log.info("Total "+self.testName+" run time:" + str(time.time()-self.startTime))
-        json.dump(self.taskDataObject, open("TaskData.json","w"))
+        json.dump(self.taskDataObject, open(self.resultsFileName,"w"))
         
         if profile:
             p = Stats(self.pr)
@@ -271,8 +274,6 @@ class TestMultiThreadedDriver(unittest.TestCase):
             _= insertedIDs.get()
         
         log.info("starting to join threads..")
-        
-        json.dump(self.taskDataObject, open("TaskData.json","w"))
         
         log.info("Terminating and Joining worker threads..")
         for i in range(self.threads*2):
