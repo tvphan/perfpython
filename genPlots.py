@@ -7,13 +7,13 @@ import shutil
 import os
 
 def main(datafile="TaskData.json", outdir="./", overwrite=False):
-    data = json.load(open(datafile))
+    data = json.load(open(datafile))["data"]
     humanReadable ={"simpleInsert":"Simple Doc Insert",
          "bulkInsert":"Simple Bulk Doc Insert (10 Docs/Insert)",
          "randomRead":"Simple Random Doc Read",
          "randomUpdate":"Simple Random Doc Update",
-         "randomDelete":"Simple Random Doc Delete"}
-         #"userCounts":"Active Users over time"} disabled until new data with correct format
+         "randomDelete":"Simple Random Doc Delete",
+         "userCounts":"Active Users over time"}
     
     if os.path.exists(outdir):
         if overwrite:
