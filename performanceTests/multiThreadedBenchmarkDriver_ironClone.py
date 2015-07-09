@@ -32,10 +32,10 @@ class TestMultiThreadedDriver(unittest.TestCase):
         self.startTime = time.time()
         self.benchmarkConfig={
             "templateFile" : "templates/iron_template.json",
-            "concurrentThreads" : 100,
+            "concurrentThreads" : 10,#0,
             "bulkInsertsPerThread" : 20,
-            "bulkInsertSize" : 1000,
-            "iterationPerThread" : 1000,
+            "bulkInsertSize" : 100,#0,
+            "iterationPerThread" : 10,#00,
             "actionRatios" : {
                   "simpleInsert" : 2,
                   "randomDelete" : 3,
@@ -44,19 +44,7 @@ class TestMultiThreadedDriver(unittest.TestCase):
                   "bulkInsert" : 0
                     }                   
             }
-        """self.benchmarkConfig={
-            "concurrentThreads" : 100,
-            "iterationPerThread" : 1000,
-            "bulkInsertsPerThread" : 20,
-            "bulkInsertSize" : 1000,
-            "actionRatios" : {
-                  "simpleInsert" : 2,
-                  "randomDelete" : 3,
-                  "randomRead" : 2,
-                  "randomUpdate" : 3,
-                  "bulkInsert" : 0
-                    }                   
-            }"""
+        
         if profile:
             self.pr = cProfile.Profile()
             self.pr.enable()
@@ -73,6 +61,14 @@ class TestMultiThreadedDriver(unittest.TestCase):
             self.assertTrue(respConn,"Failed to successfully connect to Database")
         self.dbVersion = respConn.json()
         
+        self.taskDataObject = {
+                          "data":{},
+                          "info":{
+                                  "benchmarkConfig":self.benchmarkConfig,
+                                  "dbVersion":self.dbVersion
+                                  }
+                          }
+        
         # just delete the old DB in case it already exists
         # TODO: do a check here to check whether is exists or not
         respDel = self.db.deleteDatabase(c.config["dbConfig"]["dbname"])
@@ -87,7 +83,7 @@ class TestMultiThreadedDriver(unittest.TestCase):
         # dump test data
         log.info("test finished: " + str(dt.datetime.now()))
         log.info("Total "+self.testName+" run time:" + str(time.time()-self.startTime))
-        json.dump(self.data, open("TaskData.json","w"))
+        json.dump(self.taskDataObject, open("TaskData.json","w"))
         
         if profile:
             p = Stats(self.pr)
@@ -176,13 +172,12 @@ class TestMultiThreadedDriver(unittest.TestCase):
         
         
         self.testName = "MultiThreadedBenchmark"
-        self.data = {"simpleInsert":[],
+        self.taskDataObject["data"] = {"simpleInsert":[],
                      "bulkInsert":[],
                      "randomRead":[],
                      "randomUpdate":[],
                      "randomDelete":[],
-                     "userCounts":[],
-                     "dbVersion":self.dbVersion
+                     "userCounts":[]
                      }
         
         insertedIDs = Queue()
@@ -222,7 +217,7 @@ class TestMultiThreadedDriver(unittest.TestCase):
         log.info("waiting for workers to finish..")
         while all(processStateDone) is False:
             activeWorkers = activeThreadCounter.value
-            self.data["userCounts"].append({"ts":str(dt.datetime.now()),"v":activeWorkers})
+            self.taskDataObject["data"]["userCounts"].append({"ts":str(dt.datetime.now()),"v":activeWorkers})
             log.info('tick.. %d active workers' % activeWorkers)
             time.sleep(5)
         
@@ -230,7 +225,7 @@ class TestMultiThreadedDriver(unittest.TestCase):
         while responseTimes.qsize() > 0: # don't use .empty() it lies
             d = responseTimes.get()
             # TODO: how should the timestamp be stashed?
-            self.data[d["action"]].append({"ts":d["timestamp"],"v":d["delta_t"]})
+            self.taskDataObject["data"][d["action"]].append({"ts":d["timestamp"],"v":d["delta_t"]})
             
         # Lets not forcefully end the first set of threads in case they are still
         #  messing around with the queue
@@ -254,7 +249,7 @@ class TestMultiThreadedDriver(unittest.TestCase):
         log.info("waiting for workers to finish..")
         while all(processStateDone2) is False:
             activeWorkers = activeThreadCounter.value
-            self.data["userCounts"].append({str(dt.datetime.now()): activeWorkers})
+            self.taskDataObject["data"]["userCounts"].append({"ts":str(dt.datetime.now()),"v":activeWorkers})
             log.info('tick.. %d active workers' % activeWorkers)
             time.sleep(5)
         
@@ -269,14 +264,15 @@ class TestMultiThreadedDriver(unittest.TestCase):
         while responseTimes.qsize() > 0: # don't use .empty() it lies
             d = responseTimes.get()
             # TODO: how should the timestamp be stashed?
-            self.data[d["action"]].append({"ts":d["timestamp"],"v":d["delta_t"]})
+            self.taskDataObject["data"][d["action"]].append({"ts":d["timestamp"],"v":d["delta_t"]})
         
         log.info("There should be %i docs in the db" % insertedIDs.qsize())
         while insertedIDs.qsize() > 0:
             _= insertedIDs.get()
         
         log.info("starting to join threads..")
-        json.dump(self.data, open("TaskData.json","w"))
+        
+        json.dump(self.taskDataObject, open("TaskData.json","w"))
         
         log.info("Terminating and Joining worker threads..")
         for i in range(self.threads*2):

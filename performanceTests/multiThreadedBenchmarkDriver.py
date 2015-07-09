@@ -34,6 +34,14 @@ class TestMultiThreadedDriver(unittest.TestCase):
         if not respConn.ok:
             self.assertTrue(respConn,"Failed to successfully connect to Database")
         self.dbVersion = respConn.json()
+        
+        self.taskDataObject = {
+                          "data":{},
+                          "info":{
+                                  "benchmarkConfig":self.benchmarkConfig,
+                                  "dbVersion":self.dbVersion
+                                  }
+                          }
             
         # add database for test
         respAdd = self.db.addDatabase(c.config["dbConfig"]["dbname"])
@@ -45,7 +53,7 @@ class TestMultiThreadedDriver(unittest.TestCase):
         # dump test data
         log.info("test finished: " + str(dt.datetime.now()))
         log.info("Total "+self.testName+" run time:" + str(time.time()-self.startTime))
-        json.dump(self.data, open("TaskData.json","w"))
+        json.dump(self.taskDataObject, open("TaskData.json","w"))
         
         # Remove Database after test completion
         #respDel = self.db.deleteDatabase(c.config["dbConfig"]["dbname"])
@@ -121,13 +129,12 @@ class TestMultiThreadedDriver(unittest.TestCase):
         
         
         self.testName = "MultiThreadedBenchmark"
-        self.data = {"simpleInsert":[],
+        self.taskDataObject["data"] = {"simpleInsert":[],
                      "bulkInsert":[],
                      "randomRead":[],
                      "randomUpdate":[],
                      "randomDelete":[],
-                     "userCounts":[],
-                     "dbVersion":self.dbVersion
+                     "userCounts":[]
                      }
         
         insertedIDs = Queue()
@@ -146,7 +153,7 @@ class TestMultiThreadedDriver(unittest.TestCase):
         
         log.info("waiting for workers to finish..")
         while all(processStateDone) is False:
-            self.data["userCounts"].append({"ts":str(dt.datetime.now()),"v":activeThreadCounter.value})
+            self.taskDataObject["data"]["userCounts"].append({"ts":str(dt.datetime.now()),"v":activeThreadCounter.value})
             log.info('tick..')
             time.sleep(5)
         
@@ -161,14 +168,14 @@ class TestMultiThreadedDriver(unittest.TestCase):
         while responseTimes.qsize() > 0: # don't use .empty() it lies
             d = responseTimes.get()
             # TODO: how should the timestamp be stashed?
-            self.data[d["action"]].append({"ts":d["timestamp"],"v":d["delta_t"]})
+            self.taskDataObject["data"][d["action"]].append({"ts":d["timestamp"],"v":d["delta_t"]})
         
         log.info("There should be %i docs in the db" % insertedIDs.qsize())
         while insertedIDs.qsize() > 0:
             _= insertedIDs.get()
         
         log.info("starting to join threads..")
-        json.dump(self.data, open("TaskData.json","w"))
+        json.dump(self.taskDataObject, open("TaskData.json","w"))
         
         log.info("Terminating and Joining worker threads..")
         for i in range(self.threads):
