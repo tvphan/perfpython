@@ -3,13 +3,16 @@ Some quick tests, experiments and scripts for the CDS Perf Team
 **Note**: at the moment all you need Python 2.6.x or Python 2.7.x, it is **not** Python 3.0 compatible yet
 
 Dependencies:
-Note: if you have python 2.7.9 or newer, it includes pip, python's package manager
+Note: if you have python 2.7.9 or newer, it includes pip, python's package manager, if you are on windows grab 32bit python
 * argparse, requests, numpy, matplotlib
 * if you want to use a virtualenv:
   * `virtualenv testenv`
   * `source ./testenv/bin/activate`
 * Install requirements using pip:
   * `pip install -r requirements.txt`
+* **If you are on Windows, you'll need to manually install numpy separately**
+  * grab the newest **32bit** installer for your version of python here: http://sourceforge.net/projects/numpy/files/NumPy/1.9.2/
+  * then you'll want to run: `python -m pip install win_requirements.txt`
 
 ### Getting started:
   1. clone this repo: `git clone git@github.ibm.com:malee/cdsperfplayground.git --recursive`

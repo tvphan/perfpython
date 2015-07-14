@@ -59,9 +59,9 @@ class TestMultiThreadedDriver(unittest.TestCase):
         json.dump(self.taskDataObject, open(self.resultsFileName,"w"))
         
         # Remove Database after test completion
-        #respDel = self.db.deleteDatabase(c.config["dbConfig"]["dbname"])
-        #if not respDel.ok:
-        #    self.assertTrue(respDel.ok,"Failed to delete Database: " + str(respDel.json()))
+        respDel = self.db.deleteDatabase(c.config["dbConfig"]["dbname"])
+        if not respDel.ok:
+            self.assertTrue(respDel.ok,"Failed to delete Database: " + str(respDel.json()))
 
     def basicCrudWorker(self, insertedIDs, responseTimes, processStateDone, pid, activeThreadCounter, benchmarkConfig):
         ''' An instance of this is executed in every thread '''
