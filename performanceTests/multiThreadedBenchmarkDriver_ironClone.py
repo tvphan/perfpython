@@ -1,8 +1,18 @@
+#!/usr/bin/env python
+##################################################################
+# Licensed Materials - Property of IBM
+# (c) Copyright IBM Corporation 2015. All Rights Reserved.
+# 
+# Note to U.S. Government Users Restricted Rights:  Use,
+# duplication or disclosure restricted by GSA ADP Schedule 
+# Contract with IBM Corp.
+##################################################################
 '''
 Created on Jun 13, 2015
 
 @author: madmaze
 '''
+
 import unittest
 import pyCloudantDB.pyCloudantDB as cdb
 import config as c
