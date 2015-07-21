@@ -21,6 +21,7 @@ Note: if you have python 2.7.9 or newer, it includes pip, python's package manag
   3. cd into performanceTests
   4. if you created a virtualenv:
     * enter the virtualenv: `source ./testenv/bin/activate`
+    * make sure you point to the testenv you created earlier
   5. run the test: `python ./multThreadedBenchmarkDriver.py`
     * Thread count, run length and action-ratios can be set in config.py
   6. get a coffee
