@@ -82,12 +82,8 @@ class TestMultiThreadedDriver(unittest.TestCase):
                                   }
                           }
         
-        # just delete the old DB in case it already exists
-        # TODO: do a check here to check whether is exists or not
-        respDel = self.db.deleteDatabase(c.config["dbConfig"]["dbname"])
-        
         # add database for test
-        respAdd = self.db.addDatabase(c.config["dbConfig"]["dbname"])
+        respAdd = self.db.addDatabase(c.config["dbConfig"]["dbname"], deleteIfExists=True)
         if not respAdd.ok:
             self.assertTrue(respAdd.ok,"Failed to successfully add a Database")
             

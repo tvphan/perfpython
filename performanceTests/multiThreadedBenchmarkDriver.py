@@ -57,7 +57,7 @@ class TestMultiThreadedDriver(unittest.TestCase):
                           }
             
         # add database for test
-        respAdd = self.db.addDatabase(c.config["dbConfig"]["dbname"])
+        respAdd = self.db.addDatabase(c.config["dbConfig"]["dbname"], deleteIfExists=True)
         if not respAdd.ok:
             self.assertTrue(respAdd.ok,"Failed to successfully add a Database")
             
