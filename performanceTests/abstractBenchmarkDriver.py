@@ -26,7 +26,7 @@ import sys
 from multiprocessing import Process, Queue, Value, Array
 import benchmarkWorker as bW
 
-class TestMultiThreadedDriver(unittest.TestCase):
+class abstractBenchmarkDriver(unittest.TestCase):
     """ Basic Multithreaded benchmark """
 
     def setUp(self):
@@ -73,7 +73,7 @@ class TestMultiThreadedDriver(unittest.TestCase):
         if not respDel.ok:
             self.assertTrue(respDel.ok,"Failed to delete Database: " + str(respDel.json()))
 
-    def basicCrudWorker(self, insertedIDs, responseTimes, processStateDone, pid, activeThreadCounter, benchmarkConfig):
+    def threadWorker(self, insertedIDs, responseTimes, processStateDone, pid, activeThreadCounter, benchmarkConfig):
         ''' An instance of this is executed in every thread '''
         log = logging.getLogger('mtbenchmark')
         
@@ -89,7 +89,6 @@ class TestMultiThreadedDriver(unittest.TestCase):
             # Create a local Worker
             worker = bW.benchmarkWorker(db, insertedIDs, params=benchmarkConfig)
             
-            
             for i in range(benchmarkConfig["iterationPerThread"]):
                 try:
                     # TODO: add feature to allow exiting of all threads
@@ -104,7 +103,7 @@ class TestMultiThreadedDriver(unittest.TestCase):
                         log.error("("+str(pid)+") Task Level Error: " + resp["action"] + " - Exception: " + resp["msg"])
                     
                     # Stash response time
-                    responseTimes.put(resp) #{"action":resp["action"], "resp":resp["delta_t"], "timestamp":resp["timestamp"]})
+                    responseTimes.put(resp)
                 
                 except Exception as e:
                     # catch task level exception to prevent early exiting
@@ -160,7 +159,7 @@ class TestMultiThreadedDriver(unittest.TestCase):
         # create workers
         processes = []
         for i in range(self.threads):
-            p = Process(target=self.basicCrudWorker, args=(insertedIDs, responseTimes, processStateDone, i, activeThreadCounter, self.benchmarkConfig))
+            p = Process(target=self.threadWorker, args=(insertedIDs, responseTimes, processStateDone, i, activeThreadCounter, self.benchmarkConfig))
             p.start()
             processes.append(p)
         

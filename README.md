@@ -15,29 +15,29 @@ Note: if you have python 2.7.9 or newer, it includes pip, python's package manag
   * then you'll want to run: `python -m pip install win_requirements.txt`
 
 ### Getting started:
-  1. clone this repo: `git clone git@github.ibm.com:malee/cdsperfplayground.git --recursive`
-    * the above will clone the main repository and also pull the dependent submodule
+  1. clone this repo: `git clone git@github.ibm.com:CloudDataServices/perf-cloudant-benchmark.git --recursive`
+    * the above will clone the main repository and also pull the dependent submodules
   2. configure performanceTests/config.py to point to your cloudant instance
   3. cd into performanceTests
   4. if you created a virtualenv:
     * enter the virtualenv: `source ./testenv/bin/activate`
     * make sure you point to the testenv you created earlier
-  5. run the test: `python ./multThreadedBenchmarkDriver.py`
+  5. run the test: `python ./cloudantBenchmark.py`
     * Thread count, run length and action-ratios can be set in config.py
   6. get a coffee
 
 ### Benchmarks, located in (./performanceTests)
 
-1. **basicCrudBenchmark.py**
+1. **basicCrudBenchmark.py [deprecated]**
   * This test creates a database and then does the following operations in order:
     * 500 inserts, simple docs
     * 500 bulk inserts, 10 simple docs per insert
     * 500 random reads
     * 500 random updates, one field updated each (also generates a read to get _rev)
     * 500 random deletes (also generates a read to get _rev)
-2. **multThreadedBenchmarkDriver.py**
+2. **cloudantBenchmark.py**
   * This test spawns a number (n_threads) of worker threads, each execute a number (runLength) of randomly selected operations
-  * The operations are randomly selected to be in the following ratios:
+  * The operations are randomly selected to be in the following ratios(this can be changed in config.py):
     * 50 Inserts
     * 25 Deletes
     * 25 Updates
@@ -55,8 +55,6 @@ Note: if you have python 2.7.9 or newer, it includes pip, python's package manag
   * Note: config.py is only used for the database credentials and database name for this project, the rest is preset to mimic ironcushion
 
 ### Misc related files:
-1. **genPlots.py**
+1. **genPlots.py [deprected, use perf-analysis]**
   * Generates some very simple plots
   * Calculated the number of errors during the run
-2. **getTopStats.py**
-  * gets the "CPU Steal Time" which is a measure of how many CPU cycles are lost due to CPU overcomitment 

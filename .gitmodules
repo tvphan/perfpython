@@ -1,3 +1,6 @@
 [submodule "performanceTests/pyCloudantDB"]
 	path = performanceTests/pyCloudantDB
 	url = git@github.ibm.com:CloudDataServices/perf-pycloudantdb.git
+[submodule "performanceTests/benchmarkDriver"]
+	path = performanceTests/benchmarkDriver
+	url = git@github.ibm.com:CloudDataServices/perf-benchmark-driver.git
