@@ -12,7 +12,7 @@ Created on Jul 29, 2015
 
 @author: madmaze
 '''
-import benchmarkDriver.abstractBenchmarkDriver as driver
+import benchmarkDriver.genericBenchmarkDriver as driver
 import pyCloudantDB.pyCloudantDB as cdb
 import config as c
 import unittest
@@ -20,7 +20,7 @@ import logging
 import benchmarkWorker as bW
 import sys
 
-class cloudantBenchmarkDriver(driver.abstractBenchmarkDriver, unittest.TestCase):
+class cloudantBenchmarkDriver(driver.genericBenchmarkDriver, unittest.TestCase):
     '''
     Simple Cloudant Benchmark, randomly execute basic CRUD ops
     
