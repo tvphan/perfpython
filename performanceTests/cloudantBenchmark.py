@@ -69,8 +69,25 @@ class cloudantBenchmarkDriver(driver.genericBenchmarkDriver, unittest.TestCase):
         respDel = self.db.deleteDatabase(c.config["dbConfig"]["dbname"])
         if not respDel.ok:
             self.assertTrue(respDel.ok,"Failed to delete Database: " + str(respDel.json()))
+            
+    def threadWorker_preStage(self, responseTimes, processStateDone, pid, activeThreadCounter, benchmarkConfig, idPool):
+        # Swap around the config
+        bulkInsertConfig = {
+            "templateFile" : "templates/iron_template.json",
+            "concurrentThreads" : self.benchmarkConfig["concurrentThreads"],
+            "iterationPerThread" : self.benchmarkConfig["bulkInsertsPerThread"],
+            "bulkInsertSize" : self.benchmarkConfig["bulkInsertSize"],
+            "actionRatios" : {
+                  "simpleInsert" : 0,
+                  "randomDelete" : 0,
+                  "randomRead" : 0,
+                  "randomUpdate" : 0,
+                  "bulkInsert" : 1
+                    }                   
+            }
+        self.threadWorker_mainStage(responseTimes, processStateDone, pid, activeThreadCounter, bulkInsertConfig, idPool)
         
-    def threadWorker(self, responseTimes, processStateDone, pid, activeThreadCounter, benchmarkConfig, idPool):
+    def threadWorker_mainStage(self, responseTimes, processStateDone, pid, activeThreadCounter, benchmarkConfig, idPool):
         ''' Overrides the generic threadWorker, an instance of this function is executed in each driver thread'''
         
         log = logging.getLogger('mtbenchmark')
@@ -103,9 +120,10 @@ class cloudantBenchmarkDriver(driver.genericBenchmarkDriver, unittest.TestCase):
                 errLine = "("+str(pid)+") Task Level Error - Exception: "+ str(e_info) + " trace:" + str(traceback.format_exc())
                 log.error(errLine)
         
-    #def testMultiThreadedBenchmark(self):
-    #    print("testMultiThreadedBenchmark")
-    #    super(cloudant).testMultiThreadedBenchmark()
+    def testMultiThreadedBenchmark(self):
+        print("testMultiThreadedBenchmark")
+        threadWorkers = [self.threadWorker_preStage, self.threadWorker_mainStage]
+        self._testMultiThreadedBenchmark(threadWorkers)
 
 if __name__ == "__main__":
     unittest.main()
