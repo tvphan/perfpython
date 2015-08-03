@@ -1,5 +1,6 @@
 config={
 "benchmarkConfig":{
+	"templateFile" : "templates/iron_template.json",
     "concurrentThreads" : 10,
     "iterationPerThread" : 100,
     "bulkInsertSize" : 10,
@@ -11,13 +12,13 @@ config={
           "bulkInsert" : 5
             }                   
     },
-
+"resultsFileName" : "TaskData.json",
 "dbConfig" : {
     # URL to the cloudant instance
     "dburl" : ("https://<dbURL>"),
     
     # Username & Password 
-    "auth" : ('<username>','<password'),
+    "auth" : ('<username>','<password>'),
     
     # Database to be used
     "dbname" : "testdb"
