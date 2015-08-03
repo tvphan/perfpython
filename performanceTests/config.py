@@ -1,6 +1,5 @@
 config={
-"benchmarkConfig":{
-	"templateFile" : "templates/iron_template.json",
+    "templateFile" : "templates/iron_template.json",
     "concurrentThreads" : 10,
     "iterationPerThread" : 100,
     "bulkInsertSize" : 10,
@@ -10,18 +9,16 @@ config={
           "randomRead" : 25,
           "randomUpdate" : 25,
           "bulkInsert" : 5
-            }                   
-    },
-"resultsFileName" : "TaskData.json",
-"dbConfig" : {
-    # URL to the cloudant instance
-    "dburl" : ("https://<dbURL>"),
+            },                   
+    "dbConfig" : {
+        # URL to the cloudant instance
+        "dburl" : ("https://<dbUrl>"),
     
-    # Username & Password 
-    "auth" : ('<username>','<password>'),
+        # Username & Password 
+        "auth" : ('username','password'),
     
-    # Database to be used
-    "dbname" : "testdb"
+        # Database to be used
+        "dbname" : "testdb"
    }
 
 }
