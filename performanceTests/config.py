@@ -1,24 +1,33 @@
 config={
     "templateFile" : "templates/iron_template.json",
-    "concurrentThreads" : 10,
-    "iterationPerThread" : 100,
-    "bulkInsertSize" : 10,
+    "concurrentThreads" : 1,
+    # Iterations used for the mail operations
+    "iterationPerThread" : 400,
+    
+    # Size and number of bulk inserts
+    "bulkInsertSize" : 1000,
+    "bulkInsertsPerThread" : 25,
+    
+    # Ratios to control the proportion of different actions
     "actionRatios" : {
-          "simpleInsert" : 50,
-          "randomDelete" : 25,
-          "randomRead" : 25,
-          "randomUpdate" : 25,
-          "bulkInsert" : 5
-            },                   
+          "simpleInsert" : 1,
+          "randomDelete" : 1,
+          "randomRead" : 1,
+          "randomUpdate" : 1,
+          "bulkInsert" : 0 },
+    
+    # If this is unset, it will generate a timestamped filename
+    "resultsFileName" : "TaskData.json",
+    
+    # Database configuration
     "dbConfig" : {
         # URL to the cloudant instance
         "dburl" : ("https://<dbUrl>"),
     
         # Username & Password 
-        "auth" : ('username','password'),
+        "auth" : ('<user>','<passwd>'),
     
         # Database to be used
         "dbname" : "testdb"
    }
-
 }
