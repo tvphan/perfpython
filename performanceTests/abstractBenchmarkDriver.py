@@ -35,8 +35,9 @@ class abstractBenchmarkDriver(unittest.TestCase):
         self.benchmarkConfig = c.config["benchmarkConfig"]
         self.threads = self.benchmarkConfig["concurrentThreads"]
         self.runLength = self.benchmarkConfig["iterationPerThread"]
+        # fix GHE issue #67: filename issue for windows and unix
+        timeStampedFileName = "TaskData_"+str(dt.datetime.now()).replace(":","_").replace(" ","_")+".json"
         
-        timeStampedFileName = "TaskData_"+str(dt.datetime.now()).replace(" ","_")+".json"
         self.resultsFileName = c.config["resultsFileName"] if "resultsFileName" in c.config.keys() else timeStampedFileName
         
         self.db = cdb.pyCloudantDB(c.config["dbConfig"])
