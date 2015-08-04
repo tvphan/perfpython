@@ -43,7 +43,10 @@ class cloudantBenchmarkDriver(driver.genericBenchmarkDriver, unittest.TestCase):
         
         # Capture Database version/build
         self.dbVersion = respConn.json()
-        self.taskDataObject["dbVersion"]=self.dbVersion
+        self.taskDataObject["info"]["dbVersion"] = self.dbVersion
+        
+        # Hide password int taskDataObject
+        self.taskDataObject["info"]["benchmarkConfig"]["dbConfig"]["auth"] = (self.taskDataObject["info"]["benchmarkConfig"]["dbConfig"]["auth"][0],"***")
             
         # Add Database for testing
         respAdd = self.db.addDatabase(c.config["dbConfig"]["dbname"], deleteIfExists=True)
@@ -70,7 +73,7 @@ class cloudantBenchmarkDriver(driver.genericBenchmarkDriver, unittest.TestCase):
         if not respDel.ok:
             self.assertTrue(respDel.ok,"Failed to delete Database: " + str(respDel.json()))
             
-    def threadWorker_preStage(self, responseTimes, processStateDone, pid, activeThreadCounter, benchmarkConfig, idPool):
+    def threadWorker_preStage(self, responseTimes, processStateDone, idx, pid, activeThreadCounter, benchmarkConfig, idPool):
         # Swap around the config
         bulkInsertConfig = {
             "templateFile" : "templates/iron_template.json",
@@ -85,9 +88,9 @@ class cloudantBenchmarkDriver(driver.genericBenchmarkDriver, unittest.TestCase):
                   "bulkInsert" : 1
                     }                   
             }
-        self.threadWorker_mainStage(responseTimes, processStateDone, pid, activeThreadCounter, bulkInsertConfig, idPool)
+        self.threadWorker_mainStage(responseTimes, processStateDone, idx, pid, activeThreadCounter, bulkInsertConfig, idPool)
         
-    def threadWorker_mainStage(self, responseTimes, processStateDone, pid, activeThreadCounter, benchmarkConfig, idPool):
+    def threadWorker_mainStage(self, responseTimes, processStateDone, idx, pid, activeThreadCounter, benchmarkConfig, idPool):
         ''' Overrides the generic threadWorker, an instance of this function is executed in each driver thread'''
         
         log = logging.getLogger('mtbenchmark')
