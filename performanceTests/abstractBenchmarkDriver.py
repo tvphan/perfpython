@@ -32,7 +32,8 @@ class abstractBenchmarkDriver(unittest.TestCase):
     def setUp(self):
         self.randomIDs = None
         self.startTime = time.time()
-        self.benchmarkConfig = c.config["benchmarkConfig"]
+        #Fix issue 57 - remove nested layer "benchmarkConfig in config file
+        self.benchmarkConfig = c.config
         self.threads = self.benchmarkConfig["concurrentThreads"]
         self.runLength = self.benchmarkConfig["iterationPerThread"]
         # fix GHE issue #67: filename issue for windows and unix
@@ -52,7 +53,12 @@ class abstractBenchmarkDriver(unittest.TestCase):
         self.taskDataObject = {
                           "data":{},
                           "info":{
-                                  "benchmarkConfig":self.benchmarkConfig,
+                                  "templateFile":self.benchmarkConfig["templateFile"],
+                                  "concurrentThreads":self.threads,
+                                  "iterationPerThread":self.runLength,
+                                  "actionRatios":self.benchmarkConfig["actionRatios"],
+                                  "bulkInsertSize":self.benchmarkConfig["bulkInsertSize"],
+                                  "resultsFileName":self.benchmarkConfig["resultsFileName"],
                                   "dbVersion":self.dbVersion
                                   }
                           }
