@@ -80,20 +80,26 @@ class benchmarkWorker(object):
         self.seqNum = seqNum
         action = self.getShuffledAction()
         
-        if action == "simpleInsert":
-            return self.execInsert()
-        elif action == "randomDelete":
-            return self.execDelete()
-        elif action == "randomRead":
-            return self.execRead()
-        elif action == "randomUpdate":
-            return self.execUpdate()
-        elif action == "bulkInsert":
-            return self.execBulkInsert()
+        # Partial match the named actions
+        if "simpleInsert" in action:
+            return self.execInsert(action)
+        
+        elif "randomDelete" in action:
+            return self.execDelete(action)
+        
+        elif "randomRead" in action:
+            return self.execRead(action)
+        
+        elif "randomUpdate" in action:
+            return self.execUpdate(action)
+        
+        elif "bulkInsert" in action:
+            return self.execBulkInsert(action)
+        
         else:
             raise Exception({"action":action, "err":True, "msg":"Error, unknown action"})
         
-    def execInsert(self):
+    def execInsert(self, actionName):
         ''' Insert a random document '''
         # Generate a random doc from template
         d = self.gen.genJsonFromTemplate()
@@ -104,7 +110,7 @@ class benchmarkWorker(object):
         delta_t = time.time()-t
         tstamp=str(dt.datetime.fromtimestamp(t))
         if not resp.ok:
-            return {"action":"simpleInsert",
+            return {"action":actionName,
                     "delta_t":-2,
                     "err":True,
                     "msg":"[execInsert Error] "+str(resp.status_code),
@@ -115,11 +121,11 @@ class benchmarkWorker(object):
             d["_rev"]=resp_d["rev"]
             self.insertedIDs.put(d)
             
-        return {"action":"simpleInsert",
+        return {"action":actionName,
                 "delta_t":delta_t,
                 "timestamp":tstamp}
     
-    def execDelete(self):
+    def execDelete(self, actionName):
         ''' Things to note, we are cheating a little, we don't to a read for every delete since we trach the _rev'''
         try:
             d = self.getRandomID()
@@ -128,24 +134,24 @@ class benchmarkWorker(object):
             delta_t = time.time()-t
             tstamp=str(dt.datetime.fromtimestamp(t))
             if not resp.ok:
-                return {"action":"randomDelete",
+                return {"action":actionName,
                         "delta_t":-2,
                         "err":True,
                         "msg":"[execDelete Error] "+str(resp.status_code),
                         "timestamp":tstamp}
                 
         except Q.Empty:
-            return {"action":"randomDelete",
+            return {"action":actionName,
                     "delta_t":-1,
                     "err":True,
                     "msg":"[execDelete Error] nothing to process QSize="+str(self.insertedIDs.qsize()),
                     "timestamp":str(dt.datetime.now())}
             
-        return {"action":"randomDelete",
+        return {"action":actionName,
                 "delta_t":delta_t,
                 "timestamp":tstamp}
     
-    def execRead(self):
+    def execRead(self, actionName):
         ''' Read a random read element'''
         try:
             d = self.getRandomID()
@@ -154,7 +160,7 @@ class benchmarkWorker(object):
             delta_t = time.time()-t
             tstamp=str(dt.datetime.fromtimestamp(t))
             if not resp.ok:
-                return {"action":"randomRead",
+                return {"action":actionName,
                         "delta_t":-2,
                         "err":True,
                         "msg":"[execRead Error] "+str(resp.status_code),
@@ -164,17 +170,17 @@ class benchmarkWorker(object):
             self.insertedIDs.put(resp_d)
             
         except Q.Empty:
-            return {"action":"randomRead",
+            return {"action":actionName,
                     "delta_t":-1,
                     "err":True,
                     "msg":"[execRead Error] nothing to process QSize="+str(self.insertedIDs.qsize()),
                     "timestamp":str(dt.datetime.now())}
             
-        return {"action":"randomRead",
+        return {"action":actionName,
                 "delta_t":delta_t,
                 "timestamp":tstamp}
     
-    def execUpdate(self):
+    def execUpdate(self, actionName):
         ''' Update a random element'''
         try:
             d = self.getRandomID()
@@ -185,7 +191,7 @@ class benchmarkWorker(object):
             delta_t = time.time()-t
             tstamp=str(dt.datetime.fromtimestamp(t))
             if not resp.ok:
-                return {"action":"randomUpdate",
+                return {"action":actionName,
                         "delta_t":-2,
                         "err":True,
                         "msg":"[execUpdate Error] "+str(resp.status_code),
@@ -196,17 +202,17 @@ class benchmarkWorker(object):
             self.insertedIDs.put(d_changed)
             
         except Q.Empty:
-            return {"action":"randomUpdate",
+            return {"action":actionName,
                     "delta_t":-1,
                     "err":True,
                     "msg":"[execUpdate Error] nothing to process QSize="+str(self.insertedIDs.qsize()),
                     "timestamp":str(dt.datetime.now())}
             
-        return {"action":"randomUpdate",
+        return {"action":actionName,
                 "delta_t":delta_t,
                 "timestamp":tstamp}
     
-    def execBulkInsert(self):
+    def execBulkInsert(self, actionName):
         ''' Bulk inserts a a bunch of random documents, insertSize = params["bulkInsertSize"]'''
         bulkAdd={}
         for j in range(0,self.params["bulkInsertSize"]):
@@ -221,7 +227,7 @@ class benchmarkWorker(object):
         delta_t = time.time()-t
         tstamp=str(dt.datetime.fromtimestamp(t))
         if not resp.ok:
-            return {"action":"bulkInsert",
+            return {"action":actionName,
                     "delta_t":-2,
                     "err":True,
                     "msg":"[execBulkInsert Error] "+str(resp.status_code),
@@ -231,8 +237,8 @@ class benchmarkWorker(object):
             for d in resp_d:
                 bulkAdd[d["id"]]["_rev"]=d['rev']
                 self.insertedIDs.put(bulkAdd[d["id"]])
-        print "bulk inserted",len(bulkAdd),"docs in", delta_t,"s"
-        return {"action":"bulkInsert",
+                
+        return {"action":actionName,
                 "delta_t":delta_t,
                 "timestamp":tstamp}
             

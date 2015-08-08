@@ -34,7 +34,7 @@ class cloudantBenchmarkDriver(driver.genericBenchmarkDriver, unittest.TestCase):
         super(cloudantBenchmarkDriver, self).setUp(c)
         
         # Setup Database connection
-        self.db = cdb.pyCloudantDB(c.config["dbConfig"])
+        self.db = cdb.pyCloudantDB(self.benchmarkConfig["dbConfig"])
         
         # Test Database connection
         respConn = self.db.testConnection()
@@ -45,22 +45,27 @@ class cloudantBenchmarkDriver(driver.genericBenchmarkDriver, unittest.TestCase):
         self.dbVersion = respConn.json()
         self.taskDataObject["info"]["dbVersion"] = self.dbVersion
         
-        # Hide password int taskDataObject
-        self.taskDataObject["info"]["benchmarkConfig"]["dbConfig"]["auth"] = (self.taskDataObject["info"]["benchmarkConfig"]["dbConfig"]["auth"][0],"***")
+        # Hide password in taskDataObject
+        # Recursively step though the dict and hide any "auth"-tuples
+        def hidePassword(tdObj):
+            if isinstance(tdObj, dict):
+                for k in tdObj:
+                    if k == "auth" and isinstance(tdObj[k], tuple):
+                        usr,pw = tdObj[k]
+                        tdObj[k] = (usr,"***")
+                    else:
+                        tdObj[k] = hidePassword(tdObj[k])
+            return tdObj
+            
+        self.taskDataObject["info"] = hidePassword(self.taskDataObject["info"])
+        
             
         # Add Database for testing
-        respAdd = self.db.addDatabase(c.config["dbConfig"]["dbname"], deleteIfExists=True)
+        respAdd = self.db.addDatabase(self.benchmarkConfig["dbConfig"]["dbname"], deleteIfExists=True)
         if not respAdd.ok:
             self.assertTrue(respAdd.ok,"Failed to successfully add a Database")
         
         # Populate expected tasks
-        self.taskDataObject["data"] = {"simpleInsert":[],
-                     "bulkInsert":[],
-                     "randomRead":[],
-                     "randomUpdate":[],
-                     "randomDelete":[],
-                     "userCounts":[]
-                     }
         self.testName = "MultiThreadedBenchmark"
         
         
@@ -69,12 +74,14 @@ class cloudantBenchmarkDriver(driver.genericBenchmarkDriver, unittest.TestCase):
         super(cloudantBenchmarkDriver, self).tearDown()
         
         # Remove Database after test completion
-        respDel = self.db.deleteDatabase(c.config["dbConfig"]["dbname"])
+        respDel = self.db.deleteDatabase(self.benchmarkConfig["dbConfig"]["dbname"])
         if not respDel.ok:
             self.assertTrue(respDel.ok,"Failed to delete Database: " + str(respDel.json()))
             
     def threadWorker_preStage(self, responseTimes, processStateDone, idx, pid, activeThreadCounter, benchmarkConfig, idPool):
-        # Swap around the config
+        ''' This preStage is intended to populate the database with some documents before we test '''
+
+        # assemble database population (bulk insert) config
         bulkInsertConfig = {
             "templateFile" : "templates/iron_template.json",
             "concurrentThreads" : self.benchmarkConfig["concurrentThreads"],
@@ -86,9 +93,30 @@ class cloudantBenchmarkDriver(driver.genericBenchmarkDriver, unittest.TestCase):
                   "randomRead" : 0,
                   "randomUpdate" : 0,
                   "bulkInsert" : 1
-                    }                   
+                    },
+            "dbConfig": self.benchmarkConfig["dbConfig"]
             }
         self.threadWorker_mainStage(responseTimes, processStateDone, idx, pid, activeThreadCounter, bulkInsertConfig, idPool)
+        
+    def threadWorker_mainStage_SkipLB(self, responseTimes, processStateDone, idx, pid, activeThreadCounter, benchmarkConfig, idPool):
+        ''' This stage is intended to get a small number datapoints circumventing the Load Balancer, in our tests we've noted that
+            these are very consistent (low variability) metrics to measure the response times of certain CRUD ops'''
+        
+        # assemble custom configuration
+        noLbBenchmarkConfig = {
+            "templateFile" : "templates/iron_template.json",
+            "concurrentThreads" : self.benchmarkConfig["concurrentThreads"],
+            "iterationPerThread" : self.benchmarkConfig["noLbIterationsPerThread"],
+            "actionRatios" : {
+                  "noLB_simpleInsert" : 1,
+                  "noLB_randomDelete" : 1,
+                  "noLB_randomRead" : 1,
+                  "noLB_randomUpdate" : 1,
+                  "noLB_bulkInsert" : 0
+                    },
+            "dbConfig": self.benchmarkConfig["noLbDbConfig"]                
+            }
+        self.threadWorker_mainStage(responseTimes, processStateDone, idx, pid, activeThreadCounter, noLbBenchmarkConfig, idPool)
         
     def threadWorker_mainStage(self, responseTimes, processStateDone, idx, pid, activeThreadCounter, benchmarkConfig, idPool):
         ''' Overrides the generic threadWorker, an instance of this function is executed in each driver thread'''
@@ -96,7 +124,7 @@ class cloudantBenchmarkDriver(driver.genericBenchmarkDriver, unittest.TestCase):
         log = logging.getLogger('mtbenchmark')
         
         # Create a local DB object
-        db = cdb.pyCloudantDB(c.config["dbConfig"])
+        db = cdb.pyCloudantDB(benchmarkConfig["dbConfig"])
         
         # Create a local Worker
         worker = bW.benchmarkWorker(db, idPool, params=benchmarkConfig)
@@ -124,8 +152,7 @@ class cloudantBenchmarkDriver(driver.genericBenchmarkDriver, unittest.TestCase):
                 log.error(errLine)
         
     def testMultiThreadedBenchmark(self):
-        print("testMultiThreadedBenchmark")
-        threadWorkers = [self.threadWorker_preStage, self.threadWorker_mainStage]
+        threadWorkers = [self.threadWorker_preStage, self.threadWorker_mainStage, self.threadWorker_mainStage_SkipLB]
         self._testMultiThreadedBenchmark(threadWorkers)
 
 if __name__ == "__main__":
