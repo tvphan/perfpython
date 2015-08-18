@@ -19,6 +19,7 @@ import unittest
 import logging
 import benchmarkWorker as bW
 import sys
+import time
 
 class cloudantBenchmarkDriver(driver.genericBenchmarkDriver, unittest.TestCase):
     '''
@@ -129,15 +130,24 @@ class cloudantBenchmarkDriver(driver.genericBenchmarkDriver, unittest.TestCase):
         # Create a local Worker
         worker = bW.benchmarkWorker(db, idPool, params=benchmarkConfig)
         
+        # Rate-limiting timer
+        lastLoopTime = time.time()
+        minLoopTime = 1.0/8 # 4rps
+        
         for i in range(benchmarkConfig["iterationPerThread"]):
             try:
                 # TODO: add feature to allow exiting of all threads
                 #if any(processStateDone):
                 #    print pid, "error on other thread, exiting"
                 #    return False
+                while (time.time()-lastLoopTime) < minLoopTime:
+                    time.sleep(0.01)
+                
+                # reset timer
+                lastLoopTime = time.time()
                 
                 # Run worker 
-                resp = worker.execRandomAction(str(pid)+":"+str(i))
+                resp = worker.execRandomAction(str(pid)+":"+str(i))                
                 
                 if "err" in resp.keys() and resp["err"] is True:
                     log.error("("+str(pid)+") Task Level Error: " + resp["action"] + " - Exception: " + resp["msg"])
