@@ -85,9 +85,9 @@ class cloudantBenchmarkDriver(driver.genericBenchmarkDriver, unittest.TestCase):
         # assemble database population (bulk insert) config
         bulkInsertConfig = {
             "templateFile" : "templates/iron_template.json",
-            "concurrentThreads" : self.benchmarkConfig["concurrentThreads"],
-            "iterationPerThread" : self.benchmarkConfig["bulkInsertsPerThread"],
-            "bulkInsertSize" : self.benchmarkConfig["bulkInsertSize"],
+            "concurrentThreads" : benchmarkConfig["concurrentThreads"],
+            "iterationPerThread" : benchmarkConfig["bulkInsertsPerThread"],
+            "bulkInsertSize" : benchmarkConfig["bulkInsertSize"],
             "actionRatios" : {
                   "simpleInsert" : 0,
                   "randomDelete" : 0,
@@ -95,7 +95,8 @@ class cloudantBenchmarkDriver(driver.genericBenchmarkDriver, unittest.TestCase):
                   "randomUpdate" : 0,
                   "bulkInsert" : 1
                     },
-            "dbConfig": self.benchmarkConfig["dbConfig"]
+            "dbConfig": benchmarkConfig["dbConfig"],
+            "maxReqPerSec" : benchmarkConfig["maxReqPerSec"]
             }
         self.threadWorker_mainStage(responseTimes, processStateDone, idx, pid, activeThreadCounter, bulkInsertConfig, idPool)
         
@@ -106,8 +107,8 @@ class cloudantBenchmarkDriver(driver.genericBenchmarkDriver, unittest.TestCase):
         # assemble custom configuration
         noLbBenchmarkConfig = {
             "templateFile" : "templates/iron_template.json",
-            "concurrentThreads" : self.benchmarkConfig["concurrentThreads"],
-            "iterationPerThread" : self.benchmarkConfig["noLbIterationsPerThread"],
+            "concurrentThreads" : benchmarkConfig["concurrentThreads"],
+            "iterationPerThread" : benchmarkConfig["noLbIterationsPerThread"],
             "actionRatios" : {
                   "noLB_simpleInsert" : 1,
                   "noLB_randomDelete" : 1,
@@ -115,7 +116,8 @@ class cloudantBenchmarkDriver(driver.genericBenchmarkDriver, unittest.TestCase):
                   "noLB_randomUpdate" : 1,
                   "noLB_bulkInsert" : 0
                     },
-            "dbConfig": self.benchmarkConfig["noLbDbConfig"]                
+            "dbConfig": benchmarkConfig["noLbDbConfig"],
+            "maxReqPerSec" : benchmarkConfig["maxReqPerSec"]
             }
         self.threadWorker_mainStage(responseTimes, processStateDone, idx, pid, activeThreadCounter, noLbBenchmarkConfig, idPool)
         
