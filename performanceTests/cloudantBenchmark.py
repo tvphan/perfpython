@@ -132,7 +132,7 @@ class cloudantBenchmarkDriver(driver.genericBenchmarkDriver, unittest.TestCase):
         
         # Rate-limiting timer
         lastLoopTime = time.time()
-        minLoopTime = 1.0/16 # 4rps
+        minLoopTime = 1.0/32 # 4rps
         
         for i in range(benchmarkConfig["iterationPerThread"]):
             try:
