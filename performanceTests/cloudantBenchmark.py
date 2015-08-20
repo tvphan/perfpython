@@ -132,7 +132,13 @@ class cloudantBenchmarkDriver(driver.genericBenchmarkDriver, unittest.TestCase):
         
         # Rate-limiting timer
         lastLoopTime = time.time()
-        minLoopTime = 1.0/32 # 4rps
+        
+        if "maxReqPerSec" in benchmarkConfig:
+            # setting the maximum requests per second
+            minLoopTime = 1.0/benchmarkConfig["maxReqPerSec"]
+        else:
+            # infinite
+            minLoopTime = 0
         
         for i in range(benchmarkConfig["iterationPerThread"]):
             try:
@@ -141,7 +147,6 @@ class cloudantBenchmarkDriver(driver.genericBenchmarkDriver, unittest.TestCase):
                 #    print pid, "error on other thread, exiting"
                 #    return False
                 while (time.time()-lastLoopTime) < minLoopTime:
-                    print "."
                     time.sleep(0.01)
                 
                 # reset timer
