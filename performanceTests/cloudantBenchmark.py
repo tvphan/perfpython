@@ -19,6 +19,7 @@ import unittest
 import logging
 import benchmarkWorker as bW
 import sys
+import time
 
 class cloudantBenchmarkDriver(driver.genericBenchmarkDriver, unittest.TestCase):
     '''
@@ -84,9 +85,9 @@ class cloudantBenchmarkDriver(driver.genericBenchmarkDriver, unittest.TestCase):
         # assemble database population (bulk insert) config
         bulkInsertConfig = {
             "templateFile" : "templates/iron_template.json",
-            "concurrentThreads" : self.benchmarkConfig["concurrentThreads"],
-            "iterationPerThread" : self.benchmarkConfig["bulkInsertsPerThread"],
-            "bulkInsertSize" : self.benchmarkConfig["bulkInsertSize"],
+            "concurrentThreads" : benchmarkConfig["concurrentThreads"],
+            "iterationPerThread" : benchmarkConfig["bulkInsertsPerThread"],
+            "bulkInsertSize" : benchmarkConfig["bulkInsertSize"],
             "actionRatios" : {
                   "simpleInsert" : 0,
                   "randomDelete" : 0,
@@ -94,7 +95,8 @@ class cloudantBenchmarkDriver(driver.genericBenchmarkDriver, unittest.TestCase):
                   "randomUpdate" : 0,
                   "bulkInsert" : 1
                     },
-            "dbConfig": self.benchmarkConfig["dbConfig"]
+            "dbConfig": benchmarkConfig["dbConfig"],
+            "maxReqPerSec" : benchmarkConfig["maxReqPerSec"]
             }
         self.threadWorker_mainStage(responseTimes, processStateDone, idx, pid, activeThreadCounter, bulkInsertConfig, idPool)
         
@@ -105,8 +107,8 @@ class cloudantBenchmarkDriver(driver.genericBenchmarkDriver, unittest.TestCase):
         # assemble custom configuration
         noLbBenchmarkConfig = {
             "templateFile" : "templates/iron_template.json",
-            "concurrentThreads" : self.benchmarkConfig["concurrentThreads"],
-            "iterationPerThread" : self.benchmarkConfig["noLbIterationsPerThread"],
+            "concurrentThreads" : benchmarkConfig["concurrentThreads"],
+            "iterationPerThread" : benchmarkConfig["noLbIterationsPerThread"],
             "actionRatios" : {
                   "noLB_simpleInsert" : 1,
                   "noLB_randomDelete" : 1,
@@ -114,7 +116,8 @@ class cloudantBenchmarkDriver(driver.genericBenchmarkDriver, unittest.TestCase):
                   "noLB_randomUpdate" : 1,
                   "noLB_bulkInsert" : 0
                     },
-            "dbConfig": self.benchmarkConfig["noLbDbConfig"]                
+            "dbConfig": benchmarkConfig["noLbDbConfig"],
+            "maxReqPerSec" : benchmarkConfig["maxReqPerSec"]
             }
         self.threadWorker_mainStage(responseTimes, processStateDone, idx, pid, activeThreadCounter, noLbBenchmarkConfig, idPool)
         
@@ -129,15 +132,30 @@ class cloudantBenchmarkDriver(driver.genericBenchmarkDriver, unittest.TestCase):
         # Create a local Worker
         worker = bW.benchmarkWorker(db, idPool, params=benchmarkConfig)
         
+        # Rate-limiting timer
+        lastLoopTime = time.time()
+        
+        if "maxReqPerSec" in benchmarkConfig:
+            # setting the maximum requests per second
+            minLoopTime = 1.0/benchmarkConfig["maxReqPerSec"]
+        else:
+            # infinite
+            minLoopTime = 0
+        
         for i in range(benchmarkConfig["iterationPerThread"]):
             try:
                 # TODO: add feature to allow exiting of all threads
                 #if any(processStateDone):
                 #    print pid, "error on other thread, exiting"
                 #    return False
+                while (time.time()-lastLoopTime) < minLoopTime:
+                    time.sleep(0.01)
+                
+                # reset timer
+                lastLoopTime = time.time()
                 
                 # Run worker 
-                resp = worker.execRandomAction(str(pid)+":"+str(i))
+                resp = worker.execRandomAction(str(pid)+":"+str(i))                
                 
                 if "err" in resp.keys() and resp["err"] is True:
                     log.error("("+str(pid)+") Task Level Error: " + resp["action"] + " - Exception: " + resp["msg"])

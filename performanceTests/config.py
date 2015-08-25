@@ -8,6 +8,9 @@ config={
     "bulkInsertSize" : 1000,
     "bulkInsertsPerThread" : 250,
     
+    # Limiting the number of Requests per second
+    # "maxReqPerSec" : 4,
+    
     # Ratios to control the proportion of different actions
     "actionRatios" : {
           "simpleInsert" : 1,
