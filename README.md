@@ -8,12 +8,15 @@ Note: if you have python 2.7.9 or newer, it includes pip, python's package manag
 * if you want to use a virtualenv:
   * `virtualenv testenv`
   * `source ./testenv/bin/activate`
+* Windows may additionally require these python packages
+  * sudo apt-get -y install python-dev
+  * sudo apt-get -y install python-lxml 
 * Install requirements using pip:
   * `pip install -r requirements.txt`
 * **If you are on Windows, you'll need to manually install numpy separately**
   * grab the newest **32bit** installer for your version of python here: http://sourceforge.net/projects/numpy/files/NumPy/1.9.2/
   * then you'll want to run: `python -m pip install win_requirements.txt`
-
+  * and might also need: `pip install pyopenssl ndg-httpsclient pyasn1`
 ### Getting started:
   1. clone this repo: `git clone git@github.ibm.com:CloudDataServices/perf-cloudant-benchmark.git --recursive`
     * the above will clone the main repository and also pull the dependent submodules

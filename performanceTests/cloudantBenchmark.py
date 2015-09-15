@@ -166,7 +166,7 @@ class cloudantBenchmarkDriver(driver.genericBenchmarkDriver, unittest.TestCase):
             except Exception as e:
                 # catch task level exception to prevent early exiting
                 e_info = sys.exc_info()[0]
-                errLine = "("+str(pid)+") Task Level Error - Exception: "+ str(e_info) + " trace:" + str(traceback.format_exc())
+                errLine = "("+str(pid)+") Task Level Error - Exception: "+ str(e_info)
                 log.error(errLine)
         
     def testMultiThreadedBenchmark(self):
