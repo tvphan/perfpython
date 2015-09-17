@@ -96,7 +96,7 @@ class cloudantBenchmarkDriver(driver.genericBenchmarkDriver, unittest.TestCase):
                   "bulkInsert" : 1
                     },
             "dbConfig": benchmarkConfig["dbConfig"],
-            "maxReqPerSec" : benchmarkConfig["maxReqPerSec"]
+            "maxReqPerSec" : benchmarkConfig["maxReqPerSec"] if "maxReqPerSec" in benchmarkConfig else 0
             }
         self.threadWorker_mainStage(responseTimes, processStateDone, idx, pid, activeThreadCounter, bulkInsertConfig, idPool)
         
@@ -117,7 +117,7 @@ class cloudantBenchmarkDriver(driver.genericBenchmarkDriver, unittest.TestCase):
                   "noLB_bulkInsert" : 0
                     },
             "dbConfig": benchmarkConfig["noLbDbConfig"],
-            "maxReqPerSec" : benchmarkConfig["maxReqPerSec"]
+            "maxReqPerSec" : benchmarkConfig["maxReqPerSec"] if "maxReqPerSec" in benchmarkConfig else 0
             }
         self.threadWorker_mainStage(responseTimes, processStateDone, idx, pid, activeThreadCounter, noLbBenchmarkConfig, idPool)
         
@@ -135,7 +135,7 @@ class cloudantBenchmarkDriver(driver.genericBenchmarkDriver, unittest.TestCase):
         # Rate-limiting timer
         lastLoopTime = time.time()
         
-        if "maxReqPerSec" in benchmarkConfig:
+        if "maxReqPerSec" in benchmarkConfig and benchmarkConfig["maxReqPerSec"] > 0:
             # setting the maximum requests per second
             minLoopTime = 1.0/benchmarkConfig["maxReqPerSec"]
         else:
