@@ -32,7 +32,9 @@ class baseBenchmarkWorker(object):
         self.ratios = {}
         self.actionTable = {}
         self.actions = []
-        
+        self.insertedIDs = None  #TODO: What type is insertedIDs ? Should it be in base ? 
+        self.seqNum = -1
+             
     def addActions(self, newActions):
         if not isinstance(newActions, dict):
             raise "newActions is not a dictionary"
@@ -43,14 +45,14 @@ class baseBenchmarkWorker(object):
             raise "newActions is not a dictionary"
         self.actions = dict(self.actions, **newRatios)
 
-    def timeStart(self): #TODO: Should be part of base class
+    def timeStart(self):
         """
         Set or reset starting time
         """
         self.tStart = time.time()
         self.tEnd = 0.0
         
-    def timeEnd(self): #TODO: Should be part of base class
+    def timeEnd(self):
         """
         Calculate elapsed time if not already set
         """
@@ -58,6 +60,35 @@ class baseBenchmarkWorker(object):
             self.delta_t = time.time()-self.tStart
             self.tstamp=str(dt.datetime.fromtimestamp(self.tStart))
         
+    def getShuffledAction(self):
+        if self.actions == []:
+            for k in self.ratios:
+                self.actions.extend(self.ratios[k]*[k])
+            random.seed(time.time())
+            for i in range(len(self.actions)/10):
+                # lets do a few rounds of suffleing to ensure we 
+                # get something actually kinda random
+                random.shuffle(self.actions)
+            
+        return self.actions.pop()
+    
+    def getRandomID(self):
+        # TODO: not so random right now.. 
+        t=time.time()
+        d = self.insertedIDs.get(timeout=10)  #WHY DOES THIS TAKE ANYTIME AT ALL ???
+        delta_t=time.time()-t
+        
+        if delta_t >1:
+            log = log.getLogger('mtbenchmark')
+            log.warn("getting Random ID took a long time:"+str(delta_t))
+            
+        return d
+        
+    def execRandomAction(self, seqNum):
+        self.seqNum = seqNum
+        action = self.getShuffledAction()
+        return self.execAction(action)
+ 
     def execAction(self, actionName):
         """
         Executes test method
@@ -66,12 +97,17 @@ class baseBenchmarkWorker(object):
         * handles bad response complaints
         * catches expected exceptions for things like queue underflow, etc. 
         """
-        method = self.actionTable[actionName]
+        if "noLB_" in actionName:
+            shortName = actionName.replace("noLB_","")
+            method = self.actionTable[shortName]
+        else:
+            method = self.actionTable[actionName]
+            
         if method is None:
             raise Exception({"action":actionName, "err":True, "msg":"Error, unknown action"})
         try:
             self.timeStart()
-            resp = method(self, actionName)
+            resp = method(self)
             self.timeEnd()
         
             if not resp.ok:
