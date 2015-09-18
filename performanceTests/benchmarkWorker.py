@@ -50,7 +50,7 @@ class benchmarkWorker(bBW.baseBenchmarkWorker):
                          })
         
         if params is not None and "actionRatios" in params:
-            self.ratios = params["actionRatios"]
+            self.addRatios(params["actionRatios"])
             self.params = params
         else:
             log = logging.getLogger('mtbenchmark')
@@ -72,9 +72,9 @@ class benchmarkWorker(bBW.baseBenchmarkWorker):
         d = self.gen.genJsonFromTemplate()
         
         d["_id"] = "test:"+str(self.seqNum)   #TODO: incremental id generator
-        self.tStart()  #Optional, used only to override the default if pre-processing 
+        self.timeStart()  #Optional, used only to override the default if pre-processing 
         resp = self.db.addDocument(d)
-        self.tEnd() #Optional, used to preset the time if post-processing might take time
+        self.timeEnd() #Optional, used to preset the time if post-processing might take time
         
         # if not resp.ok will be covered on return to report the problem (more consistent)
         #TODO: If resp.ok handling should use standardized methods for 
@@ -97,19 +97,21 @@ class benchmarkWorker(bBW.baseBenchmarkWorker):
         if resp.ok:
             resp_d = resp.json()
             self.insertedIDs.put(resp_d)
+        return resp
 
     def execUpdate(self):
         ''' Update a random element'''
         d = self.getRandomID()
         # execute a random change
         d_changed = self.gen.genRandomChanges(d, 1)
-        self.startTime() #TODO: Assumes gen op takes significant time
+        self.timeStart() #TODO: Assumes gen op takes significant time
         resp = self.db.updateDocument(d_changed)
         #TODO: Storing response with different rev should be standard method
         if resp.ok:
             resp_d = resp.json()
             d_changed["_rev"]=resp_d["rev"]
             self.insertedIDs.put(d_changed)
+        return resp
             
     def execBulkInsert(self):
         ''' Bulk inserts a a bunch of random documents, insertSize = params["bulkInsertSize"]'''

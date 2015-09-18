@@ -42,23 +42,26 @@ class baseBenchmarkWorker(object):
 
     def addRatios(self, newRatios):
         if not isinstance(newRatios, dict):
-            raise "newActions is not a dictionary"
-        self.actions = dict(self.actions, **newRatios)
+            raise "newRatios is not a dictionary"
+        self.ratios = dict(self.ratios, **newRatios)
 
     def timeStart(self):
         """
         Set or reset starting time
         """
         self.tStart = time.time()
+        self.tDelta = -1.0
         self.tEnd = 0.0
+        self.tStamp = ""
         
     def timeEnd(self):
         """
         Calculate elapsed time if not already set
         """
-        if self.tEnd is 0.0:
-            self.delta_t = time.time()-self.tStart
-            self.tstamp=str(dt.datetime.fromtimestamp(self.tStart))
+        if self.tEnd == 0.0:
+            self.tEnd = time.time()
+            self.tDelta = self.tEnd-self.tStart
+            self.tStamp=str(dt.datetime.fromtimestamp(self.tStart))
         
     def getShuffledAction(self):
         if self.actions == []:
@@ -66,7 +69,7 @@ class baseBenchmarkWorker(object):
                 self.actions.extend(self.ratios[k]*[k])
             random.seed(time.time())
             for i in range(len(self.actions)/10):
-                # lets do a few rounds of suffleing to ensure we 
+                # lets do a few rounds of shuffling to ensure we 
                 # get something actually kinda random
                 random.shuffle(self.actions)
             
@@ -114,14 +117,14 @@ class baseBenchmarkWorker(object):
                 return {"action":actionName,
                         "delta_t":-2,
                         "err":True,
-                        "msg":"["+actionName+" Error] "+str(resp.status_code),  #TODO: Which name to use
-                        "timestamp":self.tstamp}
+                        "msg":"["+actionName+" Error] "+str(resp.status_code),
+                        "timestamp":self.tStamp}
             
         except Q.Empty:
             return {"action":actionName,
                     "delta_t":-1,
                     "err":True,
-                    "msg":"["+actionName+"] nothing to process QSize="+str(self.insertedIDs.qsize()),  #TODO: Which name to use
+                    "msg":"["+actionName+"] nothing to process QSize="+str(self.insertedIDs.qsize()), 
                     "timestamp":str(dt.datetime.now())}
             
         except: # catch *all* exceptions
@@ -129,9 +132,9 @@ class baseBenchmarkWorker(object):
             return {"action":actionName,
                     "delta_t":-1,
                     "err":True,
-                    "msg":"["+actionName+"] ="+ e,  #TODO: Which name to use
+                    "msg":"["+actionName+"] ="+ e, 
                     "timestamp":str(dt.datetime.now())}
             
         return {"action":actionName,
-                "delta_t":self.delta_t,
-                "timestamp":self.tstamp}
+                "delta_t":self.tDelta,
+                "timestamp":self.tStamp}
