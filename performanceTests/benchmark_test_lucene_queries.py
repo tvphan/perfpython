@@ -11,6 +11,7 @@
 import baseBenchmarkWorker as bBW
 import testy.suites.api.test_lucene_queries as TLQ
 import logging
+import requests
 
 class benchmark_test_lucene_queries(bBW.baseBenchmarkWorker, TLQ.TestLuceneQueries):
     '''
@@ -53,12 +54,12 @@ class benchmark_test_lucene_queries(bBW.baseBenchmarkWorker, TLQ.TestLuceneQueri
                          "test_include_fields_invalid_fields" : benchmark_test_lucene_queries.test_include_fields_invalid_fields,
                          })
         
-        if params is not None and "IGNOREactionRatios" in params:
+        if params is not None and "actionRatios" in params and params["actionRatios"] is not None:
             self.ratios = params["actionRatios"]
             self.params = params
         else:
             log = logging.getLogger('mtbenchmark')
-            log.error("params have not been set, using fallback")
+            log.warn("params have not been set, using fallback")
             self.addRatios({
                             "test_result_json_structure" : 1,
                             "test_bookmark_has_no_rows" : 1,
@@ -85,9 +86,57 @@ class benchmark_test_lucene_queries(bBW.baseBenchmarkWorker, TLQ.TestLuceneQueri
                             "test_include_fields" : 1,
                             "test_include_fields_invalid_fields" : 1,
                   })
+            
 
-        # Do one time call to tearDown, setUp to prepare 
-        #self.tearDown()
-        #self.setUp()
+        # Configure Environment as expected by the testy tests 
+        """
+        self._env={
+            "TESTY_CLOUDANT_CONTEXT":"",
+            "TESTY_CLUSTER":"",
+            "TESTY_CLUSTER_LB":"",
+            "TESTY_CLUSTER_NODENAMES":"",
+            "TESTY_CLUSTER_URL":"",
+            "TESTY_DB_ADMIN_PASS":"",
+            "TESTY_DB_ADMIN_ROOT":"",
+            "TESTY_DB_ADMIN_USER":"",
+            "TESTY_DB_NAME":"",
+            "TESTY_DB_READ_PASS":"",
+            "TESTY_DB_READ_USER":"",
+            "TESTY_DB_URL":"",
+            "TESTY_DB_WRITE_PASS":"",
+            "TESTY_DB_WRITE_USER":"",
+            "TESTY_NO_CLEAN_TMP":"",
+            "TESTY_RESULT_DIR":"",
+            "TESTY_SAVE_PASS":"",
+            "TESTY_SAVE_URL":"",
+            "TESTY_SAVE_USER":"",
+            "TESTY_TIMESTART":"",
+            "TESTY_TMP_DIR":""
+                   }"""
+        self._env={
+            "TESTY_DB_ADMIN_PASS":params["dbConfig"]["auth"][1],
+            "TESTY_DB_ADMIN_USER":params["dbConfig"]["auth"][0],
+            "TESTY_DB_URL":params["dbConfig"]["dburl"]+"/"+params["dbConfig"]["dbname"]}
+        
+        # TODO: perhaps stick in our session from pycloudantDB?
+        self.session = requests.Session()
+        self.session.auth = (
+            self._env.get('TESTY_DB_ADMIN_USER'),
+            self._env.get('TESTY_DB_ADMIN_PASS')
+        )
+        self.session.headers.update({
+            "Accept": "application/json",
+            "Content-Type": "application/json",
+            "x-cloudant-user": self._env.get('TESTY_DB_ADMIN_USER')
+        })
+        self.tearDown()
+        self.setUp()
+        self.executingUnitTests = True
+        
+    def tearDown(self):
+        self.delete_test_db()
+        
+    def setUp(self):
+        TLQ.TestLuceneQueries.setUp(self)
         
  

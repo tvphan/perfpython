@@ -121,18 +121,34 @@ class cloudantBenchmarkDriver(driver.genericBenchmarkDriver, unittest.TestCase):
             "maxReqPerSec" : benchmarkConfig["maxReqPerSec"] if "maxReqPerSec" in benchmarkConfig else 0
             }
         self.threadWorker_mainStage(responseTimes, processStateDone, idx, pid, activeThreadCounter, noLbBenchmarkConfig, idPool)
+    
+    def threadWorker_mainStage_lucene_queries(self, responseTimes, processStateDone, idx, pid, activeThreadCounter, benchmarkConfig, idPool):
+        ''' This stage is a first stab at calling out to the cloudant testy functional tests'''
         
-    def threadWorker_mainStage(self, responseTimes, processStateDone, idx, pid, activeThreadCounter, benchmarkConfig, idPool):
+        # assemble custom configuration
+        luceneQueriesConfig = {
+            "templateFile" : "templates/iron_template.json",
+            "concurrentThreads" : benchmarkConfig["concurrentThreads"],
+            "iterationPerThread" : benchmarkConfig["iterationPerThread"],
+            # TODO: after refactoring allow passing through of custom ratios
+            "actionRatios" : None, # Populated in test class
+            "dbConfig": benchmarkConfig["dbConfig"],
+            "maxReqPerSec" : benchmarkConfig["maxReqPerSec"] if "maxReqPerSec" in benchmarkConfig else 0
+            }
+        worker = bW_lucene.benchmark_test_lucene_queries(None, idPool, params=luceneQueriesConfig)
+        self.threadWorker_mainStage(responseTimes, processStateDone, idx, pid, activeThreadCounter, luceneQueriesConfig, idPool, worker=worker)
+        
+    def threadWorker_mainStage(self, responseTimes, processStateDone, idx, pid, activeThreadCounter, benchmarkConfig, idPool, worker=None):
         ''' Overrides the generic threadWorker, an instance of this function is executed in each driver thread'''
         
         log = logging.getLogger('mtbenchmark')
         
-        # Create a local DB object
-        db = cdb.pyCloudantDB(benchmarkConfig["dbConfig"])
+        if worker is None:
+            # Create a local DB object
+            db = cdb.pyCloudantDB(benchmarkConfig["dbConfig"])
         
-        # Create a local Worker
-        #worker = bW.benchmarkWorker(db, idPool, params=benchmarkConfig)
-        worker = bW_lucene.benchmark_test_lucene_queries(db, idPool, params=benchmarkConfig)
+            # Create a local Worker
+            worker = bW.benchmarkWorker(db, idPool, params=benchmarkConfig)
         
         # Rate-limiting timer
         lastLoopTime = time.time()
@@ -172,7 +188,16 @@ class cloudantBenchmarkDriver(driver.genericBenchmarkDriver, unittest.TestCase):
                 log.error(errLine)
         
     def testMultiThreadedBenchmark(self):
-        threadWorkers = [self.threadWorker_preStage, self.threadWorker_mainStage, self.threadWorker_mainStage_SkipLB]
+        log = logging.getLogger('mtbenchmark')
+        
+        threadWorkers = []
+        if "workerStages" not in c.config:
+            raise Exception("Failed to find identify stages to be run, 'workerStages' is missing from the config")
+        
+        # Translate string function names into function pointers
+        for worker in c.config["workerStages"]:
+            threadWorkers.append(getattr(self, worker))
+            log.debug("Matched '%s' to function" % worker)
         self._testMultiThreadedBenchmark(threadWorkers)
 
 if __name__ == "__main__":
