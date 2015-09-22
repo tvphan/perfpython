@@ -1,0 +1,21 @@
+language: python
+python:
+  - "2.6"
+
+# Command to install dependencies
+install:
+  - travis_retry pip install -r requirements.txt --use-mirrors
+
+# Running the test harness with --collectonly  picks up Python
+# import/syntax problems in all tests. It also picks up
+# non-executable shell-script tests.  Neat.
+script: python runtesty.py --collectonly && python runtesty.py --cov=runtesty.py -f testy_tests/self_tests.json
+
+# Tell IRC when you succeed!
+# The format below is less "spammy" than the default.
+notifications:
+  email:
+    recipients:
+      - rob.frazier@cloudant.com
+      - simon@cloudant.com
+      - james@cloudant.com

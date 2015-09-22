@@ -1,0 +1,2958 @@
+{"docs": [
+        {
+                "geometry": {
+                    "type": "Point", 
+                    "coordinates": [
+                        -71.0953063965, 
+                        48.4217338562
+                    ]
+                },
+                "properties": {
+                    "province": "QC", 
+                    "city": "Chicoutimi", 
+                    "name": "Venitiennes Inc", 
+                    "tags": [
+                        "paint"
+                    ], 
+                    "country": "CA", 
+                    "phone": "+1 418 543 0524", 
+                    "href": "http://api.simplegeo.com/1.0/features/SG_07AbKidurs7KPemm6TP03F_48.421734_-71.095306@1293573121.json", 
+                    "postcode": "G7J 3P2", 
+                    "address": "810 Ch DE LA Reserve", 
+                    "owner": "simplegeo", 
+                    "classifiers": [
+                        {
+                            "category": "Manufacturing", 
+                            "type": "Manufacturing & Wholesale Goods", 
+                            "subcategory": "Furniture"
+                        }
+                    ]
+                }, 
+                "_id": "002ca871807a4d09e5f8a2fb4a005a9d", 
+                "type": "Feature", 
+                "id": "SG_07AbKidurs7KPemm6TP03F_48.421734_-71.095306@1293573121"
+        }, 
+        {
+                "geometry": {
+                    "type": "Point", 
+                    "coordinates": [
+                        -71.0503921509, 
+                        48.4125442505
+                    ]
+                },
+                "properties": {
+                    "province": "QC", 
+                    "city": "Chicoutimi", 
+                    "name": "Restaurant-Bar Le Stade", 
+                    "country": "CA", 
+                    "phone": "+1 418 549 6119", 
+                    "href": "http://api.simplegeo.com/1.0/features/SG_07EUBjoG4HQZJq2jbgVnUW_48.412544_-71.050392@1293573121.json", 
+                    "postcode": "G7H 4B5", 
+                    "address": "989 Boul Talbot", 
+                    "owner": "simplegeo", 
+                    "classifiers": [
+                        {
+                            "category": "Restaurant", 
+                            "type": "Food & Drink", 
+                            "subcategory": ""
+                        }
+                    ]
+                }, 
+                "_id": "002ca871807a4d09e5f8a2fb4a059710", 
+                "type": "Feature", 
+                "id": "SG_07EUBjoG4HQZJq2jbgVnUW_48.412544_-71.050392@1293573121"
+            }, 
+        {"geometry": {
+                    "type": "Point", 
+                    "coordinates": [
+                        -71.1095962524, 
+                        48.3970413208
+                    ]
+                },
+                "properties": {
+                    "province": "QC", 
+                    "city": "Chicoutimi", 
+                    "name": "Ferblanterie 2000 Inc", 
+                    "tags": [
+                        "plate", 
+                        "system", 
+                        "air", 
+                        "tin", 
+                        "conditioning", 
+                        "contractor"
+                    ], 
+                    "country": "CA", 
+                    "phone": "+1 418 543 2000", 
+                    "href": "http://api.simplegeo.com/1.0/features/SG_07vQniTS0m3oxqugUITRef_48.397041_-71.109596@1293573121.json", 
+                    "postcode": "G7K 1A2", 
+                    "address": "1130 Rue DE LA Manic", 
+                    "owner": "simplegeo", 
+                    "classifiers": [
+                        {
+                            "category": "Manufacturing", 
+                            "type": "Manufacturing & Wholesale Goods", 
+                            "subcategory": "Metals"
+                        }
+                    ]
+                }, 
+                "_id": "002ca871807a4d09e5f8a2fb4a18ae81", 
+                "type": "Feature", 
+                "id": "SG_07vQniTS0m3oxqugUITRef_48.397041_-71.109596@1293573121"
+            }, 
+        {"geometry": {
+                    "type": "Point", 
+                    "coordinates": [
+                        -71.0602264404, 
+                        48.4235916138
+                    ]
+                },
+                    "properties": {
+                    "province": "QC", 
+                    "city": "Chicoutimi", 
+                    "name": "Lafontaine Ecole", 
+                    "country": "CA", 
+                    "phone": "+1 418 698 5200", 
+                    "href": "http://api.simplegeo.com/1.0/features/SG_08xPDl25dxCBqNQfDoRzfq_48.423592_-71.060226@1293573121.json", 
+                    "postcode": "G7H 4V2", 
+                    "address": "475 Rue LA Fontaine", 
+                    "owner": "simplegeo", 
+                    "classifiers": [
+                        {
+                            "category": "Education", 
+                            "type": "Public Place", 
+                            "subcategory": "School"
+                        }
+                    ]
+                }, 
+                "_id": "002ca871807a4d09e5f8a2fb4adde228", 
+                "type": "Feature", 
+                "id": "SG_08xPDl25dxCBqNQfDoRzfq_48.423592_-71.060226@1293573121"
+            }, 
+        {
+                "geometry": {
+                    "type": "Point", 
+                    "coordinates": [
+                        -71.0574493408, 
+                        48.427696228
+                    ]
+                }, 
+                "properties": {
+                    "province": "QC", 
+                    "city": "Chicoutimi", 
+                    "name": "Jacques Lemay Conception Grphq", 
+                    "tags": [
+                        "publicity"
+                    ], 
+                    "country": "CA", 
+                    "phone": "+1 418 549 2628", 
+                    "href": "http://api.simplegeo.com/1.0/features/SG_09JGN6HiY104bQeGfMCXnS_48.427696_-71.057449@1293573121.json", 
+                    "postcode": "G7H 1S8", 
+                    "address": "365 Rue Racine E # 14", 
+                    "owner": "simplegeo", 
+                    "classifiers": [
+                        {
+                            "category": "Professional", 
+                            "type": "Services", 
+                            "subcategory": "Advertising"
+                        }
+                    ]
+                }, 
+                "_id": "002ca871807a4d09e5f8a2fb4af13af5", 
+                "type": "Feature", 
+                "id": "SG_09JGN6HiY104bQeGfMCXnS_48.427696_-71.057449@1293573121"
+            }, 
+        {
+                "geometry": {
+                    "type": "Point", 
+                    "coordinates": [
+                        -71.0685119629, 
+                        48.4261856079
+                    ]
+                }, 
+                "properties": {
+                    "province": "QC", 
+                    "city": "Chicoutimi", 
+                    "name": "Beaute Canine Mm Enr", 
+                    "tags": [
+                        "pet", 
+                        "grooming", 
+                        "washing"
+                    ], 
+                    "country": "CA", 
+                    "phone": "+1 418 549 9697", 
+                    "href": "http://api.simplegeo.com/1.0/features/SG_09kI880bqkbMZreLBoC3yi_48.426186_-71.068512@1293573121.json", 
+                    "postcode": "G7J 2M7", 
+                    "address": "363 Rue Sainte-Anne", 
+                    "owner": "simplegeo", 
+                    "classifiers": [
+                        {
+                            "category": "Retail", 
+                            "type": "Services", 
+                            "subcategory": "Animal Services"
+                        }
+                    ]
+                }, 
+                "_id": "002ca871807a4d09e5f8a2fb4af26337", 
+                "type": "Feature", 
+                "id": "SG_09kI880bqkbMZreLBoC3yi_48.426186_-71.068512@1293573121"
+            }, 
+        {
+                "geometry": {
+                    "type": "Point", 
+                    "coordinates": [
+                        -71.024597168, 
+                        48.4278106689
+                    ]
+                },
+                "properties": {
+                    "province": "QC", 
+                    "city": "Chicoutimi", 
+                    "name": "Denis Esso Svc", 
+                    "tags": [
+                        "repairing", 
+                        "automobile"
+                    ], 
+                    "country": "CA", 
+                    "phone": "+1 418 549 2433", 
+                    "href": "http://api.simplegeo.com/1.0/features/SG_09UTWT4cCpCRir7Xqo3zzs_48.427811_-71.024597@1293573121.json", 
+                    "postcode": "G7H 1H2", 
+                    "address": "1421 Boul Du Saguenay E", 
+                    "owner": "simplegeo", 
+                    "classifiers": [
+                        {
+                            "category": "Retail", 
+                            "type": "Services", 
+                            "subcategory": "Auto Repair"
+                        }
+                    ]
+                }, 
+                "_id": "002ca871807a4d09e5f8a2fb4afdfa6c", 
+                "type": "Feature", 
+                "id": "SG_09UTWT4cCpCRir7Xqo3zzs_48.427811_-71.024597@1293573121"
+            }, 
+        {
+                "geometry": {
+                    "type": "Point", 
+                    "coordinates": [
+                        -71.0445556641, 
+                        48.4437026978
+                    ]
+                },
+                "properties": {
+                    "province": "QC", 
+                    "city": "Chicoutimi", 
+                    "name": "Distribution Tremblay & Gagnon", 
+                    "tags": [
+                        "repairing", 
+                        "contractor", 
+                        "remodeling", 
+                        "general"
+                    ], 
+                    "country": "CA", 
+                    "phone": "+1 418 696 4065", 
+                    "href": "http://api.simplegeo.com/1.0/features/SG_09VnnC09G5fESYEOGxu3Tq_48.443703_-71.044556@1293573121.json", 
+                    "postcode": "G7G 4X9", 
+                    "address": "1531 Boul DE Tadoussac", 
+                    "owner": "simplegeo", 
+                    "classifiers": [
+                        {
+                            "category": "Building & Trades", 
+                            "type": "Services", 
+                            "subcategory": "Construction"
+                        }
+                    ]
+                }, 
+                "_id": "002ca871807a4d09e5f8a2fb4afefcc9", 
+                "type": "Feature", 
+                "id": "SG_09VnnC09G5fESYEOGxu3Tq_48.443703_-71.044556@1293573121"
+            }, 
+        {
+                "geometry": {
+                    "type": "Point", 
+                    "coordinates": [
+                        -71.117225647, 
+                        48.3881721497
+                    ]
+                },
+                "properties": {
+                    "province": "QC", 
+                    "city": "Chicoutimi", 
+                    "name": "Equipements Sigma Inc", 
+                    "tags": [
+                        "forestry", 
+                        "timber", 
+                        "contractor"
+                    ], 
+                    "country": "CA", 
+                    "phone": "+1 418 549 0303", 
+                    "href": "http://api.simplegeo.com/1.0/features/SG_0gXbBToH14uoZ2yYrvqPGW_48.388172_-71.117226@1293573121.json", 
+                    "postcode": "G7H 5B1", 
+                    "address": "1430 Boul Du Royaume O", 
+                    "owner": "simplegeo", 
+                    "classifiers": [
+                        {
+                            "category": "Wholesale", 
+                            "type": "Manufacturing & Wholesale Goods", 
+                            "subcategory": "Machinery & Supplies"
+                        }
+                    ]
+                }, 
+                "_id": "1217bb8a97c50cc54cf55852f7ade2bc", 
+                "type": "Feature", 
+                "id": "SG_0gXbBToH14uoZ2yYrvqPGW_48.388172_-71.117226@1293573121"
+            }, 
+        {
+                "geometry": {
+                    "type": "Point", 
+                    "coordinates": [
+                        -71.0558395386, 
+                        48.4282684326
+                    ]
+                },
+                "properties": {
+                    "province": "QC", 
+                    "city": "Chicoutimi", 
+                    "name": "Bouchard, Jean-Yves", 
+                    "country": "CA", 
+                    "phone": "+1 418 545 1099", 
+                    "href": "http://api.simplegeo.com/1.0/features/SG_0H4X3ruk5UCArvkTf5fM11_48.428268_-71.055840@1293573121.json", 
+                    "postcode": "G7H 1S8", 
+                    "owner": "simplegeo", 
+                    "classifiers": [
+                        {
+                            "category": "Health Services", 
+                            "type": "Services", 
+                            "subcategory": "Medical Lab"
+                        }
+                    ]
+                }, 
+                "_id": "1217bb8a97c50cc54cf55852f7b99b00", 
+                "type": "Feature", 
+                "id": "SG_0H4X3ruk5UCArvkTf5fM11_48.428268_-71.055840@1293573121"
+            }, 
+        {
+                "geometry": {
+                    "type": "Point", 
+                    "coordinates": [
+                        -71.0669174194, 
+                        48.4374694824
+                    ]
+                },
+                "properties": {
+                    "province": "QC", 
+                    "city": "Chicoutimi", 
+                    "name": "Tremblay, Paul-Julien", 
+                    "tags": [
+                        "bookkeeping", 
+                        "return", 
+                        "system", 
+                        "filing"
+                    ], 
+                    "country": "CA", 
+                    "phone": "+1 418 543 7208", 
+                    "href": "http://api.simplegeo.com/1.0/features/SG_0HbFZGTZ5kll7PJWasH2t0_48.437469_-71.066917@1293573121.json", 
+                    "postcode": "G7G 3A7", 
+                    "address": "58 Rue Du Pont # A", 
+                    "owner": "simplegeo", 
+                    "classifiers": [
+                        {
+                            "category": "Professional", 
+                            "type": "Services", 
+                            "subcategory": "Accounting & Tax Preparation"
+                        }
+                    ]
+                }, 
+                "_id": "1217bb8a97c50cc54cf55852f7c20539", 
+                "type": "Feature", 
+                "id": "SG_0HbFZGTZ5kll7PJWasH2t0_48.437469_-71.066917@1293573121"
+            }, 
+        {
+                "geometry": {
+                    "type": "Point", 
+                    "coordinates": [
+                        -71.0568389893, 
+                        48.4090690613
+                    ]
+                },
+                "properties": {
+                    "province": "QC", 
+                    "city": "Chicoutimi", 
+                    "name": "Clinique Dentaire Elysee", 
+                    "tags": [
+                        "dentist"
+                    ], 
+                    "country": "CA", 
+                    "phone": "+1 418 690 9613", 
+                    "href": "http://api.simplegeo.com/1.0/features/SG_0HJA1jcqFuQjiTo4eKNpXD_48.409069_-71.056839@1293573121.json", 
+                    "postcode": "G7H 5V7", 
+                    "address": "463 Rue Des Champs-Elysees", 
+                    "owner": "simplegeo", 
+                    "classifiers": [
+                        {
+                            "category": "Health Services", 
+                            "type": "Services", 
+                            "subcategory": "Doctor"
+                        }
+                    ]
+                }, 
+                "_id": "1217bb8a97c50cc54cf55852f7d5251d", 
+                "type": "Feature", 
+                "id": "SG_0HJA1jcqFuQjiTo4eKNpXD_48.409069_-71.056839@1293573121"
+            }, 
+        {
+                "geometry": {
+                    "type": "Point", 
+                    "coordinates": [
+                        -71.0262985229, 
+                        48.4294128418
+                    ]
+                },
+                "properties": {
+                    "province": "QC", 
+                    "city": "Chicoutimi", 
+                    "name": "Ecole St-Isidore", 
+                    "country": "CA", 
+                    "phone": "+1 418 698 5148", 
+                    "href": "http://api.simplegeo.com/1.0/features/SG_03fjmKFE3v22Y5JncLILcf_48.429413_-71.026299@1293573121.json", 
+                    "postcode": "G7H 3M9", 
+                    "address": "97 Rue Arthur-Hamel", 
+                    "owner": "simplegeo", 
+                    "classifiers": [
+                        {
+                            "category": "Education", 
+                            "type": "Public Place", 
+                            "subcategory": "School"
+                        }
+                    ]
+                }, 
+                "_id": "17edfe81b88cad3f87d6b249b09d2c8d", 
+                "type": "Feature", 
+                "id": "SG_03fjmKFE3v22Y5JncLILcf_48.429413_-71.026299@1293573121"
+            }, 
+        {
+                "geometry": {
+                    "type": "Point", 
+                    "coordinates": [
+                        -71.0326919556, 
+                        48.4242935181
+                    ]
+                }, 
+                "properties": {
+                    "province": "QC", 
+                    "city": "Chicoutimi", 
+                    "name": "Manoir DE LA Serenite Enr", 
+                    "tags": [
+                        "house", 
+                        "retreat"
+                    ], 
+                    "country": "CA", 
+                    "phone": "+1 418 545 8540", 
+                    "href": "http://api.simplegeo.com/1.0/features/SG_047VfSEyO4U3upFJpAKYYJ_48.424294_-71.032692@1293573121.json", 
+                    "postcode": "G7H 1P2", 
+                    "address": "1170 Rue Melancon", 
+                    "owner": "simplegeo", 
+                    "classifiers": [
+                        {
+                            "category": "Organizations", 
+                            "type": "Services", 
+                            "subcategory": "Religious Organization"
+                        }
+                    ]
+                }, 
+                "_id": "17edfe81b88cad3f87d6b249b0ba11e6", 
+                "type": "Feature", 
+                "id": "SG_047VfSEyO4U3upFJpAKYYJ_48.424294_-71.032692@1293573121"
+            }, 
+        {
+                "geometry": {
+                    "type": "Point", 
+                    "coordinates": [
+                        -71.0402832031, 
+                        48.4165763855
+                    ]
+                },
+                "properties": {
+                    "province": "QC", 
+                    "city": "Chicoutimi", 
+                    "name": "Pixel Couleur", 
+                    "tags": [
+                        "color", 
+                        "photo", 
+                        "printer", 
+                        "engrave"
+                    ], 
+                    "country": "CA", 
+                    "phone": "+1 418 545 8458", 
+                    "href": "http://api.simplegeo.com/1.0/features/SG_04MbNm6zMbYQKqJgqcMUIK_48.416576_-71.040283@1293573121.json", 
+                    "postcode": "G7H 3T3", 
+                    "address": "769 Rue Chabanel", 
+                    "owner": "simplegeo", 
+                    "classifiers": [
+                        {
+                            "category": "Manufacturing", 
+                            "type": "Manufacturing & Wholesale Goods", 
+                            "subcategory": "Printing"
+                        }
+                    ]
+                }, 
+                "_id": "17edfe81b88cad3f87d6b249b0c8b392", 
+                "type": "Feature", 
+                "id": "SG_04MbNm6zMbYQKqJgqcMUIK_48.416576_-71.040283@1293573121"
+            }, 
+        {
+                "geometry": {
+                    "type": "Point", 
+                    "coordinates": [
+                        -71.0578079224, 
+                        48.4047966003
+                    ]
+                }, 
+                "properties": {
+                    "province": "QC", 
+                    "city": "Chicoutimi", 
+                    "name": "Salon L'En-Tete Inc", 
+                    "country": "CA", 
+                    "phone": "+1 418 696 1232", 
+                    "href": "http://api.simplegeo.com/1.0/features/SG_04zYSTOLLLW0nQCN09oAAU_48.404797_-71.057808@1293573121.json", 
+                    "postcode": "G7H 4C1", 
+                    "address": "1401 Boul Talbot", 
+                    "owner": "simplegeo", 
+                    "classifiers": [
+                        {
+                            "category": "Personal", 
+                            "type": "Services", 
+                            "subcategory": "Beauty Salon"
+                        }
+                    ]
+                }, 
+                "_id": "17edfe81b88cad3f87d6b249b0da7f85", 
+                "type": "Feature", 
+                "id": "SG_04zYSTOLLLW0nQCN09oAAU_48.404797_-71.057808@1293573121"
+            }, 
+        {
+                "geometry": {
+                    "type": "Point", 
+                    "coordinates": [
+                        -71.0556564331, 
+                        48.4293746948
+                    ]
+                },
+                "properties": {
+                    "province": "QC", 
+                    "city": "Chicoutimi", 
+                    "name": "Piazzetta Restaurant", 
+                    "country": "CA", 
+                    "phone": "+1 418 549 4860", 
+                    "href": "http://api.simplegeo.com/1.0/features/SG_05vUEmm5RHflF04ZLj9HOn_48.429375_-71.055656@1293573121.json", 
+                    "postcode": "G7H 7Y8", 
+                    "address": "412 Boul Du Saguenay E", 
+                    "owner": "simplegeo", 
+                    "classifiers": [
+                        {
+                            "category": "Restaurant", 
+                            "type": "Food & Drink", 
+                            "subcategory": ""
+                        }
+                    ]
+                }, 
+                "_id": "17edfe81b88cad3f87d6b249b0fa8981", 
+                "type": "Feature", 
+                "id": "SG_05vUEmm5RHflF04ZLj9HOn_48.429375_-71.055656@1293573121"
+            }, 
+        {
+                "geometry": {
+                    "type": "Point", 
+                    "coordinates": [
+                        -71.0504684448, 
+                        48.4263687134
+                    ]
+                },
+                "properties": {
+                    "province": "QC", 
+                    "city": "Chicoutimi", 
+                    "name": "Clinique Ortheses-Protheses", 
+                    "tags": [
+                        "orthopedic", 
+                        "appliance"
+                    ], 
+                    "country": "CA", 
+                    "phone": "+1 418 698 1288", 
+                    "href": "http://api.simplegeo.com/1.0/features/SG_0lP58ITNltgeTtrBlEQ35D_48.426369_-71.050468@1293573121.json", 
+                    "postcode": "G7H 4J1", 
+                    "address": "302 Rue Saint-Vallier", 
+                    "owner": "simplegeo", 
+                    "classifiers": [
+                        {
+                            "category": "Shopping", 
+                            "type": "Retail Goods", 
+                            "subcategory": ""
+                        }
+                    ]
+                }, 
+                "_id": "2391f5e4aa2dc60ef56f9bb550e37a0d", 
+                "type": "Feature", 
+                "id": "SG_0lP58ITNltgeTtrBlEQ35D_48.426369_-71.050468@1293573121"
+            }, 
+        {
+                "geometry": {
+                    "type": "Point", 
+                    "coordinates": [
+                        -71.0676879883, 
+                        48.4252319336
+                    ]
+                },
+                "properties": {
+                    "province": "QC", 
+                    "city": "Chicoutimi", 
+                    "name": "Joachim Lunch Bar", 
+                    "country": "CA", 
+                    "phone": "+1 418 543 0899", 
+                    "href": "http://api.simplegeo.com/1.0/features/SG_0lt7IINTsuZtOnRvTBjhEZ_48.425232_-71.067688@1293573121.json", 
+                    "postcode": "G7J 1G3", 
+                    "address": "34 Rue Price O", 
+                    "owner": "simplegeo", 
+                    "classifiers": [
+                        {
+                            "category": "Restaurant", 
+                            "type": "Food & Drink", 
+                            "subcategory": ""
+                        }
+                    ]
+                }, 
+                "_id": "2391f5e4aa2dc60ef56f9bb550ed0896", 
+                "type": "Feature", 
+                "id": "SG_0lt7IINTsuZtOnRvTBjhEZ_48.425232_-71.067688@1293573121"
+            }, 
+        {
+                "geometry": {
+                    "type": "Point", 
+                    "coordinates": [
+                        -71.1205596924, 
+                        48.383026123
+                    ]
+                },
+                "properties": {
+                    "province": "QC", 
+                    "city": "Chicoutimi", 
+                    "name": "Reflex-Paysage Inc", 
+                    "tags": [
+                        "landscape", 
+                        "contractor"
+                    ], 
+                    "country": "CA", 
+                    "phone": "+1 418 545 8014", 
+                    "href": "http://api.simplegeo.com/1.0/features/SG_0m0pSmdu2eCmneS13Dv64U_48.383026_-71.120560@1293573121.json", 
+                    "postcode": "G7K 1G1", 
+                    "address": "2568 Rang Saint-Paul", 
+                    "owner": "simplegeo", 
+                    "classifiers": [
+                        {
+                            "category": "Building & Trades", 
+                            "type": "Services", 
+                            "subcategory": "Landscaping Services"
+                        }
+                    ]
+                }, 
+                "_id": "2391f5e4aa2dc60ef56f9bb550fe81f8", 
+                "type": "Feature", 
+                "id": "SG_0m0pSmdu2eCmneS13Dv64U_48.383026_-71.120560@1293573121"
+            }, 
+        {
+                "geometry": {
+                    "type": "Point", 
+                    "coordinates": [
+                        -71.1133651733, 
+                        48.3892059326
+                    ]
+                },
+                "properties": {
+                    "province": "QC", 
+                    "city": "Chicoutimi", 
+                    "name": "Groupe Saga", 
+                    "tags": [
+                        "franchising"
+                    ], 
+                    "country": "CA", 
+                    "phone": "+1 418 690 1113", 
+                    "href": "http://api.simplegeo.com/1.0/features/SG_0AYLXYg4cGU3Ajjmz10QJh_48.389206_-71.113365@1293573121.json", 
+                    "postcode": "G7K 1E5", 
+                    "address": "2285 Boul Saint-Paul", 
+                    "owner": "simplegeo", 
+                    "classifiers": [
+                        {
+                            "category": "Food & Beverages", 
+                            "type": "Retail Goods", 
+                            "subcategory": "Groceries & Convenience Stores"
+                        }
+                    ]
+                }, 
+                "_id": "46980ee129d3f8bc2ae849cb524fa150", 
+                "type": "Feature", 
+                "id": "SG_0AYLXYg4cGU3Ajjmz10QJh_48.389206_-71.113365@1293573121"
+            }, 
+        {
+                "geometry": {
+                    "type": "Point", 
+                    "coordinates": [
+                        -71.1127471924, 
+                        48.455280304
+                    ]
+                },
+                "properties": {
+                    "province": "QC", 
+                    "city": "Chicoutimi", 
+                    "name": "Progypse Inc", 
+                    "tags": [
+                        "general", 
+                        "contractor"
+                    ], 
+                    "country": "CA", 
+                    "phone": "+1 418 543 5590", 
+                    "href": "http://api.simplegeo.com/1.0/features/SG_0B2amKIL1Jm7yTXn3zoSiR_48.455280_-71.112747@1293573121.json", 
+                    "postcode": "G7G 3W7", 
+                    "address": "1814 Boul Sainte-Genevieve", 
+                    "owner": "simplegeo", 
+                    "classifiers": [
+                        {
+                            "category": "Building & Trades", 
+                            "type": "Services", 
+                            "subcategory": "Construction"
+                        }
+                    ]
+                }, 
+                "_id": "46980ee129d3f8bc2ae849cb52550aad", 
+                "type": "Feature", 
+                "id": "SG_0B2amKIL1Jm7yTXn3zoSiR_48.455280_-71.112747@1293573121"
+            }, 
+        {
+                "geometry": {
+                    "type": "Point", 
+                    "coordinates": [
+                        -71.1138687134, 
+                        48.3994064331
+                    ]
+                },
+                "properties": {
+                    "province": "QC", 
+                    "city": "Chicoutimi", 
+                    "name": "Atelier D'Affutage Du Saguenay", 
+                    "tags": [
+                        "sharpening"
+                    ], 
+                    "country": "CA", 
+                    "phone": "+1 418 547 4087", 
+                    "href": "http://api.simplegeo.com/1.0/features/SG_0BAcaGBfIjyAM0ht9v0IE4_48.399406_-71.113869@1293573121.json", 
+                    "postcode": "G7K 1G7", 
+                    "address": "1321 Rue DE LA Manic", 
+                    "owner": "simplegeo", 
+                    "classifiers": [
+                        {
+                            "category": "Retail", 
+                            "type": "Services", 
+                            "subcategory": "Repair Shop"
+                        }
+                    ]
+                }, 
+                "_id": "46980ee129d3f8bc2ae849cb525f1681", 
+                "type": "Feature", 
+                "id": "SG_0BAcaGBfIjyAM0ht9v0IE4_48.399406_-71.113869@1293573121"
+            }, 
+        {
+                "geometry": {
+                    "type": "Point", 
+                    "coordinates": [
+                        -71.08177948, 
+                        48.3971633911
+                    ]
+                },
+                "properties": {
+                    "province": "QC", 
+                    "city": "Chicoutimi", 
+                    "name": "Gestion 2000", 
+                    "tags": [
+                        "accounting", 
+                        "bookkeeping", 
+                        "system"
+                    ], 
+                    "country": "CA", 
+                    "phone": "+1 418 549 2000", 
+                    "href": "http://api.simplegeo.com/1.0/features/SG_0BGRkZt4ikk1YjIG6ARQ2D_48.397163_-71.081779@1293573121.json", 
+                    "postcode": "G7H 6R9", 
+                    "address": "272 Rue Malraux", 
+                    "owner": "simplegeo", 
+                    "classifiers": [
+                        {
+                            "category": "Wholesale", 
+                            "type": "Manufacturing & Wholesale Goods", 
+                            "subcategory": "Office Equipment"
+                        }
+                    ]
+                }, 
+                "_id": "46980ee129d3f8bc2ae849cb526ec15c", 
+                "type": "Feature", 
+                "id": "SG_0BGRkZt4ikk1YjIG6ARQ2D_48.397163_-71.081779@1293573121"
+            }, 
+        {
+                "geometry": {
+                    "type": "Point", 
+                    "coordinates": [
+                        -71.0578079224, 
+                        48.4047966003
+                    ]
+                },
+                "properties": {
+                    "province": "QC", 
+                    "city": "Chicoutimi", 
+                    "name": "Laura Secord", 
+                    "tags": [
+                        "cocoa", 
+                        "parlor", 
+                        "chocolate", 
+                        "ice", 
+                        "cream"
+                    ], 
+                    "country": "CA", 
+                    "phone": "+1 418 690 0578", 
+                    "href": "http://api.simplegeo.com/1.0/features/SG_0biOpfyrPokWOv4b0cNK87_48.404797_-71.057808@1293573121.json", 
+                    "postcode": "G7H 4C1", 
+                    "address": "1401 Boul Talbot", 
+                    "owner": "simplegeo", 
+                    "classifiers": [
+                        {
+                            "category": "Restaurant", 
+                            "type": "Food & Drink", 
+                            "subcategory": ""
+                        }
+                    ]
+                }, 
+                "_id": "46980ee129d3f8bc2ae849cb5273abbe", 
+                "type": "Feature", 
+                "id": "SG_0biOpfyrPokWOv4b0cNK87_48.404797_-71.057808@1293573121"
+            }, 
+        {
+                "geometry": {
+                    "type": "Point", 
+                    "coordinates": [
+                        -71.0237121582, 
+                        48.4264831543
+                    ]
+                }, 
+                "properties": {
+                    "province": "QC", 
+                    "city": "Chicoutimi", 
+                    "name": "Moisson Saguenay Inc", 
+                    "country": "CA", 
+                    "phone": "+1 418 698 8808", 
+                    "href": "http://api.simplegeo.com/1.0/features/SG_0bp1YWG41jQ0556kU0sBsY_48.426483_-71.023712@1293573121.json", 
+                    "postcode": "G7H 3G4", 
+                    "owner": "simplegeo", 
+                    "classifiers": [
+                        {
+                            "category": "Organizations", 
+                            "type": "Services", 
+                            "subcategory": "Professional Association"
+                        }
+                    ]
+                }, 
+                "_id": "46980ee129d3f8bc2ae849cb5282223d", 
+                "type": "Feature", 
+                "id": "SG_0bp1YWG41jQ0556kU0sBsY_48.426483_-71.023712@1293573121"
+            }, 
+        {
+                "geometry": {
+                    "type": "Point", 
+                    "coordinates": [
+                        -71.0497741699, 
+                        48.4136962891
+                    ]
+                },
+                "properties": {
+                    "province": "QC", 
+                    "city": "Chicoutimi", 
+                    "name": "Automobiles Perron Chicoutimi", 
+                    "tags": [
+                        "car", 
+                        "dealer"
+                    ], 
+                    "country": "CA", 
+                    "phone": "+1 418 549 7633", 
+                    "href": "http://api.simplegeo.com/1.0/features/SG_0BV1TDGQ3FMt662keOyQWa_48.413696_-71.049774@1293573121.json", 
+                    "postcode": "G7H 4B4", 
+                    "address": "930 Boul Talbot", 
+                    "owner": "simplegeo", 
+                    "classifiers": [
+                        {
+                            "category": "Autos & Motor Vehicles", 
+                            "type": "Retail Goods", 
+                            "subcategory": "Automobile Sales"
+                        }
+                    ]
+                }, 
+                "_id": "46980ee129d3f8bc2ae849cb529021dd", 
+                "type": "Feature", 
+                "id": "SG_0BV1TDGQ3FMt662keOyQWa_48.413696_-71.049774@1293573121"
+            }, 
+        {
+                "geometry": {
+                    "type": "Point", 
+                    "coordinates": [
+                        -71.049041748, 
+                        48.4143943787
+                    ]
+                },
+                "properties": {
+                    "province": "QC", 
+                    "city": "Chicoutimi", 
+                    "name": "Perron Equipement Inc", 
+                    "country": "CA", 
+                    "phone": "+1 418 543 0713", 
+                    "href": "http://api.simplegeo.com/1.0/features/SG_0C5Zo4zbKv8WzkJMFZEc39_48.414394_-71.049042@1293573121.json", 
+                    "postcode": "G7H 4B4", 
+                    "address": "888 Boul Talbot", 
+                    "owner": "simplegeo", 
+                    "classifiers": [
+                        {
+                            "category": "Manufacturing", 
+                            "type": "Manufacturing & Wholesale Goods", 
+                            "subcategory": "Tools & Machinery"
+                        }
+                    ]
+                }, 
+                "_id": "46980ee129d3f8bc2ae849cb52a555ec", 
+                "type": "Feature", 
+                "id": "SG_0C5Zo4zbKv8WzkJMFZEc39_48.414394_-71.049042@1293573121"
+            }, 
+        {
+                "geometry": {
+                    "type": "Point", 
+                    "coordinates": [
+                        -71.1140441895, 
+                        48.3983955383
+                    ]
+                }, 
+                "properties": {
+                    "province": "QC", 
+                    "city": "Chicoutimi", 
+                    "name": "Stas", 
+                    "tags": [
+                        "product", 
+                        "manufacturer", 
+                        "engineer"
+                    ], 
+                    "country": "CA", 
+                    "phone": "+1 418 696 0074", 
+                    "href": "http://api.simplegeo.com/1.0/features/SG_0CcdNapyJtVDlOkw8mfCAZ_48.398396_-71.114044@1293573121.json", 
+                    "postcode": "G7K 1H1", 
+                    "address": "1846 Rue Des Outardes", 
+                    "owner": "simplegeo", 
+                    "classifiers": [
+                        {
+                            "category": "Manufacturing", 
+                            "type": "Manufacturing & Wholesale Goods", 
+                            "subcategory": "Tools & Machinery"
+                        }
+                    ]
+                }, 
+                "_id": "46980ee129d3f8bc2ae849cb52aff768", 
+                "type": "Feature", 
+                "id": "SG_0CcdNapyJtVDlOkw8mfCAZ_48.398396_-71.114044@1293573121"
+            }, 
+        {
+                "geometry": {
+                    "type": "Point", 
+                    "coordinates": [
+                        -71.0653610229, 
+                        48.4367103577
+                    ]
+                },
+                "properties": {
+                    "province": "QC", 
+                    "city": "Chicoutimi", 
+                    "name": "Fourrures Gauthier Ltee", 
+                    "tags": [
+                        "fur", 
+                        "business"
+                    ], 
+                    "country": "CA", 
+                    "phone": "+1 418 543 3567", 
+                    "href": "http://api.simplegeo.com/1.0/features/SG_0CDi8vu0V52bigIlXm8EZ1_48.436710_-71.065361@1293573121.json", 
+                    "postcode": "G7G 2H4", 
+                    "address": "66 Rue Rhainds", 
+                    "owner": "simplegeo", 
+                    "classifiers": [
+                        {
+                            "category": "Shopping", 
+                            "type": "Retail Goods", 
+                            "subcategory": "Clothing, Apparel, & Fashions"
+                        }
+                    ]
+                }, 
+                "_id": "46980ee129d3f8bc2ae849cb52b2f945", 
+                "type": "Feature", 
+                "id": "SG_0CDi8vu0V52bigIlXm8EZ1_48.436710_-71.065361@1293573121"
+            }, 
+        {
+                "geometry": {
+                    "type": "Point", 
+                    "coordinates": [
+                        -71.0488433838, 
+                        48.4141197205
+                    ]
+                }, 
+                "properties": {
+                    "province": "QC", 
+                    "city": "Chicoutimi", 
+                    "name": "Consultants En Ergonomie", 
+                    "tags": [
+                        "ergonomics"
+                    ], 
+                    "country": "CA", 
+                    "phone": "+1 418 698 0543", 
+                    "href": "http://api.simplegeo.com/1.0/features/SG_01w8743XgchOgV9Di8NRrr_48.414120_-71.048843@1293573121.json", 
+                    "postcode": "G7H 6N7", 
+                    "owner": "simplegeo", 
+                    "classifiers": [
+                        {
+                            "category": "Professional", 
+                            "type": "Services", 
+                            "subcategory": "Research"
+                        }
+                    ]
+                }, 
+                "_id": "5855ba232680967954281d4a5a123d70", 
+                "type": "Feature", 
+                "id": "SG_01w8743XgchOgV9Di8NRrr_48.414120_-71.048843@1293573121"
+            }, 
+        {
+                "geometry": {
+                    "type": "Point", 
+                    "coordinates": [
+                        -71.0623321533, 
+                        48.4275741577
+                    ]
+                },
+                "properties": {
+                    "province": "QC", 
+                    "city": "Chicoutimi", 
+                    "name": "Arpenteurs-Geometres Laberge", 
+                    "tags": [
+                        "surveyor"
+                    ], 
+                    "country": "CA", 
+                    "phone": "+1 418 549 8965", 
+                    "href": "http://api.simplegeo.com/1.0/features/SG_02MfgcMSsOaF5qQ5DPU2BJ_48.427574_-71.062332@1293573121.json", 
+                    "postcode": "G7H 1R9", 
+                    "address": "198 Rue Racine E", 
+                    "owner": "simplegeo", 
+                    "classifiers": [
+                        {
+                            "category": "Real Estate", 
+                            "type": "Services", 
+                            "subcategory": "Surveying"
+                        }
+                    ]
+                }, 
+                "_id": "5855ba232680967954281d4a5a2a6241", 
+                "type": "Feature", 
+                "id": "SG_02MfgcMSsOaF5qQ5DPU2BJ_48.427574_-71.062332@1293573121"
+            }, 
+        {
+                "geometry": {
+                    "type": "Point", 
+                    "coordinates": [
+                        -71.122543335, 
+                        48.3909492493
+                    ]
+                },
+                "properties": {
+                    "province": "QC", 
+                    "city": "Chicoutimi", 
+                    "name": "Cuisines Du Fjord Inc", 
+                    "tags": [
+                        "maker", 
+                        "cabinet"
+                    ], 
+                    "country": "CA", 
+                    "phone": "+1 418 690 1429", 
+                    "href": "http://api.simplegeo.com/1.0/features/SG_0JxNXOVoxy09O17yQfHNYf_48.390949_-71.122543@1293573121.json", 
+                    "postcode": "G7H 5B1", 
+                    "address": "1609 Boul Du Royaume O", 
+                    "owner": "simplegeo", 
+                    "classifiers": [
+                        {
+                            "category": "Building & Trades", 
+                            "type": "Services", 
+                            "subcategory": "Construction"
+                        }
+                    ]
+                }, 
+                "_id": "757b215546a892639e0e88a568060836", 
+                "type": "Feature", 
+                "id": "SG_0JxNXOVoxy09O17yQfHNYf_48.390949_-71.122543@1293573121"
+            }, 
+        {
+                "geometry": {
+                    "type": "Point", 
+                    "coordinates": [
+                        -71.1054458618, 
+                        48.3962593079
+                    ]
+                },
+                "properties": {
+                    "province": "QC", 
+                    "city": "Chicoutimi", 
+                    "name": "Opc Acoustique Inc", 
+                    "tags": [
+                        "acoustical", 
+                        "repairing", 
+                        "remodeling", 
+                        "contractor"
+                    ], 
+                    "country": "CA", 
+                    "phone": "+1 418 693 9311", 
+                    "href": "http://api.simplegeo.com/1.0/features/SG_0kdxniPev2yGQq6E1lv0dM_48.396259_-71.105446@1293573121.json", 
+                    "postcode": "G7K 1E1", 
+                    "address": "1905 Boul Saint-Paul", 
+                    "owner": "simplegeo", 
+                    "classifiers": [
+                        {
+                            "category": "Building & Trades", 
+                            "type": "Services", 
+                            "subcategory": "Construction"
+                        }
+                    ]
+                }, 
+                "_id": "757b215546a892639e0e88a56821ce7b", 
+                "type": "Feature", 
+                "id": "SG_0kdxniPev2yGQq6E1lv0dM_48.396259_-71.105446@1293573121"
+            }, 
+        {
+                "geometry": {
+                    "type": "Point", 
+                    "coordinates": [
+                        -71.0514297485, 
+                        48.4032936096
+                    ]
+                }, 
+                "properties": {
+                    "province": "QC", 
+                    "city": "Chicoutimi", 
+                    "name": "Restaurant Au Vieux Duluth", 
+                    "country": "CA", 
+                    "phone": "+1 418 690 2454", 
+                    "href": "http://api.simplegeo.com/1.0/features/SG_0kmM9jOhio0rcLCkFs9d5k_48.403294_-71.051430@1293573121.json", 
+                    "postcode": "G7H 6J2", 
+                    "address": "1445 Rue Des Champs-Elysees", 
+                    "owner": "simplegeo", 
+                    "classifiers": [
+                        {
+                            "category": "Restaurant", 
+                            "type": "Food & Drink", 
+                            "subcategory": ""
+                        }
+                    ]
+                }, 
+                "_id": "757b215546a892639e0e88a56836dbfe", 
+                "type": "Feature", 
+                "id": "SG_0kmM9jOhio0rcLCkFs9d5k_48.403294_-71.051430@1293573121"
+            }, 
+        {
+                "geometry": {
+                    "type": "Point", 
+                    "coordinates": [
+                        -71.0818023682, 
+                        48.3971443176
+                    ]
+                },
+                "properties": {
+                    "province": "QC", 
+                    "city": "Chicoutimi", 
+                    "name": "Restaurant Malraux", 
+                    "country": "CA", 
+                    "phone": "+1 418 693 0543", 
+                    "href": "http://api.simplegeo.com/1.0/features/SG_0KopzFezYE7v43dsaYnRMp_48.397144_-71.081802@1293573121.json", 
+                    "postcode": "G7H 6R9", 
+                    "address": "274 Rue Malraux", 
+                    "owner": "simplegeo", 
+                    "classifiers": [
+                        {
+                            "category": "Restaurant", 
+                            "type": "Food & Drink", 
+                            "subcategory": ""
+                        }
+                    ]
+                }, 
+                "_id": "757b215546a892639e0e88a5683b4890", 
+                "type": "Feature", 
+                "id": "SG_0KopzFezYE7v43dsaYnRMp_48.397144_-71.081802@1293573121"
+            }, 
+        {
+                "geometry": {
+                    "type": "Point", 
+                    "coordinates": [
+                        -71.0662536621, 
+                        48.3970565796
+                    ]
+                },
+                "properties": {
+                    "province": "QC", 
+                    "city": "Chicoutimi", 
+                    "name": "Pacini Restaurant", 
+                    "country": "CA", 
+                    "phone": "+1 418 549 1931", 
+                    "href": "http://api.simplegeo.com/1.0/features/SG_0KSIwfR3O6BddpWqfoTT74_48.397057_-71.066254@1293573121.json", 
+                    "postcode": "G7H 7Y4", 
+                    "address": "1775 Boul Talbot", 
+                    "owner": "simplegeo", 
+                    "classifiers": [
+                        {
+                            "category": "Restaurant", 
+                            "type": "Food & Drink", 
+                            "subcategory": ""
+                        }
+                    ]
+                }, 
+                "_id": "757b215546a892639e0e88a5684573b1", 
+                "type": "Feature", 
+                "id": "SG_0KSIwfR3O6BddpWqfoTT74_48.397057_-71.066254@1293573121"
+            }, 
+        {
+                "geometry": {
+                    "type": "Point", 
+                    "coordinates": [
+                        -71.0988388062, 
+                        48.4056739807
+                    ]
+                },
+                "properties": {
+                    "province": "QC", 
+                    "city": "Chicoutimi", 
+                    "name": "L'Ami Du Tapis Nettoyeur Enr", 
+                    "tags": [
+                        "cleaners", 
+                        "steam", 
+                        "rug", 
+                        "carpet"
+                    ], 
+                    "country": "CA", 
+                    "phone": "+1 418 693 9358", 
+                    "href": "http://api.simplegeo.com/1.0/features/SG_0KsXuT2bdJQFwZwnfRcRLB_48.405674_-71.098839@1293573121.json", 
+                    "postcode": "G7J 4X3", 
+                    "address": "889 Rue DE L'Ecluse # 5", 
+                    "owner": "simplegeo", 
+                    "classifiers": [
+                        {
+                            "category": "Retail", 
+                            "type": "Services", 
+                            "subcategory": "Laundry & Dry Cleaning"
+                        }
+                    ]
+                }, 
+                "_id": "757b215546a892639e0e88a56846b462", 
+                "type": "Feature", 
+                "id": "SG_0KsXuT2bdJQFwZwnfRcRLB_48.405674_-71.098839@1293573121"
+            }, 
+        {
+                "geometry": {
+                    "type": "Point", 
+                    "coordinates": [
+                        -71.0522842407, 
+                        48.3988761902
+                    ]
+                }, 
+                "properties": {
+                    "province": "QC", 
+                    "city": "Chicoutimi", 
+                    "name": "Glidden, Danny DC", 
+                    "country": "CA", 
+                    "phone": "+1 418 696 4900", 
+                    "href": "http://api.simplegeo.com/1.0/features/SG_0la43p1a6IsOCjBFEd69Zr_48.398876_-71.052284@1293573121.json", 
+                    "postcode": "G7H 5R9", 
+                    "address": "1646 Rue Des Engoulevents", 
+                    "owner": "simplegeo", 
+                    "classifiers": [
+                        {
+                            "category": "Health Services", 
+                            "type": "Services", 
+                            "subcategory": "Chiropractor"
+                        }
+                    ]
+                }, 
+                "_id": "757b215546a892639e0e88a568635ac8", 
+                "type": "Feature", 
+                "id": "SG_0la43p1a6IsOCjBFEd69Zr_48.398876_-71.052284@1293573121"
+            }, 
+        {
+                "geometry": {
+                    "type": "Point", 
+                    "coordinates": [
+                        -71.0416488647, 
+                        48.4240837097
+                    ]
+                }, 
+                "properties": {
+                    "province": "QC", 
+                    "city": "Chicoutimi", 
+                    "name": "Ecole Apostolique", 
+                    "country": "CA", 
+                    "phone": "+1 418 549 3302", 
+                    "href": "http://api.simplegeo.com/1.0/features/SG_0iPSJ1IQXzNnn1GQI44yGy_48.424084_-71.041649@1293573121.json", 
+                    "postcode": "G7H 2A3", 
+                    "address": "913 Rue Jacques-Cartier E", 
+                    "owner": "simplegeo", 
+                    "classifiers": [
+                        {
+                            "category": "Education", 
+                            "type": "Public Place", 
+                            "subcategory": "School"
+                        }
+                    ]
+                }, 
+                "_id": "89d62b72f2c57b790354d347ef090d8c", 
+                "type": "Feature", 
+                "id": "SG_0iPSJ1IQXzNnn1GQI44yGy_48.424084_-71.041649@1293573121"
+            }, 
+        {
+                "geometry": {
+                    "type": "Point", 
+                    "coordinates": [
+                        -71.0597763062, 
+                        48.4273910522
+                    ]
+                },
+                "properties": {
+                    "province": "QC", 
+                    "city": "Chicoutimi", 
+                    "name": "Maison D'Accueil Sans-Abri", 
+                    "tags": [
+                        "organization", 
+                        "welfare"
+                    ], 
+                    "country": "CA", 
+                    "phone": "+1 418 549 3510", 
+                    "href": "http://api.simplegeo.com/1.0/features/SG_0mSWZ1BXq6OMiy9ylllvSj_48.427391_-71.059776@1293573121.json", 
+                    "postcode": "G7H 4T7", 
+                    "address": "299 Rue LA Fontaine", 
+                    "owner": "simplegeo", 
+                    "classifiers": [
+                        {
+                            "category": "Social Services", 
+                            "type": "Services", 
+                            "subcategory": ""
+                        }
+                    ]
+                }, 
+                "_id": "95d487a24f08eb3262c810494d1eeb6f", 
+                "type": "Feature", 
+                "id": "SG_0mSWZ1BXq6OMiy9ylllvSj_48.427391_-71.059776@1293573121"
+            }, 
+        {
+                "geometry": {
+                    "type": "Point", 
+                    "coordinates": [
+                        -71.1141433716, 
+                        48.388343811
+                    ]
+                },
+                "properties": {
+                    "province": "QC", 
+                    "city": "Chicoutimi", 
+                    "name": "Camions International 170 Ltee", 
+                    "tags": [
+                        "equipment", 
+                        "truck"
+                    ], 
+                    "country": "CA", 
+                    "phone": "+1 418 549 8830", 
+                    "href": "http://api.simplegeo.com/1.0/features/SG_0MWwIyX7PoD6F8TAkgt8VL_48.388344_-71.114143@1293573121.json", 
+                    "postcode": "G7K 1E5", 
+                    "address": "2333 Boul Saint-Paul", 
+                    "owner": "simplegeo", 
+                    "classifiers": [
+                        {
+                            "category": "Manufacturing", 
+                            "type": "Manufacturing & Wholesale Goods", 
+                            "subcategory": "Motor Vehicles & Parts"
+                        }
+                    ]
+                }, 
+                "_id": "95d487a24f08eb3262c810494d289435", 
+                "type": "Feature", 
+                "id": "SG_0MWwIyX7PoD6F8TAkgt8VL_48.388344_-71.114143@1293573121"
+            }, 
+        {
+                "geometry": {
+                    "type": "Point", 
+                    "coordinates": [
+                        -71.114654541, 
+                        48.4006195068
+                    ]
+                },
+                "properties": {
+                    "province": "QC", 
+                    "city": "Chicoutimi", 
+                    "name": "Groupe Uni-Spec Enr", 
+                    "tags": [
+                        "software"
+                    ], 
+                    "country": "CA", 
+                    "phone": "+1 418 690 0454", 
+                    "href": "http://api.simplegeo.com/1.0/features/SG_0Mzz4JebtmuthbRvaacSLJ_48.400620_-71.114655@1293573121.json", 
+                    "postcode": "G7K 1H6", 
+                    "address": "1350 Rue DE LA Manouane", 
+                    "owner": "simplegeo", 
+                    "classifiers": [
+                        {
+                            "category": "Shopping", 
+                            "type": "Retail Goods", 
+                            "subcategory": "Computers & Home Electronics"
+                        }
+                    ]
+                }, 
+                "_id": "95d487a24f08eb3262c810494d312f51", 
+                "type": "Feature", 
+                "id": "SG_0Mzz4JebtmuthbRvaacSLJ_48.400620_-71.114655@1293573121"
+            }, 
+        {
+                "geometry": {
+                    "type": "Point", 
+                    "coordinates": [
+                        -71.0551300049, 
+                        48.4284629822
+                    ]
+                }, 
+                "properties": {
+                    "province": "QC", 
+                    "city": "Chicoutimi", 
+                    "name": "Restaurant Chez Georges", 
+                    "country": "CA", 
+                    "phone": "+1 418 543 2875", 
+                    "href": "http://api.simplegeo.com/1.0/features/SG_0NbrrpTy8RcJyOSAv5NGps_48.428463_-71.055130@1293573121.json", 
+                    "postcode": "G7H 1T5", 
+                    "address": "433 Rue Racine E", 
+                    "owner": "simplegeo", 
+                    "classifiers": [
+                        {
+                            "category": "Restaurant", 
+                            "type": "Food & Drink", 
+                            "subcategory": ""
+                        }
+                    ]
+                }, 
+                "_id": "95d487a24f08eb3262c810494d405612", 
+                "type": "Feature", 
+                "id": "SG_0NbrrpTy8RcJyOSAv5NGps_48.428463_-71.055130@1293573121"
+            }, 
+        {
+                "geometry": {
+                    "type": "Point", 
+                    "coordinates": [
+                        -71.0957183838, 
+                        48.4034461975
+                    ]
+                },
+                "properties": {
+                    "province": "QC", 
+                    "city": "Chicoutimi", 
+                    "name": "Boucherie Raymond & Andre Inc", 
+                    "tags": [
+                        "butchering"
+                    ], 
+                    "country": "CA", 
+                    "phone": "+1 418 693 3303", 
+                    "href": "http://api.simplegeo.com/1.0/features/SG_0nw7CEa3fsDnUSzDE4g8dh_48.403446_-71.095718@1293573121.json", 
+                    "postcode": "G7J 4C4", 
+                    "address": "739 Boul Barrette", 
+                    "owner": "simplegeo", 
+                    "classifiers": [
+                        {
+                            "category": "Food & Beverages", 
+                            "type": "Retail Goods", 
+                            "subcategory": "Meat & Fish"
+                        }
+                    ]
+                }, 
+                "_id": "95d487a24f08eb3262c810494d704d00", 
+                "type": "Feature", 
+                "id": "SG_0nw7CEa3fsDnUSzDE4g8dh_48.403446_-71.095718@1293573121"
+            }, 
+        {
+                "geometry": {
+                    "type": "Point", 
+                    "coordinates": [
+                        -71.0817565918, 
+                        48.3971824646
+                    ]
+                }, 
+                "properties": {
+                    "province": "QC", 
+                    "city": "Chicoutimi", 
+                    "name": "Clinique D'Orthopedie", 
+                    "tags": [
+                        "clinic"
+                    ], 
+                    "country": "CA", 
+                    "phone": "+1 418 690 1014", 
+                    "href": "http://api.simplegeo.com/1.0/features/SG_0m8d43I6cHUymrBIix4Q0Q_48.397182_-71.081757@1293573121.json", 
+                    "postcode": "G7H 6R9", 
+                    "address": "270 Rue Malraux", 
+                    "owner": "simplegeo", 
+                    "classifiers": [
+                        {
+                            "category": "Health Services", 
+                            "type": "Services", 
+                            "subcategory": "Doctor"
+                        }
+                    ]
+                }, 
+                "_id": "a3acf2b24503cfb5ad267ff31207968e", 
+                "type": "Feature", 
+                "id": "SG_0m8d43I6cHUymrBIix4Q0Q_48.397182_-71.081757@1293573121"
+            }, 
+        {
+                "geometry": {
+                    "type": "Point", 
+                    "coordinates": [
+                        -71.0454788208, 
+                        48.4435958862
+                    ]
+                },
+                "properties": {
+                    "province": "QC", 
+                    "city": "Chicoutimi", 
+                    "name": "Couche-Tard", 
+                    "country": "CA", 
+                    "phone": "+1 418 543 1343", 
+                    "href": "http://api.simplegeo.com/1.0/features/SG_0maHssmZEcTC9DH0mOwWSN_48.443596_-71.045479@1293573121.json", 
+                    "postcode": "G7G 4X9", 
+                    "address": "1579 Boul DE Tadoussac", 
+                    "owner": "simplegeo", 
+                    "classifiers": [
+                        {
+                            "category": "Food & Beverages", 
+                            "type": "Retail Goods", 
+                            "subcategory": "Groceries & Convenience Stores"
+                        }
+                    ]
+                }, 
+                "_id": "a3acf2b24503cfb5ad267ff3120aaa1b", 
+                "type": "Feature", 
+                "id": "SG_0maHssmZEcTC9DH0mOwWSN_48.443596_-71.045479@1293573121"
+            }, 
+        {
+                "geometry": {
+                    "type": "Point", 
+                    "coordinates": [
+                        -70.9945297241, 
+                        48.396522522
+                    ]
+                },
+                "properties": {
+                    "province": "QC", 
+                    "city": "Chicoutimi", 
+                    "name": "Ferme Lavoie Inc", 
+                    "country": "CA", 
+                    "phone": "+1 418 693 7900", 
+                    "href": "http://api.simplegeo.com/1.0/features/SG_0MavrhNhfZDuuVtY0Ue4ZY_48.396523_-70.994530@1293573121.json", 
+                    "postcode": "G7H 7W2", 
+                    "address": "2510 Boul Saint-Jean-Baptiste", 
+                    "owner": "simplegeo", 
+                    "classifiers": [
+                        {
+                            "category": "Farming", 
+                            "type": "Manufacturing & Wholesale Goods", 
+                            "subcategory": "Farm"
+                        }
+                    ]
+                }, 
+                "_id": "a3acf2b24503cfb5ad267ff3120b9b11", 
+                "type": "Feature", 
+                "id": "SG_0MavrhNhfZDuuVtY0Ue4ZY_48.396523_-70.994530@1293573121"
+            }, 
+        {
+                "geometry": {
+                    "type": "Point", 
+                    "coordinates": [
+                        -71.0578079224, 
+                        48.4047966003
+                    ]
+                },
+                "properties": {
+                    "province": "QC", 
+                    "city": "Chicoutimi", 
+                    "name": "Rouet Metier D'Art", 
+                    "tags": [
+                        "shop"
+                    ], 
+                    "country": "CA", 
+                    "phone": "+1 418 545 9780", 
+                    "href": "http://api.simplegeo.com/1.0/features/SG_0MCT3o5Va5ujCtFYCTKhry_48.404797_-71.057808@1293573121.json", 
+                    "postcode": "G7H 4C1", 
+                    "address": "1401 Boul Talbot", 
+                    "owner": "simplegeo", 
+                    "classifiers": [
+                        {
+                            "category": "Shopping", 
+                            "type": "Retail Goods", 
+                            "subcategory": "Gifts & Souvenirs"
+                        }
+                    ]
+                }, 
+                "_id": "a3acf2b24503cfb5ad267ff3120f89b9", 
+                "type": "Feature", 
+                "id": "SG_0MCT3o5Va5ujCtFYCTKhry_48.404797_-71.057808@1293573121"
+            }, 
+        {
+                "geometry": {
+                    "type": "Point", 
+                    "coordinates": [
+                        -71.0511474609, 
+                        48.4013557434
+                    ]
+                },
+                "properties": {
+                    "province": "QC", 
+                    "city": "Chicoutimi", 
+                    "name": "Soeurs Sainte-Marie", 
+                    "country": "CA", 
+                    "phone": "+1 418 545 2471", 
+                    "href": "http://api.simplegeo.com/1.0/features/SG_0mEI9g4S5mLbS2HzbrwrQq_48.401356_-71.051147@1293573121.json", 
+                    "postcode": "G7H 5R8", 
+                    "address": "1526 Rue Des Engoulevents", 
+                    "owner": "simplegeo", 
+                    "classifiers": [
+                        {
+                            "category": "Organizations", 
+                            "type": "Services", 
+                            "subcategory": "Religious Organization"
+                        }
+                    ]
+                }, 
+                "_id": "a3acf2b24503cfb5ad267ff312135167", 
+                "type": "Feature", 
+                "id": "SG_0mEI9g4S5mLbS2HzbrwrQq_48.401356_-71.051147@1293573121"
+            }, 
+        {
+                "geometry": {
+                    "type": "Point", 
+                    "coordinates": [
+                        -71.0659179688, 
+                        48.4367218018
+                    ]
+                }, 
+                "properties": {
+                    "province": "QC", 
+                    "city": "Chicoutimi", 
+                    "name": "Clinique DE Medicine Familiale", 
+                    "tags": [
+                        "clinic"
+                    ], 
+                    "country": "CA", 
+                    "phone": "+1 418 698 2414", 
+                    "href": "http://api.simplegeo.com/1.0/features/SG_0MGy9KRXow3XNtmoy20Fl5_48.436722_-71.065918@1293573121.json", 
+                    "postcode": "G7G 2H4", 
+                    "address": "44 Rue Rhainds", 
+                    "owner": "simplegeo", 
+                    "classifiers": [
+                        {
+                            "category": "Health Services", 
+                            "type": "Services", 
+                            "subcategory": "Doctor"
+                        }
+                    ]
+                }, 
+                "_id": "a3acf2b24503cfb5ad267ff312193ea7", 
+                "type": "Feature", 
+                "id": "SG_0MGy9KRXow3XNtmoy20Fl5_48.436722_-71.065918@1293573121"
+            }, 
+        {
+                "geometry": {
+                    "type": "Point", 
+                    "coordinates": [
+                        -71.0575714111, 
+                        48.4091415405
+                    ]
+                },
+                "properties": {
+                    "province": "QC", 
+                    "city": "Chicoutimi", 
+                    "name": "Clinique Dl Enr", 
+                    "tags": [
+                        "clinic"
+                    ], 
+                    "country": "CA", 
+                    "phone": "+1 418 696 1021", 
+                    "href": "http://api.simplegeo.com/1.0/features/SG_0MLc8ln3PialKcFBbj00gv_48.409142_-71.057571@1293573121.json", 
+                    "postcode": "G7H 2W2", 
+                    "address": "448 Rue Des Champs-Elysees", 
+                    "owner": "simplegeo", 
+                    "classifiers": [
+                        {
+                            "category": "Health Services", 
+                            "type": "Services", 
+                            "subcategory": "Doctor"
+                        }
+                    ]
+                }, 
+                "_id": "a3acf2b24503cfb5ad267ff3122364f9", 
+                "type": "Feature", 
+                "id": "SG_0MLc8ln3PialKcFBbj00gv_48.409142_-71.057571@1293573121"
+            }, 
+        {
+                "geometry": {
+                    "type": "Point", 
+                    "coordinates": [
+                        -71.0570373535, 
+                        48.4061088562
+                    ]
+                },
+                "properties": {
+                    "province": "QC", 
+                    "city": "Chicoutimi", 
+                    "name": "Pharmacie Georges Tremblay", 
+                    "country": "CA", 
+                    "phone": "+1 418 549 9889", 
+                    "href": "http://api.simplegeo.com/1.0/features/SG_05WtihJH9Xe2HIfb34F9ph_48.406109_-71.057037@1293573121.json", 
+                    "postcode": "G7H 4B8", 
+                    "address": "1324 Boul Talbot", 
+                    "owner": "simplegeo", 
+                    "classifiers": [
+                        {
+                            "category": "Shopping", 
+                            "type": "Retail Goods", 
+                            "subcategory": "Pharmacy"
+                        }
+                    ]
+                }, 
+                "_id": "a7fb8a32eb69dba840dbfb6a13d3751e", 
+                "type": "Feature", 
+                "id": "SG_05WtihJH9Xe2HIfb34F9ph_48.406109_-71.057037@1293573121"
+            }, 
+        {
+                "geometry": {
+                    "type": "Point", 
+                    "coordinates": [
+                        -71.0796051025, 
+                        48.3944244385
+                    ]
+                },
+                "properties": {
+                    "province": "QC", 
+                    "city": "Chicoutimi", 
+                    "name": "Godin, Michel", 
+                    "tags": [
+                        "repairing", 
+                        "remodeling", 
+                        "contractor"
+                    ], 
+                    "country": "CA", 
+                    "phone": "+1 418 693 8416", 
+                    "href": "http://api.simplegeo.com/1.0/features/SG_063A5r8pTd6I8Qsg9Y4Mcv_48.394424_-71.079605@1293573121.json", 
+                    "postcode": "G7H 7L6", 
+                    "address": "224 Rue Calvin", 
+                    "owner": "simplegeo", 
+                    "classifiers": [
+                        {
+                            "category": "Building & Trades", 
+                            "type": "Services", 
+                            "subcategory": "Construction"
+                        }
+                    ]
+                }, 
+                "_id": "a7fb8a32eb69dba840dbfb6a13d9464f", 
+                "type": "Feature", 
+                "id": "SG_063A5r8pTd6I8Qsg9Y4Mcv_48.394424_-71.079605@1293573121"
+            }, 
+        {
+                "geometry": {
+                    "type": "Point", 
+                    "coordinates": [
+                        -71.0462875366, 
+                        48.4165840149
+                    ]
+                },
+                "properties": {
+                    "province": "QC", 
+                    "city": "Chicoutimi", 
+                    "name": "Doolys Chicoutimi Inc", 
+                    "tags": [
+                        "parlor", 
+                        "billiard", 
+                        "hall", 
+                        "auditorium"
+                    ], 
+                    "country": "CA", 
+                    "phone": "+1 418 543 2662", 
+                    "href": "http://api.simplegeo.com/1.0/features/SG_06CnMYwhAI9hmDKZocvXmg_48.416584_-71.046288@1293573121.json", 
+                    "postcode": "G7H 4B3", 
+                    "address": "797 Boul Talbot", 
+                    "owner": "simplegeo", 
+                    "classifiers": [
+                        {
+                            "category": "Recreation", 
+                            "type": "Entertainment", 
+                            "subcategory": ""
+                        }
+                    ]
+                }, 
+                "_id": "a7fb8a32eb69dba840dbfb6a13dff2e3", 
+                "type": "Feature", 
+                "id": "SG_06CnMYwhAI9hmDKZocvXmg_48.416584_-71.046288@1293573121"
+            }, 
+        {
+                "geometry": {
+                    "type": "Point", 
+                    "coordinates": [
+                        -71.0611190796, 
+                        48.4384651184
+                    ]
+                },
+                "properties": {
+                    "province": "QC", 
+                    "city": "Chicoutimi", 
+                    "name": "Couche-Tard", 
+                    "tags": [
+                        "grocer"
+                    ], 
+                    "country": "CA", 
+                    "phone": "+1 418 543 0694", 
+                    "href": "http://api.simplegeo.com/1.0/features/SG_06LoTrONsemvdCXw3Gx8oa_48.438465_-71.061119@1293573121.json", 
+                    "postcode": "G7G 1W1", 
+                    "address": "2082 Rue Roussel", 
+                    "owner": "simplegeo", 
+                    "classifiers": [
+                        {
+                            "category": "Food & Beverages", 
+                            "type": "Retail Goods", 
+                            "subcategory": "Groceries & Convenience Stores"
+                        }
+                    ]
+                }, 
+                "_id": "a7fb8a32eb69dba840dbfb6a13ea25ed", 
+                "type": "Feature", 
+                "id": "SG_06LoTrONsemvdCXw3Gx8oa_48.438465_-71.061119@1293573121"
+            }, 
+        {
+                "geometry": {
+                    "type": "Point", 
+                    "coordinates": [
+                        -71.0999603271, 
+                        48.4017066956
+                    ]
+                },
+                "properties": {
+                    "province": "QC", 
+                    "city": "Chicoutimi", 
+                    "name": "Resto-St-Paul", 
+                    "country": "CA", 
+                    "phone": "+1 418 693 8285", 
+                    "href": "http://api.simplegeo.com/1.0/features/SG_06Xx7ONj50jjpA94Y5HTFT_48.401707_-71.099960@1293573121.json", 
+                    "postcode": "G7J 4N1", 
+                    "address": "1660 Boul Saint-Paul", 
+                    "owner": "simplegeo", 
+                    "classifiers": [
+                        {
+                            "category": "Restaurant", 
+                            "type": "Food & Drink", 
+                            "subcategory": ""
+                        }
+                    ]
+                }, 
+                "_id": "a7fb8a32eb69dba840dbfb6a13f82b35", 
+                "type": "Feature", 
+                "id": "SG_06Xx7ONj50jjpA94Y5HTFT_48.401707_-71.099960@1293573121"
+            }, 
+        {
+                "geometry": {
+                    "type": "Point", 
+                    "coordinates": [
+                        -71.0487823486, 
+                        48.4373397827
+                    ]
+                },
+                "properties": {
+                    "province": "QC", 
+                    "city": "Chicoutimi", 
+                    "name": "Lettrage Express Gb Inc", 
+                    "tags": [
+                        "painter"
+                    ], 
+                    "country": "CA", 
+                    "phone": "+1 418 690 1870", 
+                    "href": "http://api.simplegeo.com/1.0/features/SG_06ZCNCF7VzpoQaLNyKDQbX_48.437340_-71.048782@1293573121.json", 
+                    "postcode": "G7G 1T8", 
+                    "address": "1771 Rue Roussel", 
+                    "owner": "simplegeo", 
+                    "classifiers": [
+                        {
+                            "category": "Manufacturing", 
+                            "type": "Manufacturing & Wholesale Goods", 
+                            "subcategory": "Signs"
+                        }
+                    ]
+                }, 
+                "_id": "a7fb8a32eb69dba840dbfb6a13f9643a", 
+                "type": "Feature", 
+                "id": "SG_06ZCNCF7VzpoQaLNyKDQbX_48.437340_-71.048782@1293573121"
+            }, 
+        {
+                "geometry": {
+                    "type": "Point", 
+                    "coordinates": [
+                        -71.0661010742, 
+                        48.448589325
+                    ]
+                }, 
+                "properties": {
+                    "province": "QC", 
+                    "city": "Chicoutimi", 
+                    "name": "Garage Du Parc", 
+                    "tags": [
+                        "body", 
+                        "automobile", 
+                        "painting"
+                    ], 
+                    "country": "CA", 
+                    "phone": "+1 418 545 0220", 
+                    "href": "http://api.simplegeo.com/1.0/features/SG_000sr0fLGK49pEnJs4w2WW_48.448589_-71.066101@1293573121.json", 
+                    "postcode": "G7G 4G8", 
+                    "address": "608 Rue Cabot", 
+                    "owner": "simplegeo", 
+                    "classifiers": [
+                        {
+                            "category": "Retail", 
+                            "type": "Services", 
+                            "subcategory": "Auto Repair"
+                        }
+                    ]
+                }, 
+                "_id": "ae9f3a94241bebaa821e8977c4ccd66b", 
+                "type": "Feature", 
+                "id": "SG_000sr0fLGK49pEnJs4w2WW_48.448589_-71.066101@1293573121"
+            }, 
+        {
+                "geometry": {
+                    "type": "Point", 
+                    "coordinates": [
+                        -71.0682754517, 
+                        48.4216003418
+                    ]
+                }, 
+                "properties": {
+                    "province": "QC", 
+                    "city": "Chicoutimi", 
+                    "name": "Centre Physio Plus Sport", 
+                    "tags": [
+                        "clinic"
+                    ], 
+                    "country": "CA", 
+                    "phone": "+1 418 545 4443", 
+                    "href": "http://api.simplegeo.com/1.0/features/SG_003tLQm7iv3ZBjDlSOpm9c_48.421600_-71.068275@1293573121.json", 
+                    "postcode": "G7H 2B1", 
+                    "address": "555 Boul DE L'Universite E", 
+                    "owner": "simplegeo", 
+                    "classifiers": [
+                        {
+                            "category": "Health Services", 
+                            "type": "Services", 
+                            "subcategory": "Doctor"
+                        }
+                    ]
+                }, 
+                "_id": "ae9f3a94241bebaa821e8977c4ce9037", 
+                "type": "Feature", 
+                "id": "SG_003tLQm7iv3ZBjDlSOpm9c_48.421600_-71.068275@1293573121"
+            }, 
+        {
+                "geometry": {
+                    "type": "Point", 
+                    "coordinates": [
+                        -71.0564422607, 
+                        48.4277458191
+                    ]
+                },
+                "properties": {
+                    "province": "QC", 
+                    "city": "Chicoutimi", 
+                    "name": "Librairie Les Bouquinistes Inc", 
+                    "tags": [
+                        "dealer"
+                    ], 
+                    "country": "CA", 
+                    "phone": "+1 418 543 7026", 
+                    "href": "http://api.simplegeo.com/1.0/features/SG_00jfXBKmqCaOmF3fe2cTGZ_48.427746_-71.056442@1293573121.json", 
+                    "postcode": "G7H 1T3", 
+                    "address": "392 Rue Racine E", 
+                    "owner": "simplegeo", 
+                    "classifiers": [
+                        {
+                            "category": "Shopping", 
+                            "type": "Retail Goods", 
+                            "subcategory": "Books"
+                        }
+                    ]
+                }, 
+                "_id": "ae9f3a94241bebaa821e8977c4ddb1f4", 
+                "type": "Feature", 
+                "id": "SG_00jfXBKmqCaOmF3fe2cTGZ_48.427746_-71.056442@1293573121"
+            }, 
+        {
+                "geometry": {
+                    "type": "Point", 
+                    "coordinates": [
+                        -71.069229126, 
+                        48.3946838379
+                    ]
+                },
+                "properties": {
+                    "province": "QC", 
+                    "city": "Chicoutimi", 
+                    "name": "Beaute Star-Bedard Quebec Inc", 
+                    "tags": [
+                        "salon", 
+                        "beauty"
+                    ], 
+                    "country": "CA", 
+                    "phone": "+1 418 543 1239", 
+                    "href": "http://api.simplegeo.com/1.0/features/SG_014XoYCwHtbe2h8JqqEjPP_48.394684_-71.069229@1293573121.json", 
+                    "postcode": "G7H 7Y4", 
+                    "owner": "simplegeo", 
+                    "classifiers": [
+                        {
+                            "category": "Wholesale", 
+                            "type": "Manufacturing & Wholesale Goods", 
+                            "subcategory": "Machinery & Supplies"
+                        }
+                    ]
+                }, 
+                "_id": "ae9f3a94241bebaa821e8977c4f4807c", 
+                "type": "Feature", 
+                "id": "SG_014XoYCwHtbe2h8JqqEjPP_48.394684_-71.069229@1293573121"
+            }, 
+        {
+                "geometry": {
+                    "type": "Point", 
+                    "coordinates": [
+                        -71.0679092407, 
+                        48.4278717041
+                    ]
+                },
+                "properties": {
+                    "province": "QC", 
+                    "city": "Chicoutimi", 
+                    "name": "Grenier DE Mon Pere", 
+                    "tags": [
+                        "antique"
+                    ], 
+                    "country": "CA", 
+                    "phone": "+1 418 693 0965", 
+                    "href": "http://api.simplegeo.com/1.0/features/SG_0dX9zC5S4Rho6se0ilNlGJ_48.427872_-71.067909@1293573121.json", 
+                    "postcode": "G7H 1P5", 
+                    "address": "16 Rue Racine E", 
+                    "owner": "simplegeo", 
+                    "classifiers": [
+                        {
+                            "category": "Shopping", 
+                            "type": "Retail Goods", 
+                            "subcategory": "Used Merchandise"
+                        }
+                    ]
+                }, 
+                "_id": "b907c0a22a2b51da2394a8c7fd027d7b", 
+                "type": "Feature", 
+                "id": "SG_0dX9zC5S4Rho6se0ilNlGJ_48.427872_-71.067909@1293573121"
+            }, 
+        {
+                "geometry": {
+                    "type": "Point", 
+                    "coordinates": [
+                        -71.0633468628, 
+                        48.4269142151
+                    ]
+                },
+                "properties": {
+                    "province": "QC", 
+                    "city": "Chicoutimi", 
+                    "name": "Roy Moteurs Specialites", 
+                    "tags": [
+                        "engine"
+                    ], 
+                    "country": "CA", 
+                    "phone": "+1 418 543 3412", 
+                    "href": "http://api.simplegeo.com/1.0/features/SG_0E1A0BhLWZh12Q5sUjXcYh_48.426914_-71.063347@1293573121.json", 
+                    "postcode": "G7H 4W8", 
+                    "address": "315 Rue DE L'Hotel-DE-Ville", 
+                    "owner": "simplegeo", 
+                    "classifiers": [
+                        {
+                            "category": "Wholesale", 
+                            "type": "Manufacturing & Wholesale Goods", 
+                            "subcategory": "Machinery & Supplies"
+                        }
+                    ]
+                }, 
+                "_id": "b907c0a22a2b51da2394a8c7fd09865b", 
+                "type": "Feature", 
+                "id": "SG_0E1A0BhLWZh12Q5sUjXcYh_48.426914_-71.063347@1293573121"
+            }, 
+        {
+                "geometry": {
+                    "type": "Point", 
+                    "coordinates": [
+                        -71.0622787476, 
+                        48.4275741577
+                    ]
+                }, 
+                "properties": {
+                    "province": "QC", 
+                    "city": "Chicoutimi", 
+                    "name": "Informatique Ebr Inc", 
+                    "tags": [
+                        "equipment", 
+                        "dealer", 
+                        "consultant"
+                    ], 
+                    "country": "CA", 
+                    "phone": "+1 418 543 2600", 
+                    "href": "http://api.simplegeo.com/1.0/features/SG_0edMvv3tdatEVAr0iSCyGC_48.427574_-71.062279@1293573121.json", 
+                    "postcode": "G7H 1S1", 
+                    "owner": "simplegeo", 
+                    "classifiers": [
+                        {
+                            "category": "Professional", 
+                            "type": "Services", 
+                            "subcategory": "Computer Services"
+                        }
+                    ]
+                }, 
+                "_id": "b907c0a22a2b51da2394a8c7fd1e4324", 
+                "type": "Feature", 
+                "id": "SG_0edMvv3tdatEVAr0iSCyGC_48.427574_-71.062279@1293573121"
+            }, 
+        {
+                "geometry": {
+                    "type": "Point", 
+                    "coordinates": [
+                        -71.0714797974, 
+                        48.390914917
+                    ]
+                },
+                "properties": {
+                    "province": "QC", 
+                    "city": "Chicoutimi", 
+                    "name": "Vitrerie 20-20 Inc", 
+                    "tags": [
+                        "glass", 
+                        "window", 
+                        "plate"
+                    ], 
+                    "country": "CA", 
+                    "phone": "+1 418 698 4040", 
+                    "href": "http://api.simplegeo.com/1.0/features/SG_0EXjskg4cxit9Sxk0KoGEt_48.390915_-71.071480@1293573121.json", 
+                    "postcode": "G7H 8C2", 
+                    "address": "2288 Rue DE LA Fonderie", 
+                    "owner": "simplegeo", 
+                    "classifiers": [
+                        {
+                            "category": "Home & Garden", 
+                            "type": "Retail Goods", 
+                            "subcategory": "Building Materials"
+                        }
+                    ]
+                }, 
+                "_id": "b907c0a22a2b51da2394a8c7fd4efff7", 
+                "type": "Feature", 
+                "id": "SG_0EXjskg4cxit9Sxk0KoGEt_48.390915_-71.071480@1293573121"
+            }, 
+        {
+                "geometry": {
+                    "type": "Point", 
+                    "coordinates": [
+                        -71.0472412109, 
+                        48.437084198
+                    ]
+                },
+                "properties": {
+                    "province": "QC", 
+                    "city": "Chicoutimi", 
+                    "name": "Ebenisterie Sl Enr", 
+                    "tags": [
+                        "equipment", 
+                        "kitchen", 
+                        "maker", 
+                        "cabinet"
+                    ], 
+                    "country": "CA", 
+                    "phone": "+1 418 693 6758", 
+                    "href": "http://api.simplegeo.com/1.0/features/SG_0FAgr2pBxlWpqxd4YWGCPt_48.437084_-71.047241@1293573121.json", 
+                    "postcode": "G7G 1T7", 
+                    "address": "1716 Rue Roussel", 
+                    "owner": "simplegeo", 
+                    "classifiers": [
+                        {
+                            "category": "Building & Trades", 
+                            "type": "Services", 
+                            "subcategory": "Construction"
+                        }
+                    ]
+                }, 
+                "_id": "b907c0a22a2b51da2394a8c7fd6125d7", 
+                "type": "Feature", 
+                "id": "SG_0FAgr2pBxlWpqxd4YWGCPt_48.437084_-71.047241@1293573121"
+            }, 
+        {
+                "geometry": {
+                    "type": "Point", 
+                    "coordinates": [
+                        -71.0516052246, 
+                        48.4058532715
+                    ]
+                },
+                "properties": {
+                    "province": "QC", 
+                    "city": "Chicoutimi", 
+                    "name": "Clinique Dentaire Poirier", 
+                    "tags": [
+                        "clinic", 
+                        "dentist"
+                    ], 
+                    "country": "CA", 
+                    "phone": "+1 418 545 8850", 
+                    "href": "http://api.simplegeo.com/1.0/features/SG_0FCoySr3WW3bFbWQP7MUQG_48.405853_-71.051605@1293573121.json", 
+                    "postcode": "G7H 6P3", 
+                    "address": "1299 Rue Des Champs-Elysees # 201", 
+                    "owner": "simplegeo", 
+                    "classifiers": [
+                        {
+                            "category": "Health Services", 
+                            "type": "Services", 
+                            "subcategory": "Doctor"
+                        }
+                    ]
+                }, 
+                "_id": "b907c0a22a2b51da2394a8c7fd666684", 
+                "type": "Feature", 
+                "id": "SG_0FCoySr3WW3bFbWQP7MUQG_48.405853_-71.051605@1293573121"
+            }, 
+        {
+                "geometry": {
+                    "type": "Point", 
+                    "coordinates": [
+                        -71.1067504883, 
+                        48.395526886
+                    ]
+                },
+                "properties": {
+                    "province": "QC", 
+                    "city": "Chicoutimi", 
+                    "name": "Distribution Mobus Inc", 
+                    "tags": [
+                        "automobile", 
+                        "parts"
+                    ], 
+                    "country": "CA", 
+                    "phone": "+1 418 545 4411", 
+                    "href": "http://api.simplegeo.com/1.0/features/SG_0FCqH4RWZatkuBCAU7hihD_48.395527_-71.106750@1293573121.json", 
+                    "postcode": "G7K 1H2", 
+                    "address": "1930 Boul Saint-Paul", 
+                    "owner": "simplegeo", 
+                    "classifiers": [
+                        {
+                            "category": "Autos & Motor Vehicles", 
+                            "type": "Retail Goods", 
+                            "subcategory": "Auto Supplies"
+                        }
+                    ]
+                }, 
+                "_id": "b907c0a22a2b51da2394a8c7fd667c20", 
+                "type": "Feature", 
+                "id": "SG_0FCqH4RWZatkuBCAU7hihD_48.395527_-71.106750@1293573121"
+            }, 
+        {
+                "geometry": {
+                    "type": "Point", 
+                    "coordinates": [
+                        -71.1258163452, 
+                        48.4031524658
+                    ]
+                },
+                "properties": {
+                    "province": "QC", 
+                    "city": "Chicoutimi", 
+                    "name": "Mecfor Inc", 
+                    "tags": [
+                        "equipment", 
+                        "hydraulic"
+                    ], 
+                    "country": "CA", 
+                    "phone": "+1 418 543 1632", 
+                    "href": "http://api.simplegeo.com/1.0/features/SG_0oKV6Lygcj7kqokwv5f3fL_48.403152_-71.125816@1293573121.json", 
+                    "postcode": "G7K 1H5", 
+                    "address": "1788 Rue Mitis", 
+                    "owner": "simplegeo", 
+                    "classifiers": [
+                        {
+                            "category": "Manufacturing", 
+                            "type": "Manufacturing & Wholesale Goods", 
+                            "subcategory": "Tools & Machinery"
+                        }
+                    ]
+                }, 
+                "_id": "bfbbbbbf84afa84c7893bb617e91bfb1", 
+                "type": "Feature", 
+                "id": "SG_0oKV6Lygcj7kqokwv5f3fL_48.403152_-71.125816@1293573121"
+            }, 
+        {
+                "geometry": {
+                    "type": "Point", 
+                    "coordinates": [
+                        -71.0593414307, 
+                        48.4025764465
+                    ]
+                },
+                "properties": {
+                    "province": "QC", 
+                    "city": "Chicoutimi", 
+                    "name": "Pharmacie Jean Coutu", 
+                    "country": "CA", 
+                    "phone": "+1 418 543 5566", 
+                    "href": "http://api.simplegeo.com/1.0/features/SG_0p0tfJrsnmg2opGVAqFamb_48.402576_-71.059341@1293573121.json", 
+                    "postcode": "G7H 5S5", 
+                    "address": "400 Rue Des Sagueneens", 
+                    "owner": "simplegeo", 
+                    "classifiers": [
+                        {
+                            "category": "Shopping", 
+                            "type": "Retail Goods", 
+                            "subcategory": "Pharmacy"
+                        }
+                    ]
+                }, 
+                "_id": "bfbbbbbf84afa84c7893bb617eb69b75", 
+                "type": "Feature", 
+                "id": "SG_0p0tfJrsnmg2opGVAqFamb_48.402576_-71.059341@1293573121"
+            }, 
+        {
+                "geometry": {
+                    "type": "Point", 
+                    "coordinates": [
+                        -71.0443496704, 
+                        48.4485931396
+                    ]
+                },
+                "properties": {
+                    "province": "QC", 
+                    "city": "Chicoutimi", 
+                    "name": "Salon DE Coiffure Adam", 
+                    "country": "CA", 
+                    "phone": "+1 418 545 0492", 
+                    "href": "http://api.simplegeo.com/1.0/features/SG_0P9qHbbTAvNXSI9hUScUov_48.448593_-71.044350@1293573121.json", 
+                    "postcode": "G7G 1C1", 
+                    "address": "1351 Rue Adam", 
+                    "owner": "simplegeo", 
+                    "classifiers": [
+                        {
+                            "category": "Personal", 
+                            "type": "Services", 
+                            "subcategory": "Beauty Salon"
+                        }
+                    ]
+                }, 
+                "_id": "bfbbbbbf84afa84c7893bb617ec1db8f", 
+                "type": "Feature", 
+                "id": "SG_0P9qHbbTAvNXSI9hUScUov_48.448593_-71.044350@1293573121"
+            }, 
+        {
+                "geometry": {
+                    "type": "Point", 
+                    "coordinates": [
+                        -71.0578079224, 
+                        48.4047966003
+                    ]
+                }, 
+                "properties": {
+                    "province": "QC", 
+                    "city": "Chicoutimi", 
+                    "name": "Hmv Canada", 
+                    "tags": [
+                        "compact", 
+                        "record", 
+                        "disc", 
+                        "tape"
+                    ], 
+                    "country": "CA", 
+                    "phone": "+1 418 693 1465", 
+                    "href": "http://api.simplegeo.com/1.0/features/SG_0pEqNQlsMkxwhLn42Qy6bU_48.404797_-71.057808@1293573121.json", 
+                    "postcode": "G7H 4C1", 
+                    "address": "1401 Boul Talbot", 
+                    "owner": "simplegeo", 
+                    "classifiers": [
+                        {
+                            "category": "Shopping", 
+                            "type": "Retail Goods", 
+                            "subcategory": "Music"
+                        }
+                    ]
+                }, 
+                "_id": "bfbbbbbf84afa84c7893bb617ecd2c8b", 
+                "type": "Feature", 
+                "id": "SG_0pEqNQlsMkxwhLn42Qy6bU_48.404797_-71.057808@1293573121"
+            }, 
+        {
+                "geometry": {
+                    "type": "Point", 
+                    "coordinates": [
+                        -71.1436233521, 
+                        48.3688278198
+                    ]
+                },
+                "properties": {
+                    "province": "QC", 
+                    "city": "Chicoutimi", 
+                    "name": "Plomberies Jacques Morin Inc", 
+                    "tags": [
+                        "contractor"
+                    ], 
+                    "country": "CA", 
+                    "phone": "+1 418 696 1705", 
+                    "href": "http://api.simplegeo.com/1.0/features/SG_0G9GoA1GUzXAhlethilBT5_48.368828_-71.143623@1293573121.json", 
+                    "postcode": "G7H 5B3", 
+                    "address": "3369 Rang Saint-Pierre", 
+                    "owner": "simplegeo", 
+                    "classifiers": [
+                        {
+                            "category": "Building & Trades", 
+                            "type": "Services", 
+                            "subcategory": "Plumbing"
+                        }
+                    ]
+                }, 
+                "_id": "d75f3c21243a063fa889db419d7f8c8f", 
+                "type": "Feature", 
+                "id": "SG_0G9GoA1GUzXAhlethilBT5_48.368828_-71.143623@1293573121"
+            }, 
+        {
+                "geometry": {
+                    "type": "Point", 
+                    "coordinates": [
+                        -71.0585708618, 
+                        48.427646637
+                    ]
+                },
+                "properties": {
+                    "province": "QC", 
+                    "city": "Chicoutimi", 
+                    "name": "Salon Frederic", 
+                    "country": "CA", 
+                    "phone": "+1 418 549 4595", 
+                    "href": "http://api.simplegeo.com/1.0/features/SG_0gEKcWZ7e9ql5BGIfb4bpu_48.427647_-71.058571@1293573121.json", 
+                    "postcode": "G7H 1S8", 
+                    "address": "325 Rue Racine E", 
+                    "owner": "simplegeo", 
+                    "classifiers": [
+                        {
+                            "category": "Personal", 
+                            "type": "Services", 
+                            "subcategory": "Beauty Salon"
+                        }
+                    ]
+                }, 
+                "_id": "d75f3c21243a063fa889db419d8a76b9", 
+                "type": "Feature", 
+                "id": "SG_0gEKcWZ7e9ql5BGIfb4bpu_48.427647_-71.058571@1293573121"
+            }, 
+        {
+                "geometry": {
+                    "type": "Point", 
+                    "coordinates": [
+                        -71.0680541992, 
+                        48.4293251038
+                    ]
+                }, 
+                "properties": {
+                    "province": "QC", 
+                    "city": "Chicoutimi", 
+                    "name": "Saguenay Radiateur", 
+                    "tags": [
+                        "repairing", 
+                        "automobile", 
+                        "tank"
+                    ], 
+                    "country": "CA", 
+                    "phone": "+1 418 543 7282", 
+                    "href": "http://api.simplegeo.com/1.0/features/SG_0GHAHdqkUjNBEMv5glFJwN_48.429325_-71.068054@1293573121.json", 
+                    "postcode": "G7J 2L9", 
+                    "address": "211 Rue Sainte-Anne", 
+                    "owner": "simplegeo", 
+                    "classifiers": [
+                        {
+                            "category": "Retail", 
+                            "type": "Services", 
+                            "subcategory": "Auto Repair"
+                        }
+                    ]
+                }, 
+                "_id": "d75f3c21243a063fa889db419d90c316", 
+                "type": "Feature", 
+                "id": "SG_0GHAHdqkUjNBEMv5glFJwN_48.429325_-71.068054@1293573121"
+            }, 
+        {
+                "geometry": {
+                    "type": "Point", 
+                    "coordinates": [
+                        -71.0676879883, 
+                        48.4137115479
+                    ]
+                },
+                "properties": {
+                    "province": "QC", 
+                    "city": "Chicoutimi", 
+                    "name": "Salon DE Coiffure Lindel", 
+                    "country": "CA", 
+                    "phone": "+1 418 545 6780", 
+                    "href": "http://api.simplegeo.com/1.0/features/SG_0gMkpFc0RVQmxSSbv4D0Oc_48.413712_-71.067688@1293573121.json", 
+                    "postcode": "G7H 2X9", 
+                    "address": "87 Rue Des Oblats E", 
+                    "owner": "simplegeo", 
+                    "classifiers": [
+                        {
+                            "category": "Personal", 
+                            "type": "Services", 
+                            "subcategory": "Beauty Salon"
+                        }
+                    ]
+                }, 
+                "_id": "d75f3c21243a063fa889db419d9d002a", 
+                "type": "Feature", 
+                "id": "SG_0gMkpFc0RVQmxSSbv4D0Oc_48.413712_-71.067688@1293573121"
+            }, 
+        {
+                "geometry": {
+                    "type": "Point", 
+                    "coordinates": [
+                        -71.1054458618, 
+                        48.3962593079
+                    ]
+                },
+                "properties": {
+                    "province": "QC", 
+                    "city": "Chicoutimi", 
+                    "name": "Construction Opcr", 
+                    "tags": [
+                        "general", 
+                        "contractor"
+                    ], 
+                    "country": "CA", 
+                    "phone": "+1 418 696 4211", 
+                    "href": "http://api.simplegeo.com/1.0/features/SG_0cIZigEPJ36hkdxSF3HHVg_48.396259_-71.105446@1293573121.json", 
+                    "postcode": "G7K 1E1", 
+                    "address": "1905 Boul Saint-Paul", 
+                    "owner": "simplegeo", 
+                    "classifiers": [
+                        {
+                            "category": "Building & Trades", 
+                            "type": "Services", 
+                            "subcategory": "Construction"
+                        }
+                    ]
+                }, 
+                "_id": "d8e44b2f1766bdc6cc2eda66740d9cf2", 
+                "type": "Feature", 
+                "id": "SG_0cIZigEPJ36hkdxSF3HHVg_48.396259_-71.105446@1293573121"
+            }, 
+        {
+                "geometry": {
+                    "type": "Point", 
+                    "coordinates": [
+                        -71.0680770874, 
+                        48.4281539917
+                    ]
+                },
+                "properties": {
+                    "province": "QC", 
+                    "city": "Chicoutimi", 
+                    "name": "Station Robert Gasse", 
+                    "tags": [
+                        "repairing", 
+                        "automobile", 
+                        "wrecker"
+                    ], 
+                    "country": "CA", 
+                    "phone": "+1 418 545 4952", 
+                    "href": "http://api.simplegeo.com/1.0/features/SG_0cNEgBFh9oo6Qluo6OJ8N7_48.428154_-71.068077@1293573121.json", 
+                    "postcode": "G7H 1P3", 
+                    "address": "7 Rue Racine E", 
+                    "owner": "simplegeo", 
+                    "classifiers": [
+                        {
+                            "category": "Retail", 
+                            "type": "Services", 
+                            "subcategory": "Auto Repair"
+                        }
+                    ]
+                }, 
+                "_id": "d8e44b2f1766bdc6cc2eda66741665e9", 
+                "type": "Feature", 
+                "id": "SG_0cNEgBFh9oo6Qluo6OJ8N7_48.428154_-71.068077@1293573121"
+            }, 
+        {
+                "geometry": {
+                    "type": "Point", 
+                    "coordinates": [
+                        -71.1107711792, 
+                        48.3855819702
+                    ]
+                },
+                "properties": {
+                    "province": "QC", 
+                    "city": "Chicoutimi", 
+                    "name": "Petro Plus Inc", 
+                    "tags": [
+                        "oil", 
+                        "heating", 
+                        "contractor"
+                    ], 
+                    "country": "CA", 
+                    "phone": "+1 418 549 8444", 
+                    "href": "http://api.simplegeo.com/1.0/features/SG_0CNnq9xwYIZmFSyMK3hMyY_48.385582_-71.110771@1293573121.json", 
+                    "postcode": "G7H 5B1", 
+                    "address": "1270 Boul Du Royaume O", 
+                    "owner": "simplegeo", 
+                    "classifiers": [
+                        {
+                            "category": "Building & Trades", 
+                            "type": "Services", 
+                            "subcategory": "Plumbing"
+                        }
+                    ]
+                }, 
+                "_id": "d8e44b2f1766bdc6cc2eda6674176532", 
+                "type": "Feature", 
+                "id": "SG_0CNnq9xwYIZmFSyMK3hMyY_48.385582_-71.110771@1293573121"
+            }, 
+        {
+                "geometry": {
+                    "type": "Point", 
+                    "coordinates": [
+                        -71.0555419922, 
+                        48.4478340149
+                    ]
+                },
+                "properties": {
+                    "province": "QC", 
+                    "city": "Chicoutimi", 
+                    "name": "Salon DE Coiffure Dynasty", 
+                    "country": "CA", 
+                    "phone": "+1 418 545 8676", 
+                    "href": "http://api.simplegeo.com/1.0/features/SG_0CVgHVMCqY2Ebm7gRFMhEr_48.447834_-71.055542@1293573121.json", 
+                    "postcode": "G7G 2P3", 
+                    "address": "409 Rue DE Verdun", 
+                    "owner": "simplegeo", 
+                    "classifiers": [
+                        {
+                            "category": "Personal", 
+                            "type": "Services", 
+                            "subcategory": "Beauty Salon"
+                        }
+                    ]
+                }, 
+                "_id": "d8e44b2f1766bdc6cc2eda66742a13a4", 
+                "type": "Feature", 
+                "id": "SG_0CVgHVMCqY2Ebm7gRFMhEr_48.447834_-71.055542@1293573121"
+            }, 
+        {
+                "geometry": {
+                    "type": "Point", 
+                    "coordinates": [
+                        -71.1163101196, 
+                        48.3877487183
+                    ]
+                },
+                "properties": {
+                    "province": "QC", 
+                    "city": "Chicoutimi", 
+                    "name": "Industries Dms Inc", 
+                    "tags": [
+                        "machine", 
+                        "shop"
+                    ], 
+                    "country": "CA", 
+                    "phone": "+1 418 693 8829", 
+                    "href": "http://api.simplegeo.com/1.0/features/SG_0cvS5MBOJqrCa3b4NfhOXo_48.387749_-71.116310@1293573121.json", 
+                    "postcode": "G7H 5B1", 
+                    "address": "1390 Boul Du Royaume O", 
+                    "owner": "simplegeo", 
+                    "classifiers": [
+                        {
+                            "category": "Manufacturing", 
+                            "type": "Manufacturing & Wholesale Goods", 
+                            "subcategory": "Tools & Machinery"
+                        }
+                    ]
+                }, 
+                "_id": "d8e44b2f1766bdc6cc2eda66742aa3d7", 
+                "type": "Feature", 
+                "id": "SG_0cvS5MBOJqrCa3b4NfhOXo_48.387749_-71.116310@1293573121"
+            }, 
+        {
+                "geometry": {
+                    "type": "Point", 
+                    "coordinates": [
+                        -71.064491272, 
+                        48.398765564
+                    ]
+                },
+                "properties": {
+                    "province": "QC", 
+                    "city": "Chicoutimi", 
+                    "name": "Enviro-Globe Inc", 
+                    "tags": [
+                        "environmental", 
+                        "ecological"
+                    ], 
+                    "country": "CA", 
+                    "phone": "+1 418 698 4562", 
+                    "href": "http://api.simplegeo.com/1.0/features/SG_0DA6EnuyJx9OA6Ztydiwa1_48.398766_-71.064491@1293573121.json", 
+                    "postcode": "G7H 7Y1", 
+                    "address": "1700 Boul Talbot", 
+                    "owner": "simplegeo", 
+                    "classifiers": [
+                        {
+                            "category": "Professional", 
+                            "type": "Services", 
+                            "subcategory": "Research"
+                        }
+                    ]
+                }, 
+                "_id": "d8e44b2f1766bdc6cc2eda6674404de4", 
+                "type": "Feature", 
+                "id": "SG_0DA6EnuyJx9OA6Ztydiwa1_48.398766_-71.064491@1293573121"
+            }, 
+        {
+                "geometry": {
+                    "type": "Point", 
+                    "coordinates": [
+                        -71.018699646, 
+                        48.4368286133
+                    ]
+                },
+                "properties": {
+                    "province": "QC", 
+                    "city": "Chicoutimi", 
+                    "name": "Entreprises D'Electricite Gaby", 
+                    "tags": [
+                        "electric", 
+                        "contractor"
+                    ], 
+                    "country": "CA", 
+                    "phone": "+1 418 545 1632", 
+                    "href": "http://api.simplegeo.com/1.0/features/SG_0dExPTIq4Edy3AHq38CHuS_48.436829_-71.018700@1293573121.json", 
+                    "postcode": "G7H 5A7", 
+                    "address": "1610 Boul Renaud", 
+                    "owner": "simplegeo", 
+                    "classifiers": [
+                        {
+                            "category": "Building & Trades", 
+                            "type": "Services", 
+                            "subcategory": "Electrical"
+                        }
+                    ]
+                }, 
+                "_id": "d8e44b2f1766bdc6cc2eda66744b19f2", 
+                "type": "Feature", 
+                "id": "SG_0dExPTIq4Edy3AHq38CHuS_48.436829_-71.018700@1293573121"
+            }, 
+        {
+                "geometry": {
+                    "type": "Point", 
+                    "coordinates": [
+                        -71.0635604858, 
+                        48.408000946
+                    ]
+                },
+                "properties": {
+                    "province": "QC", 
+                    "city": "Chicoutimi", 
+                    "name": "A Pro Peau Esthetique", 
+                    "country": "CA", 
+                    "phone": "+1 418 690 2585", 
+                    "href": "http://api.simplegeo.com/1.0/features/SG_0dgWhM4cUEEF8SH8ZH8Fqz_48.408001_-71.063560@1293573121.json", 
+                    "postcode": "G7H 7P6", 
+                    "address": "220 Rue Don-Bosco", 
+                    "owner": "simplegeo", 
+                    "classifiers": [
+                        {
+                            "category": "Personal", 
+                            "type": "Services", 
+                            "subcategory": "Beauty Salon"
+                        }
+                    ]
+                }, 
+                "_id": "d8e44b2f1766bdc6cc2eda66744f12fe", 
+                "type": "Feature", 
+                "id": "SG_0dgWhM4cUEEF8SH8ZH8Fqz_48.408001_-71.063560@1293573121"
+            }, 
+        {
+                "geometry": {
+                    "type": "Point", 
+                    "coordinates": [
+                        -71.0794143677, 
+                        48.3828849792
+                    ]
+                },
+                "properties": {
+                    "province": "QC", 
+                    "city": "Chicoutimi", 
+                    "name": "Equipement Federal Quebec Ltee", 
+                    "tags": [
+                        "forestry", 
+                        "timber"
+                    ], 
+                    "country": "CA", 
+                    "phone": "+1 418 549 0022", 
+                    "href": "http://api.simplegeo.com/1.0/features/SG_0DkCeD5tL4Hp3ShkKi3o5K_48.382885_-71.079414@1293573121.json", 
+                    "postcode": "G7H 5B1", 
+                    "address": "205 Rue Clement-Gilbert", 
+                    "owner": "simplegeo", 
+                    "classifiers": [
+                        {
+                            "category": "Wholesale", 
+                            "type": "Manufacturing & Wholesale Goods", 
+                            "subcategory": "Machinery & Supplies"
+                        }
+                    ]
+                }, 
+                "_id": "d8e44b2f1766bdc6cc2eda6674557a6c", 
+                "type": "Feature", 
+                "id": "SG_0DkCeD5tL4Hp3ShkKi3o5K_48.382885_-71.079414@1293573121"
+            }, 
+        {
+                "geometry": {
+                    "type": "Point", 
+                    "coordinates": [
+                        -71.0554351807, 
+                        48.4077949524
+                    ]
+                },
+                "properties": {
+                    "province": "QC", 
+                    "city": "Chicoutimi", 
+                    "name": "Citi Financiere", 
+                    "tags": [
+                        "loan", 
+                        "real estate"
+                    ], 
+                    "country": "CA", 
+                    "phone": "+1 418 549 8338", 
+                    "href": "http://api.simplegeo.com/1.0/features/SG_0dMRFMS07nKIqWQgr637mr_48.407795_-71.055435@1293573121.json", 
+                    "postcode": "G7H 4B7", 
+                    "address": "1212 Boul Talbot", 
+                    "owner": "simplegeo", 
+                    "classifiers": [
+                        {
+                            "category": "Banks & Credit Unions", 
+                            "type": "Services", 
+                            "subcategory": "Bank"
+                        }
+                    ]
+                }, 
+                "_id": "d8e44b2f1766bdc6cc2eda66745ad531", 
+                "type": "Feature", 
+                "id": "SG_0dMRFMS07nKIqWQgr637mr_48.407795_-71.055435@1293573121"
+            }, 
+        {
+                "geometry": {
+                    "type": "Point", 
+                    "coordinates": [
+                        -71.0391769409, 
+                        48.4361000061
+                    ]
+                },
+                "properties": {
+                    "province": "QC", 
+                    "city": "Chicoutimi", 
+                    "name": "Boutique Sub-Aquatique Enr", 
+                    "tags": [
+                        "equipment", 
+                        "diver", 
+                        "supply"
+                    ], 
+                    "country": "CA", 
+                    "phone": "+1 418 545 6487", 
+                    "href": "http://api.simplegeo.com/1.0/features/SG_0do1d1PkxxEy1yCI0mhYzE_48.436100_-71.039177@1293573121.json", 
+                    "postcode": "G7G 1T4", 
+                    "address": "1452 Rue Roussel", 
+                    "owner": "simplegeo", 
+                    "classifiers": [
+                        {
+                            "category": "Shopping", 
+                            "type": "Retail Goods", 
+                            "subcategory": "Bicycles & Sporting Goods"
+                        }
+                    ]
+                }, 
+                "_id": "d8e44b2f1766bdc6cc2eda66745e92cc", 
+                "type": "Feature", 
+                "id": "SG_0do1d1PkxxEy1yCI0mhYzE_48.436100_-71.039177@1293573121"
+            }, 
+        {
+                "geometry": {
+                    "type": "Point", 
+                    "coordinates": [
+                        -71.1074066162, 
+                        48.3470726013
+                    ]
+                },
+                "properties": {
+                    "province": "QC", 
+                    "city": "Chicoutimi", 
+                    "name": "Desjardins Extermination", 
+                    "country": "CA", 
+                    "phone": "+1 418 545 2134", 
+                    "href": "http://api.simplegeo.com/1.0/features/SG_0dRg7BFb13V7uqlFAfur5m_48.347073_-71.107407@1293573121.json", 
+                    "postcode": "G7H 5B1", 
+                    "address": "4370 Boul Talbot", 
+                    "owner": "simplegeo", 
+                    "classifiers": [
+                        {
+                            "category": "Building & Trades", 
+                            "type": "Services", 
+                            "subcategory": "Pest Control"
+                        }
+                    ]
+                }, 
+                "_id": "d8e44b2f1766bdc6cc2eda6674670b54", 
+                "type": "Feature", 
+                "id": "SG_0dRg7BFb13V7uqlFAfur5m_48.347073_-71.107407@1293573121"
+            }, 
+        {
+                "geometry": {
+                    "type": "Point", 
+                    "coordinates": [
+                        -71.1353607178, 
+                        48.3753242493
+                    ]
+                },
+                "properties": {
+                    "province": "QC", 
+                    "city": "Chicoutimi", 
+                    "name": "Max-I-Mum Svc Financiers Ltee", 
+                    "country": "CA", 
+                    "phone": "+1 418 549 9066", 
+                    "href": "http://api.simplegeo.com/1.0/features/SG_0AfpRnfuD8boEY14S8tTXh_48.375324_-71.135361@1293573121.json", 
+                    "postcode": "G7H 5B3", 
+                    "address": "2923 Rang Saint-Pierre", 
+                    "owner": "simplegeo", 
+                    "classifiers": [
+                        {
+                            "category": "Insurance", 
+                            "type": "Services", 
+                            "subcategory": "Life Insurance"
+                        }
+                    ]
+                }, 
+                "_id": "e81647052d3716873ae2b9ddcf1dddf3", 
+                "type": "Feature", 
+                "id": "SG_0AfpRnfuD8boEY14S8tTXh_48.375324_-71.135361@1293573121"
+            }
+            ]}

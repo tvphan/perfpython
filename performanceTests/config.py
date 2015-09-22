@@ -8,8 +8,8 @@ config={
     "bulkInsertSize" : 1000,
     "bulkInsertsPerThread" : 250,
     
-    # Limiting the number of Requests per second
-    # "maxReqPerSec" : 4,
+    # Limiting the number of Requests per second, (-1 for unlimited)
+    "maxReqPerSec" : -1,
     
     # Ratios to control the proportion of different actions
     "actionRatios" : {
@@ -21,6 +21,12 @@ config={
     
     # If this is unset, it will generate a timestamped filename
     "resultsFileName" : "TaskData.json",
+    
+    # Stages to execute:
+    # Default Stages
+    "workerStages" : ["threadWorker_preStage", "threadWorker_mainStage", "threadWorker_mainStage_SkipLB"],
+    # Lucene Search Stage
+    #"workerStages": ["threadWorker_mainStage_lucene_queries"],
         
     # Database configuration
     "dbConfig" : {
@@ -49,7 +55,7 @@ config={
         "dbname" : "testdb"
         
         # Extra headers to pretend to be the LB
-        #"extraHeaders" : {"X-Cloudant-User":"testy008-admin"}
+        "extraHeaders" : {"X-Cloudant-User":"<user>"}
     }
 
 

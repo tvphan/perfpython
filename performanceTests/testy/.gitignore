@@ -1,0 +1,11 @@
+venv
+*.pyc
+auth.json
+save_config.json
+*.DS_STORE
+.cache
+.coverage
+tmp
+
+# Vim swap files
+.*.sw?

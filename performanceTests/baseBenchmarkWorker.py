@@ -34,6 +34,7 @@ class baseBenchmarkWorker(object):
         self.actions = []
         self.insertedIDs = None  #TODO: What type is insertedIDs ? Should it be in base ? 
         self.seqNum = -1
+        self.executingUnitTests = False
              
     def addActions(self, newActions):
         if not isinstance(newActions, dict):
@@ -113,7 +114,7 @@ class baseBenchmarkWorker(object):
             resp = method(self)
             self.timeEnd()
         
-            if not resp.ok:
+            if not self.executingUnitTests and not resp.ok:
                 return {"action":actionName,
                         "delta_t":-2,
                         "err":True,
@@ -132,7 +133,7 @@ class baseBenchmarkWorker(object):
             return {"action":actionName,
                     "delta_t":-1,
                     "err":True,
-                    "msg":"["+actionName+"] ="+ e, 
+                    "msg":"["+actionName+"] ="+ str(e),
                     "timestamp":str(dt.datetime.now())}
             
         return {"action":actionName,
