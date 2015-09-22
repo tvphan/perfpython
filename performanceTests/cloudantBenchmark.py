@@ -18,6 +18,7 @@ import config as c
 import unittest
 import logging
 import benchmarkWorker as bW
+import benchmark_test_lucene_queries as bW_lucene
 import sys
 import time
 
@@ -134,7 +135,8 @@ class cloudantBenchmarkDriver(driver.genericBenchmarkDriver, unittest.TestCase):
         db = cdb.pyCloudantDB(benchmarkConfig["dbConfig"])
         
         # Create a local Worker
-        worker = bW.benchmarkWorker(db, idPool, params=benchmarkConfig)
+        #worker = bW.benchmarkWorker(db, idPool, params=benchmarkConfig)
+        worker = bW_lucene.benchmark_test_lucent_queries(db, idPool, params=benchmarkConfig)
         
         # Rate-limiting timer
         lastLoopTime = time.time()
