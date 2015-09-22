@@ -95,12 +95,8 @@ class cloudantBenchmarkDriver(driver.genericBenchmarkDriver, unittest.TestCase):
                   "randomUpdate" : 0,
                   "bulkInsert" : 1
                     },
-<<<<<<< HEAD
-            "dbConfig": benchmarkConfig["dbConfig"]
-=======
             "dbConfig": benchmarkConfig["dbConfig"],
             "maxReqPerSec" : benchmarkConfig["maxReqPerSec"] if "maxReqPerSec" in benchmarkConfig else 0
->>>>>>> master
             }
         self.threadWorker_mainStage(responseTimes, processStateDone, idx, pid, activeThreadCounter, bulkInsertConfig, idPool)
         
