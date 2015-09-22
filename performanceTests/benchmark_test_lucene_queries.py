@@ -12,7 +12,7 @@ import baseBenchmarkWorker as bBW
 import testy.suites.api.test_lucene_queries as TLQ
 import logging
 
-class benchmark_test_lucent_queries(bBW.baseBenchmarkWorker, TLQ.TestLuceneQueries):
+class benchmark_test_lucene_queries(bBW.baseBenchmarkWorker, TLQ.TestLuceneQueries):
     '''
     classdocs
     '''
@@ -27,30 +27,30 @@ class benchmark_test_lucent_queries(bBW.baseBenchmarkWorker, TLQ.TestLuceneQueri
                 
         #TODO: actions (action : actionMethod)  default ratios (action: 1) 
         self.addActions({  #TODO: introspection could probably lookup the name of self.test_ methods and calculate everything
-                         "test_result_json_structure" : benchmark_test_lucent_queries.test_result_json_structure,
-                         "test_bookmark_has_no_rows" : benchmark_test_lucent_queries.test_bookmark_has_no_rows,
-                         "test_bookmark_has_rows" : benchmark_test_lucent_queries.test_bookmark_has_rows,
-                         "test_bookmark_invalid" : benchmark_test_lucent_queries.test_bookmark_invalid,
-                         "test_stale_ok" : benchmark_test_lucent_queries.test_stale_ok,
-                         "test_limit_of_x" : benchmark_test_lucent_queries.test_limit_of_x,
-                         "test_include_x_doc" : benchmark_test_lucent_queries.test_include_x_doc,
-                         "test_include_doc_false" : benchmark_test_lucent_queries.test_include_doc_false,
-                         "test_sort_ascending_number" : benchmark_test_lucent_queries.test_sort_ascending_number,
-                         "test_sort_descending_number" : benchmark_test_lucent_queries.test_sort_descending_number,
-                         "test_sort_ascending_string" : benchmark_test_lucent_queries.test_sort_ascending_string,
-                         "test_sort_descending_string" : benchmark_test_lucent_queries.test_sort_descending_string,
-                         "test_group_field_number_is_unsupported" : benchmark_test_lucent_queries.test_group_field_number_is_unsupported,
-                         "test_group_field_string" : benchmark_test_lucent_queries.test_group_field_string,
-                         "test_group_field_string_with_row_limit" : benchmark_test_lucent_queries.test_group_field_string_with_row_limit,
-                         "test_group_field_string_with_group_limit" : benchmark_test_lucent_queries.test_group_field_string_with_group_limit,
-                         "test_group_field_string_sort_ascending" : benchmark_test_lucent_queries.test_group_field_string_sort_ascending,
-                         "test_group_field_string_sort_descending" : benchmark_test_lucent_queries.test_group_field_string_sort_descending,
-                         "test_ranges" : benchmark_test_lucent_queries.test_ranges,
-                         "test_counts" : benchmark_test_lucent_queries.test_counts,
-                         "test_drilldown" : benchmark_test_lucent_queries.test_drilldown,
-                         "test_query" : benchmark_test_lucent_queries.test_query,
-                         "test_include_fields" : benchmark_test_lucent_queries.test_include_fields,
-                         "test_include_fields_invalid_fields" : benchmark_test_lucent_queries.test_include_fields_invalid_fields,
+                         "test_result_json_structure" : benchmark_test_lucene_queries.test_result_json_structure,
+                         "test_bookmark_has_no_rows" : benchmark_test_lucene_queries.test_bookmark_has_no_rows,
+                         "test_bookmark_has_rows" : benchmark_test_lucene_queries.test_bookmark_has_rows,
+                         "test_bookmark_invalid" : benchmark_test_lucene_queries.test_bookmark_invalid,
+                         "test_stale_ok" : benchmark_test_lucene_queries.test_stale_ok,
+                         "test_limit_of_x" : benchmark_test_lucene_queries.test_limit_of_x,
+                         "test_include_x_doc" : benchmark_test_lucene_queries.test_include_x_doc,
+                         "test_include_doc_false" : benchmark_test_lucene_queries.test_include_doc_false,
+                         "test_sort_ascending_number" : benchmark_test_lucene_queries.test_sort_ascending_number,
+                         "test_sort_descending_number" : benchmark_test_lucene_queries.test_sort_descending_number,
+                         "test_sort_ascending_string" : benchmark_test_lucene_queries.test_sort_ascending_string,
+                         "test_sort_descending_string" : benchmark_test_lucene_queries.test_sort_descending_string,
+                         "test_group_field_number_is_unsupported" : benchmark_test_lucene_queries.test_group_field_number_is_unsupported,
+                         "test_group_field_string" : benchmark_test_lucene_queries.test_group_field_string,
+                         "test_group_field_string_with_row_limit" : benchmark_test_lucene_queries.test_group_field_string_with_row_limit,
+                         "test_group_field_string_with_group_limit" : benchmark_test_lucene_queries.test_group_field_string_with_group_limit,
+                         "test_group_field_string_sort_ascending" : benchmark_test_lucene_queries.test_group_field_string_sort_ascending,
+                         "test_group_field_string_sort_descending" : benchmark_test_lucene_queries.test_group_field_string_sort_descending,
+                         "test_ranges" : benchmark_test_lucene_queries.test_ranges,
+                         "test_counts" : benchmark_test_lucene_queries.test_counts,
+                         "test_drilldown" : benchmark_test_lucene_queries.test_drilldown,
+                         "test_query" : benchmark_test_lucene_queries.test_query,
+                         "test_include_fields" : benchmark_test_lucene_queries.test_include_fields,
+                         "test_include_fields_invalid_fields" : benchmark_test_lucene_queries.test_include_fields_invalid_fields,
                          })
         
         if params is not None and "IGNOREactionRatios" in params:

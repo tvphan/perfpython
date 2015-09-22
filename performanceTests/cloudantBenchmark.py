@@ -132,7 +132,7 @@ class cloudantBenchmarkDriver(driver.genericBenchmarkDriver, unittest.TestCase):
         
         # Create a local Worker
         #worker = bW.benchmarkWorker(db, idPool, params=benchmarkConfig)
-        worker = bW_lucene.benchmark_test_lucent_queries(db, idPool, params=benchmarkConfig)
+        worker = bW_lucene.benchmark_test_lucene_queries(db, idPool, params=benchmarkConfig)
         
         # Rate-limiting timer
         lastLoopTime = time.time()

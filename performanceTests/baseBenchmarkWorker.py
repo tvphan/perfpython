@@ -132,7 +132,7 @@ class baseBenchmarkWorker(object):
             return {"action":actionName,
                     "delta_t":-1,
                     "err":True,
-                    "msg":"["+actionName+"] ="+ e, 
+                    "msg":"["+actionName+"] ="+ str(e),
                     "timestamp":str(dt.datetime.now())}
             
         return {"action":actionName,
