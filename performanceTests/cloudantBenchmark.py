@@ -192,7 +192,7 @@ class cloudantBenchmarkDriver(driver.genericBenchmarkDriver, unittest.TestCase):
         
         threadWorkers = []
         if "workerStages" not in c.config:
-            raise Exception("Failed to find identify stages to be run, 'workerStages' is missing from the config")
+            raise Exception("Failed to identify stages to be run, 'workerStages' is missing from the config")
         
         # Translate string function names into function pointers
         for worker in c.config["workerStages"]:
