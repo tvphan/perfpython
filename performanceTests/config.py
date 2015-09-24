@@ -37,7 +37,16 @@ config={
         "auth" : ('<user>','<passwd>'),
     
         # Database to be used
-        "dbname" : "testdb"
+        "dbname" : "testdb",
+        
+        # Create new Database for this run? 
+        #   If True it will create database <dbname>
+        #   If False it will reuse database <dbname>
+        "freshDatabase" : True,
+        
+        # Delete Database after run?
+        "cleanupDatabase" : True,
+        
     },
     
     # The number of iterations when hitting one of the DB nodes directly
@@ -53,7 +62,7 @@ config={
     
         # Database to be used
         "dbname" : "testdb",
-        
+
         # Extra headers to pretend to be the LB
         "extraHeaders" : {"X-Cloudant-User":"<user>"}
     }

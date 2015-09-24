@@ -61,11 +61,11 @@ class cloudantBenchmarkDriver(driver.genericBenchmarkDriver, unittest.TestCase):
             
         self.taskDataObject["info"] = hidePassword(self.taskDataObject["info"])
         
-            
-        # Add Database for testing
-        respAdd = self.db.addDatabase(self.benchmarkConfig["dbConfig"]["dbname"], deleteIfExists=True)
-        if not respAdd.ok:
-            self.assertTrue(respAdd.ok,"Failed to successfully add a Database")
+        if "freshDatabase" in self.benchmarkConfig["dbConfig"] and self.benchmarkConfig["dbConfig"]["freshDatabase"] is True:
+            # Add Database for testing
+            respAdd = self.db.addDatabase(self.benchmarkConfig["dbConfig"]["dbname"], deleteIfExists=True)
+            if not respAdd.ok:
+                self.assertTrue(respAdd.ok,"Failed to successfully add a Database")
         
         # Populate expected tasks
         self.testName = "MultiThreadedBenchmark"
@@ -75,10 +75,11 @@ class cloudantBenchmarkDriver(driver.genericBenchmarkDriver, unittest.TestCase):
         ''' First do generic tearDown, then clean up cloudant db generated during benchmark '''
         super(cloudantBenchmarkDriver, self).tearDown()
         
-        # Remove Database after test completion
-        respDel = self.db.deleteDatabase(self.benchmarkConfig["dbConfig"]["dbname"])
-        if not respDel.ok:
-            self.assertTrue(respDel.ok,"Failed to delete Database: " + str(respDel.json()))
+        if "cleanupDatabase" in self.benchmarkConfig["dbConfig"] and self.benchmarkConfig["dbConfig"]["cleanupDatabase"] is True:
+            # Remove Database after test completion
+            respDel = self.db.deleteDatabase(self.benchmarkConfig["dbConfig"]["dbname"])
+            if not respDel.ok:
+                self.assertTrue(respDel.ok,"Failed to delete Database: " + str(respDel.json()))
             
     def threadWorker_preStage(self, responseTimes, processStateDone, idx, pid, activeThreadCounter, benchmarkConfig, idPool):
         ''' This preStage is intended to populate the database with some documents before we test '''

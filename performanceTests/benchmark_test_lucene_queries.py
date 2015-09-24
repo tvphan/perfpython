@@ -53,10 +53,11 @@ class benchmark_test_lucene_queries(bBW.baseBenchmarkWorker, TLQ.TestLuceneQueri
                          "test_include_fields" : benchmark_test_lucene_queries.test_include_fields,
                          "test_include_fields_invalid_fields" : benchmark_test_lucene_queries.test_include_fields_invalid_fields,
                          })
-        
-        if params is not None and "actionRatios" in params and params["actionRatios"] is not None:
-            self.ratios = params["actionRatios"]
+        if params is not None:
             self.params = params
+            
+        if "actionRatios" in params and params["actionRatios"] is not None:
+            self.ratios = params["actionRatios"]
         else:
             log = logging.getLogger('mtbenchmark')
             log.warn("params have not been set, using fallback")
@@ -79,12 +80,13 @@ class benchmark_test_lucene_queries(bBW.baseBenchmarkWorker, TLQ.TestLuceneQueri
                             "test_group_field_string_with_group_limit" : 1,
                             "test_group_field_string_sort_ascending" : 1,
                             "test_group_field_string_sort_descending" : 1,
-                            "test_ranges" : 1,
-                            "test_counts" : 1,
-                            "test_drilldown" : 1,
                             "test_query" : 1,
                             "test_include_fields" : 1,
                             "test_include_fields_invalid_fields" : 1,
+                            # These are turned off for now
+                            "test_ranges" : 0,
+                            "test_counts" : 0,
+                            "test_drilldown" : 0                            
                   })
             
 
@@ -131,13 +133,39 @@ class benchmark_test_lucene_queries(bBW.baseBenchmarkWorker, TLQ.TestLuceneQueri
         })
         self.tearDown()
         self.setUp()
+        
+        # Disable checking of the response since the unit tests don't return anything. 
         self.executingUnitTests = True
+        
+        # Toggle flag to only do non-context aware asserts
         self.perfTesting = True
         
+        
+        self.SEARCH_URL = "/_design/lookup/_search/all"
+        self.viewName = "lookup"
+        self.m = {
+           "wildcard1":"Registrant.RegistrantName:A*",
+           "query1":"Issues.SpecificIssue:Health",
+           "query2":"Issues.SpecificIssue:ACCOUNTING",
+           "sort_num":"Filing.Amount<number>",
+           "sort_num_rev":"-Filing.Amount<number>",
+           "sort_str":"Client.ClientPPBState<string>",
+           "sort_str_rev":"-Client.ClientPPBState<string>",
+           "group_by":"Client.ClientState",
+           "group_by_sort":"Client.ClientState<string>",
+           "group_by_sort_rev":"-Client.ClientState<string>",
+           "include_field":"Filing.Amount",
+           "include_invalid_field":"Filing.Amount_FAKE"
+           }
+        
+        
+        
     def tearDown(self):
-        self.delete_test_db()
+        if self.params["dbConfig"]["cleanupDatabase"]:
+            self.delete_test_db()
         
     def setUp(self):
-        TLQ.TestLuceneQueries.setUp(self)
+        if self.params["dbConfig"]["freshDatabase"]:
+            TLQ.TestLuceneQueries.setUp(self)
         
  
