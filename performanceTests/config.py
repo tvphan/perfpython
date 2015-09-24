@@ -52,7 +52,7 @@ config={
         "auth" : ('<user>','<passwd>'),
     
         # Database to be used
-        "dbname" : "testdb"
+        "dbname" : "testdb",
         
         # Extra headers to pretend to be the LB
         "extraHeaders" : {"X-Cloudant-User":"<user>"}

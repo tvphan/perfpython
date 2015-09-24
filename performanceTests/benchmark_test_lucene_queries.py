@@ -132,6 +132,7 @@ class benchmark_test_lucene_queries(bBW.baseBenchmarkWorker, TLQ.TestLuceneQueri
         self.tearDown()
         self.setUp()
         self.executingUnitTests = True
+        self.perfTesting = True
         
     def tearDown(self):
         self.delete_test_db()
