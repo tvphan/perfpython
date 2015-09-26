@@ -24,9 +24,9 @@ config={
     
     # Stages to execute:
     # Default Stages
-    "workerStages" : ["threadWorker_preStage", "threadWorker_mainStage", "threadWorker_mainStage_SkipLB"],
+    "workerStages" : ["threadWorker_simple_datapop", "threadWorker_CRUD", "threadWorker_CRUD_SkipLB"],
     # Lucene Search Stage
-    #"workerStages": ["threadWorker_mainStage_lucene_queries"],
+    #"workerStages": ["threadWorker_testy_lucene"],
         
     # Database configuration
     "dbConfig" : {
