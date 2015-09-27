@@ -22,7 +22,7 @@ import BenchmarkWorker_testy_lucene as LuceneBW
 import sys
 import time
 
-class cloudantBenchmarkDriver(driver.genericBenchmarkDriver, unittest.TestCase):
+class cloudantBenchmarkDriver(driver.genericBenchmarkDriver):
     '''
     Simple Cloudant Benchmark, randomly execute basic CRUD ops
     
@@ -167,6 +167,7 @@ class cloudantBenchmarkDriver(driver.genericBenchmarkDriver, unittest.TestCase):
         
         
     def testMultiThreadedBenchmark(self):
+        ''' This function loops through all workerStages and looks up the correct functions'''
         log = logging.getLogger('mtbenchmark')
         
         threadWorkers = []
