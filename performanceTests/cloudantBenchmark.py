@@ -106,8 +106,8 @@ class cloudantBenchmarkDriver(driver.genericBenchmarkDriver):
         db = cdb.pyCloudantDB(benchmarkConfig["dbConfig"])
     
         # Create a local Worker
-        worker = CrudBW.BenchmarkWorker_CRUD(db, idPool, params=bulkInsertConfig)
-        self.threadWorker_driverLoop(responseTimes, processStateDone, idx, pid, activeThreadCounter, bulkInsertConfig, idPool, worker)
+        worker = CrudBW.BenchmarkWorker_CRUD(db, idPool, params=benchmarkConfig)
+        self.threadWorker_driverLoop(responseTimes, processStateDone, idx, pid, activeThreadCounter, benchmarkConfig, idPool, worker)
         
     def threadWorker_CRUD_SkipLB(self, responseTimes, processStateDone, idx, pid, activeThreadCounter, benchmarkConfig, idPool):
         ''' This stage is intended to get a small number datapoints circumventing the Load Balancer, in our tests we've noted that
@@ -133,8 +133,8 @@ class cloudantBenchmarkDriver(driver.genericBenchmarkDriver):
         db = cdb.pyCloudantDB(benchmarkConfig["dbConfig"])
     
         # Create a local Worker
-        worker = CrudBW.BenchmarkWorker_CRUD(db, idPool, params=noLbBenchmarkConfig)
-        self.threadWorker_driverLoop(responseTimes, processStateDone, idx, pid, activeThreadCounter, noLbBenchmarkConfig, idPool, worker)
+        worker = CrudBW.BenchmarkWorker_CRUD(db, idPool, params=benchmarkConfig)
+        self.threadWorker_driverLoop(responseTimes, processStateDone, idx, pid, activeThreadCounter, benchmarkConfig, idPool, worker)
     
     def threadWorker_testy_lucene(self, responseTimes, processStateDone, idx, pid, activeThreadCounter, benchmarkConfig, idPool):
         ''' This stage is a first stab at calling out to the cloudant testy functional tests'''
@@ -150,8 +150,8 @@ class cloudantBenchmarkDriver(driver.genericBenchmarkDriver):
             "maxReqPerSec" : benchmarkConfig["maxReqPerSec"] if "maxReqPerSec" in benchmarkConfig else 0
             }
         
-        worker = LuceneBW.BenchmarkWorker_testy_lucene(None, idPool, params=luceneQueriesConfig)
-        self.threadWorker_driverLoop(responseTimes, processStateDone, idx, pid, activeThreadCounter, luceneQueriesConfig, idPool, worker)
+        worker = LuceneBW.BenchmarkWorker_testy_lucene(None, idPool, params=benchmarkConfig)
+        self.threadWorker_driverLoop(responseTimes, processStateDone, idx, pid, activeThreadCounter, benchmarkConfig, idPool, worker)
         
     def threadWorker_CRUD(self, responseTimes, processStateDone, idx, pid, activeThreadCounter, benchmarkConfig, idPool):
         ''' Overrides the generic threadWorker, an instance of this function is executed in each driver thread'''
@@ -165,20 +165,6 @@ class cloudantBenchmarkDriver(driver.genericBenchmarkDriver):
         worker = CrudBW.BenchmarkWorker_CRUD(db, idPool, params=benchmarkConfig)
         self.threadWorker_driverLoop(responseTimes, processStateDone, idx, pid, activeThreadCounter, benchmarkConfig, idPool, worker)
         
-        
-    def testMultiThreadedBenchmark(self):
-        ''' This function loops through all workerStages and looks up the correct functions'''
-        log = logging.getLogger('mtbenchmark')
-        
-        threadWorkers = []
-        if "workerStages" not in c.config:
-            raise Exception("Failed to identify stages to be run, 'workerStages' is missing from the config")
-        
-        # Translate string function names into function pointers
-        for worker in c.config["workerStages"]:
-            threadWorkers.append(getattr(self, worker))
-            log.debug("Matched '%s' to function" % worker)
-        self._testMultiThreadedBenchmark(threadWorkers)
 
 if __name__ == "__main__":
     unittest.main()

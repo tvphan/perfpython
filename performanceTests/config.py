@@ -75,6 +75,7 @@ config={
                                     # Extra headers to pretend to be the LB
                                     "extraHeaders" : {"X-Cloudant-User":"<user>"}
                                 }
-                                }}]
+                                }}
+                      ], # end of worker stages
 
 }
