@@ -81,65 +81,33 @@ class cloudantBenchmarkDriver(driver.genericBenchmarkDriver):
             if not respDel.ok:
                 self.assertTrue(respDel.ok,"Failed to delete Database: " + str(respDel.json()))
             
-    def threadWorker_simple_datapop(self, responseTimes, processStateDone, idx, pid, activeThreadCounter, benchmarkConfig, idPool):
+    def threadWorker_simple_datapop(self, responseTimes, processStateDone, idx, pid, activeThreadCounter, workerConfig, idPool):
         ''' This preStage is intended to populate the database with some documents before we test '''
-
-        # assemble database population (bulk insert) config
-        bulkInsertConfig = {
-            "templateFile" : "templates/iron_template.json",
-            "concurrentThreads" : benchmarkConfig["concurrentThreads"],
-            "iterationPerThread" : benchmarkConfig["bulkInsertsPerThread"],
-            "bulkInsertSize" : benchmarkConfig["bulkInsertSize"],
-            "actionRatios" : {
-                  "simpleInsert" : 0,
-                  "randomDelete" : 0,
-                  "randomRead" : 0,
-                  "randomUpdate" : 0,
-                  "bulkInsert" : 1
-                    },
-            "dbConfig": benchmarkConfig["dbConfig"],
-            "maxReqPerSec" : benchmarkConfig["maxReqPerSec"] if "maxReqPerSec" in benchmarkConfig else 0
-            }
         
         # TODO: check whether a self.db exists
         # Create a local DB object
-        db = cdb.pyCloudantDB(benchmarkConfig["dbConfig"])
+        db = cdb.pyCloudantDB(workerConfig["dbConfig"])
     
         # Create a local Worker
-        worker = CrudBW.BenchmarkWorker_CRUD(db, idPool, params=benchmarkConfig)
-        self.threadWorker_driverLoop(responseTimes, processStateDone, idx, pid, activeThreadCounter, benchmarkConfig, idPool, worker)
+        worker = CrudBW.BenchmarkWorker_CRUD(db, idPool, params=workerConfig)
+        self.threadWorker_driverLoop(responseTimes, processStateDone, idx, pid, activeThreadCounter, workerConfig, idPool, worker)
         
-    def threadWorker_CRUD_SkipLB(self, responseTimes, processStateDone, idx, pid, activeThreadCounter, benchmarkConfig, idPool):
+    def threadWorker_CRUD_SkipLB(self, responseTimes, processStateDone, idx, pid, activeThreadCounter, workerConfig, idPool):
         ''' This stage is intended to get a small number datapoints circumventing the Load Balancer, in our tests we've noted that
             these are very consistent (low variability) metrics to measure the response times of certain CRUD ops'''
         
-        # assemble custom configuration
-        noLbBenchmarkConfig = {
-            "templateFile" : "templates/iron_template.json",
-            "concurrentThreads" : benchmarkConfig["concurrentThreads"],
-            "iterationPerThread" : benchmarkConfig["noLbIterationsPerThread"],
-            "actionRatios" : {
-                  "noLB_simpleInsert" : 1,
-                  "noLB_randomDelete" : 1,
-                  "noLB_randomRead" : 1,
-                  "noLB_randomUpdate" : 1,
-                  "noLB_bulkInsert" : 0
-                    },
-            "dbConfig": benchmarkConfig["noLbDbConfig"],
-            "maxReqPerSec" : benchmarkConfig["maxReqPerSec"] if "maxReqPerSec" in benchmarkConfig else 0
-            }
-        
+        # TODO: check whether a self.db exists
         # Create a local DB object
-        db = cdb.pyCloudantDB(benchmarkConfig["dbConfig"])
+        db = cdb.pyCloudantDB(workerConfig["dbConfig"])
     
         # Create a local Worker
-        worker = CrudBW.BenchmarkWorker_CRUD(db, idPool, params=benchmarkConfig)
-        self.threadWorker_driverLoop(responseTimes, processStateDone, idx, pid, activeThreadCounter, benchmarkConfig, idPool, worker)
+        worker = CrudBW.BenchmarkWorker_CRUD(db, idPool, params=workerConfig)
+        self.threadWorker_driverLoop(responseTimes, processStateDone, idx, pid, activeThreadCounter, workerConfig, idPool, worker)
     
-    def threadWorker_testy_lucene(self, responseTimes, processStateDone, idx, pid, activeThreadCounter, benchmarkConfig, idPool):
+    def threadWorker_testy_lucene(self, responseTimes, processStateDone, idx, pid, activeThreadCounter, workerConfig, idPool):
         ''' This stage is a first stab at calling out to the cloudant testy functional tests'''
         
-        # assemble custom configuration
+        '''# assemble custom configuration
         luceneQueriesConfig = {
             "templateFile" : "templates/iron_template.json",
             "concurrentThreads" : benchmarkConfig["concurrentThreads"],
@@ -148,22 +116,22 @@ class cloudantBenchmarkDriver(driver.genericBenchmarkDriver):
             "actionRatios" : None, # Populated in test class
             "dbConfig": benchmarkConfig["dbConfig"],
             "maxReqPerSec" : benchmarkConfig["maxReqPerSec"] if "maxReqPerSec" in benchmarkConfig else 0
-            }
+            }'''
         
-        worker = LuceneBW.BenchmarkWorker_testy_lucene(None, idPool, params=benchmarkConfig)
-        self.threadWorker_driverLoop(responseTimes, processStateDone, idx, pid, activeThreadCounter, benchmarkConfig, idPool, worker)
+        worker = LuceneBW.BenchmarkWorker_testy_lucene(None, idPool, params=workerConfig)
+        self.threadWorker_driverLoop(responseTimes, processStateDone, idx, pid, activeThreadCounter, workerConfig, idPool, worker)
         
-    def threadWorker_CRUD(self, responseTimes, processStateDone, idx, pid, activeThreadCounter, benchmarkConfig, idPool):
+    def threadWorker_CRUD(self, responseTimes, processStateDone, idx, pid, activeThreadCounter, workerConfig, idPool):
         ''' Overrides the generic threadWorker, an instance of this function is executed in each driver thread'''
         
         log = logging.getLogger('mtbenchmark')
         
         # Create a local DB object
-        db = cdb.pyCloudantDB(benchmarkConfig["dbConfig"])
+        db = cdb.pyCloudantDB(workerConfig["dbConfig"])
     
         # Create a local Worker
-        worker = CrudBW.BenchmarkWorker_CRUD(db, idPool, params=benchmarkConfig)
-        self.threadWorker_driverLoop(responseTimes, processStateDone, idx, pid, activeThreadCounter, benchmarkConfig, idPool, worker)
+        worker = CrudBW.BenchmarkWorker_CRUD(db, idPool, params=workerConfig)
+        self.threadWorker_driverLoop(responseTimes, processStateDone, idx, pid, activeThreadCounter, workerConfig, idPool, worker)
         
 
 if __name__ == "__main__":

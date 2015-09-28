@@ -5,10 +5,6 @@ config={
         # Iterations used for the mail operations
         "iterationPerThread" : 4000,
         
-        # Size and number of bulk inserts
-        "bulkInsertSize" : 1000,
-        "bulkInsertsPerThread" : 250,
-        
         # Limiting the number of Requests per second, (-1 for unlimited)
         "maxReqPerSec" : -1,
         
@@ -32,15 +28,28 @@ config={
             "auth" : ('<user>','<passwd>'),
         
             # Database to be used
-            "dbname" : "testdb"
+            "dbname" : "testdb",
+            
+            #   If True it will create database <dbname>
+            #   If False it will reuse database <dbname>
+            "freshDatabase" : True,
+            
+            # Delete Database after run?
+            "cleanupDatabase" : True,
+
         }
+                    
     },
     
     # Stages to execute:
     # Default Stages
-    "workerStages" : [{"threadWorker_preStage":{
+    "workerStages" : [{"threadWorker_simple_datapop":{
                                 # Worker function to be called
-                                "stageFunction" : "threadWorker_preStage",
+                                "stageFunction" : "threadWorker_simple_datapop",
+                                
+                                # Control the size of the database, 250 x 1000 docs
+                                "iterationPerThread" : 250,
+                                "bulkInsertSize" : 1000,
                                 
                                 # Ratios to control the proportion of different actions
                                 "actionRatios" : {
@@ -52,14 +61,14 @@ config={
                                                 
                                  }}, 
                       
-                      {"threadWorker_mainStage":{
+                      {"threadWorker_CRUD":{
                                 # Worker function to be called
-                                "stageFunction":"threadWorker_mainStage"
+                                "stageFunction":"threadWorker_CRUD"
                                 }}, 
                       
-                      {"threadWorker_mainStage_SkipLB":{
+                      {"threadWorker_CRUD_SkipLB":{
                                 # Worker function to be called
-                                "stageFunction":"threadWorker_mainStage_SkipLB",
+                                "stageFunction":"threadWorker_CRUD_SkipLB",
                                 
                                 # Ratios to control the proportion of different actions
                                 "actionRatios" : {
@@ -71,11 +80,22 @@ config={
                                 },
                                 
                                 # Database configuration for hitting one of the DB nodes directly
-                                "dbConfig" : {                                    
+                                "dbConfig" : {     
+                                    # URL to the cloudant instance
+                                    "dburl" : ("https://<dbUrl>"),                               
+                                    
                                     # Extra headers to pretend to be the LB
                                     "extraHeaders" : {"X-Cloudant-User":"<user>"}
                                 }
-                                }}
+                                }},
+                      # To enable the testy lucene tests, uncomment this block
+                      #"threadWorker_testy_lucene":{
+                      #          # Worker function to be called
+                      #          "stageFunction" : "threadWorker_testy_lucene",
+                      #          
+                      #          # Ratios to control the proportion of different actions
+                      #          "actionRatios" : None,
+                      #           }},
                       ], # end of worker stages
 
 }
