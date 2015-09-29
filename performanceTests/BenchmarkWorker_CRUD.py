@@ -16,9 +16,9 @@ import baseBenchmarkWorker as bBW
 import logging
 import genJsonData as gen
 
-class benchmarkWorker(bBW.baseBenchmarkWorker):
+class BenchmarkWorker_CRUD(bBW.baseBenchmarkWorker):
     '''
-    classdocs
+    This Benchmark Worker generates simple CRUD load according the specified ratios 
     '''
 
     def __init__(self, db, insertedIDs, params=None):
@@ -42,11 +42,11 @@ class benchmarkWorker(bBW.baseBenchmarkWorker):
         ####################################
         # class-specific
                 
-        self.addActions({"simpleInsert" : benchmarkWorker.execInsert,
-                         "randomDelete" : benchmarkWorker.execDelete,
-                         "randomRead"   : benchmarkWorker.execRead,
-                         "randomUpdate" : benchmarkWorker.execUpdate,
-                         "bulkInsert"   : benchmarkWorker.execBulkInsert
+        self.addActions({"simpleInsert" : BenchmarkWorker_CRUD.execInsert,
+                         "randomDelete" : BenchmarkWorker_CRUD.execDelete,
+                         "randomRead"   : BenchmarkWorker_CRUD.execRead,
+                         "randomUpdate" : BenchmarkWorker_CRUD.execUpdate,
+                         "bulkInsert"   : BenchmarkWorker_CRUD.execBulkInsert
                          })
         
         if params is not None and "actionRatios" in params:

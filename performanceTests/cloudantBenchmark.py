@@ -17,12 +17,12 @@ import pyCloudantDB.pyCloudantDB as cdb
 import config as c
 import unittest
 import logging
-import benchmarkWorker as bW
-import benchmark_test_lucene_queries as bW_lucene
+import BenchmarkWorker_CRUD as CrudBW
+import BenchmarkWorker_testy_lucene as LuceneBW
 import sys
 import time
 
-class cloudantBenchmarkDriver(driver.genericBenchmarkDriver, unittest.TestCase):
+class cloudantBenchmarkDriver(driver.genericBenchmarkDriver):
     '''
     Simple Cloudant Benchmark, randomly execute basic CRUD ops
     
@@ -81,52 +81,33 @@ class cloudantBenchmarkDriver(driver.genericBenchmarkDriver, unittest.TestCase):
             if not respDel.ok:
                 self.assertTrue(respDel.ok,"Failed to delete Database: " + str(respDel.json()))
             
-    def threadWorker_preStage(self, responseTimes, processStateDone, idx, pid, activeThreadCounter, benchmarkConfig, idPool):
+    def threadWorker_simple_datapop(self, responseTimes, processStateDone, idx, pid, activeThreadCounter, workerConfig, idPool):
         ''' This preStage is intended to populate the database with some documents before we test '''
-
-        # assemble database population (bulk insert) config
-        bulkInsertConfig = {
-            "templateFile" : "templates/iron_template.json",
-            "concurrentThreads" : benchmarkConfig["concurrentThreads"],
-            "iterationPerThread" : benchmarkConfig["bulkInsertsPerThread"],
-            "bulkInsertSize" : benchmarkConfig["bulkInsertSize"],
-            "actionRatios" : {
-                  "simpleInsert" : 0,
-                  "randomDelete" : 0,
-                  "randomRead" : 0,
-                  "randomUpdate" : 0,
-                  "bulkInsert" : 1
-                    },
-            "dbConfig": benchmarkConfig["dbConfig"],
-            "maxReqPerSec" : benchmarkConfig["maxReqPerSec"] if "maxReqPerSec" in benchmarkConfig else 0
-            }
-        self.threadWorker_mainStage(responseTimes, processStateDone, idx, pid, activeThreadCounter, bulkInsertConfig, idPool)
         
-    def threadWorker_mainStage_SkipLB(self, responseTimes, processStateDone, idx, pid, activeThreadCounter, benchmarkConfig, idPool):
+        # TODO: check whether a self.db exists
+        # Create a local DB object
+        db = cdb.pyCloudantDB(workerConfig["dbConfig"])
+    
+        # Create a local Worker
+        worker = CrudBW.BenchmarkWorker_CRUD(db, idPool, params=workerConfig)
+        self.threadWorker_driverLoop(responseTimes, processStateDone, idx, pid, activeThreadCounter, workerConfig, idPool, worker)
+        
+    def threadWorker_CRUD_SkipLB(self, responseTimes, processStateDone, idx, pid, activeThreadCounter, workerConfig, idPool):
         ''' This stage is intended to get a small number datapoints circumventing the Load Balancer, in our tests we've noted that
             these are very consistent (low variability) metrics to measure the response times of certain CRUD ops'''
         
-        # assemble custom configuration
-        noLbBenchmarkConfig = {
-            "templateFile" : "templates/iron_template.json",
-            "concurrentThreads" : benchmarkConfig["concurrentThreads"],
-            "iterationPerThread" : benchmarkConfig["noLbIterationsPerThread"],
-            "actionRatios" : {
-                  "noLB_simpleInsert" : 1,
-                  "noLB_randomDelete" : 1,
-                  "noLB_randomRead" : 1,
-                  "noLB_randomUpdate" : 1,
-                  "noLB_bulkInsert" : 0
-                    },
-            "dbConfig": benchmarkConfig["noLbDbConfig"],
-            "maxReqPerSec" : benchmarkConfig["maxReqPerSec"] if "maxReqPerSec" in benchmarkConfig else 0
-            }
-        self.threadWorker_mainStage(responseTimes, processStateDone, idx, pid, activeThreadCounter, noLbBenchmarkConfig, idPool)
+        # TODO: check whether a self.db exists
+        # Create a local DB object
+        db = cdb.pyCloudantDB(workerConfig["dbConfig"])
     
-    def threadWorker_mainStage_lucene_queries(self, responseTimes, processStateDone, idx, pid, activeThreadCounter, benchmarkConfig, idPool):
+        # Create a local Worker
+        worker = CrudBW.BenchmarkWorker_CRUD(db, idPool, params=workerConfig)
+        self.threadWorker_driverLoop(responseTimes, processStateDone, idx, pid, activeThreadCounter, workerConfig, idPool, worker)
+    
+    def threadWorker_testy_lucene(self, responseTimes, processStateDone, idx, pid, activeThreadCounter, workerConfig, idPool):
         ''' This stage is a first stab at calling out to the cloudant testy functional tests'''
         
-        # assemble custom configuration
+        '''# assemble custom configuration
         luceneQueriesConfig = {
             "templateFile" : "templates/iron_template.json",
             "concurrentThreads" : benchmarkConfig["concurrentThreads"],
@@ -135,71 +116,23 @@ class cloudantBenchmarkDriver(driver.genericBenchmarkDriver, unittest.TestCase):
             "actionRatios" : None, # Populated in test class
             "dbConfig": benchmarkConfig["dbConfig"],
             "maxReqPerSec" : benchmarkConfig["maxReqPerSec"] if "maxReqPerSec" in benchmarkConfig else 0
-            }
-        worker = bW_lucene.benchmark_test_lucene_queries(None, idPool, params=luceneQueriesConfig)
-        self.threadWorker_mainStage(responseTimes, processStateDone, idx, pid, activeThreadCounter, luceneQueriesConfig, idPool, worker=worker)
+            }'''
         
-    def threadWorker_mainStage(self, responseTimes, processStateDone, idx, pid, activeThreadCounter, benchmarkConfig, idPool, worker=None):
+        worker = LuceneBW.BenchmarkWorker_testy_lucene(None, idPool, params=workerConfig)
+        self.threadWorker_driverLoop(responseTimes, processStateDone, idx, pid, activeThreadCounter, workerConfig, idPool, worker)
+        
+    def threadWorker_CRUD(self, responseTimes, processStateDone, idx, pid, activeThreadCounter, workerConfig, idPool):
         ''' Overrides the generic threadWorker, an instance of this function is executed in each driver thread'''
         
         log = logging.getLogger('mtbenchmark')
         
-        if worker is None:
-            # Create a local DB object
-            db = cdb.pyCloudantDB(benchmarkConfig["dbConfig"])
+        # Create a local DB object
+        db = cdb.pyCloudantDB(workerConfig["dbConfig"])
+    
+        # Create a local Worker
+        worker = CrudBW.BenchmarkWorker_CRUD(db, idPool, params=workerConfig)
+        self.threadWorker_driverLoop(responseTimes, processStateDone, idx, pid, activeThreadCounter, workerConfig, idPool, worker)
         
-            # Create a local Worker
-            worker = bW.benchmarkWorker(db, idPool, params=benchmarkConfig)
-        
-        # Rate-limiting timer
-        lastLoopTime = time.time()
-        
-        if "maxReqPerSec" in benchmarkConfig and benchmarkConfig["maxReqPerSec"] > 0:
-            # setting the maximum requests per second
-            minLoopTime = 1.0/benchmarkConfig["maxReqPerSec"]
-        else:
-            # infinite
-            minLoopTime = 0
-        
-        for i in range(benchmarkConfig["iterationPerThread"]):
-            try:
-                # TODO: add feature to allow exiting of all threads
-                #if any(processStateDone):
-                #    print pid, "error on other thread, exiting"
-                #    return False
-                while (time.time()-lastLoopTime) < minLoopTime:
-                    time.sleep(0.01)
-                
-                # reset timer
-                lastLoopTime = time.time()
-                
-                # Run worker 
-                resp = worker.execRandomAction(str(pid)+":"+str(i))                
-                
-                if "err" in resp.keys() and resp["err"] is True:
-                    log.error("("+str(pid)+") Task Level Error: " + resp["action"] + " - Exception: " + resp["msg"])
-                
-                # Stash response time
-                responseTimes.put(resp)
-            
-            except Exception as e:
-                # catch task level exception to prevent early exiting
-                e_info = sys.exc_info()[0]
-                errLine = "("+str(pid)+") Task Level Error - Exception: "+ str(e_info)
-                log.error(errLine)
-        
-    def testMultiThreadedBenchmark(self):
-        log = logging.getLogger('mtbenchmark')
-        
-        threadWorkers = []
-        if "workerStages" not in c.config:
-            raise Exception("Failed to identify stages to be run, 'workerStages' is missing from the config")
-        
-        # Translate string function names into function pointers
-        for worker in c.config["workerStages"]:
-            threadWorkers.append(getattr(self, worker))
-            log.debug("Matched '%s' to function" % worker)
-        self._testMultiThreadedBenchmark(threadWorkers)
 
 if __name__ == "__main__":
     unittest.main()
